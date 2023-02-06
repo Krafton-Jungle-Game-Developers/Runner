@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph;
+// using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// This class is used for controlling class Timer.
 /// if you need to Modify TIMER, please use this class.
 /// Is implemented in TimerText.
-/// Currently, timer starts when scene activates.
+/// Currently, timer starts after pressing any button.
 /// Ends when Player Character Triggers "Goal Space"
 /// </summary>
 public class TimerControl : MonoBehaviour
