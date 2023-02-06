@@ -17,9 +17,11 @@ public class TimerControl : MonoBehaviour
     Timer timer = new Timer();
     //public Timer timer;
 
+
     // Change these Variables for Timer
     #region TimerControlVariables
     public bool timerRunBool = false;
+    public bool isGameFinish = false;
     public string secDecimal = "f2";
     public Color initColor = Color.white;
     public Color finishColor = Color.yellow;
@@ -34,9 +36,11 @@ public class TimerControl : MonoBehaviour
         timer.StartTimer();
     }
     
+    // This Method is currently triggered colliding with "Goal Space". 
     public void EndProcess()
     {
         timerRunBool = false;
+        isGameFinish= true;
         timerText.color = finishColor;
         timer.EndTimer();
     }
@@ -45,8 +49,7 @@ public class TimerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        // timer = FindObjectOfType<Timer>();
-        StartProcess();   
+        // TODO : Prepare Timer GUI 
     }
 
     // Update is called once per frame
@@ -54,6 +57,11 @@ public class TimerControl : MonoBehaviour
     {
         if (!timerRunBool)
         {
+            // Timer Starts when player first press anykey. 
+            if (!isGameFinish && Input.anyKey)
+            {
+                StartProcess();
+            } 
             return;
         }
 
