@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -465,7 +465,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 485617699}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1110535297
+--- !u!114 &1110535305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,12 +474,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1110535290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0216a90bb0481d4d9dc62130624d2d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8126dd26a9a903e41a2051f29c02618d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1344898732}
-  endTime: 0
-  timerDuration: 0
+  timerRunBool: 0
+  secDecimal: 
+  initColor: {r: 1, g: 1, b: 1, a: 1}
+  finishColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1272730959
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,8 +627,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16, y: 113.81}
-  m_SizeDelta: {x: 500, y: 258.11}
+  m_AnchoredPosition: {x: -16, y: 74.11843}
+  m_SizeDelta: {x: 500, y: 81.3379}
   m_Pivot: {x: 0.5, y: 0.46056852}
 --- !u!114 &1344898732
 MonoBehaviour:
@@ -650,10 +652,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 3750c318f40cab44a97d3a81beaefeb3, type: 3}
-    m_FontSize: 75
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 7
+    m_MinSize: 0
     m_MaxSize: 75
     m_Alignment: 4
     m_AlignByGeometry: 0

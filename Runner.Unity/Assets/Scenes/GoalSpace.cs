@@ -10,7 +10,7 @@ public class GoalSpace : MonoBehaviour
 {
     // name variables 
     private string objectName = "FirstPersonController";
-    private string message = "EndTimer";
+    private string message = "EndProcess";
 
     
     private void OnTriggerEnter(Collider other)
