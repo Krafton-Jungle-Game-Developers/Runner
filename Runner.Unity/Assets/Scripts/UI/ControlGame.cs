@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ControlGame : MonoBehaviour
 {
-    #region Key Variables
+    #region KeySettings
     public KeyCode resetKey = KeyCode.R;
     public KeyCode menuKey = KeyCode.Escape;
     #endregion
