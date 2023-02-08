@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.42219603, g: 0.24359204, b: 0.4339623, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 0.6008575, g: 0.37891603, b: 0.6132076, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: e76fd1a8054078a47b2176672c278a17, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -15594,7 +15594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &768452174
 Transform:
   m_ObjectHideFlags: 0
@@ -34481,8 +34481,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575929315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133.1298, y: -12.3, z: -11.2749}
-  m_LocalScale: {x: 41.7023, y: 1, z: 23.068665}
+  m_LocalPosition: {x: 103.1923, y: -16.3, z: 0.0673}
+  m_LocalScale: {x: 424.3351, y: 8.2528, z: 383.88}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 101331845}
@@ -34501,7 +34501,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1575929318
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34551,7 +34551,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575929315}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1586936702
 GameObject:
   m_ObjectHideFlags: 0
