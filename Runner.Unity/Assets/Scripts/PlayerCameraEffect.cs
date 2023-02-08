@@ -51,6 +51,7 @@ public class PlayerCameraEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        oldPlayerHorizontalSpeed = playerHorizontalSpeed;
         CameraEffect();
     }
 
@@ -59,7 +60,7 @@ public class PlayerCameraEffect : MonoBehaviour
     private void CameraEffect()
     {
         playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
-        if (playerHorizontalSpeed * 10 > baseFOV && (playerHorizontalSpeed - oldPlayerHorizontalSpeed) >= 0 )
+        if (playerHorizontalSpeed * 15 > baseFOV && (playerHorizontalSpeed - oldPlayerHorizontalSpeed) >= 0 )
         {
             //if (nowFOV <= maxFOV)
             //{
@@ -78,8 +79,12 @@ public class PlayerCameraEffect : MonoBehaviour
             //    nowBloomIntensity += 0.03f;
             //}
             nowFOV = Mathf.Lerp(nowFOV, maxFOV, Time.deltaTime * playerHorizontalSpeed);
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, Time.deltaTime * playerHorizontalSpeed);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, Time.deltaTime * playerHorizontalSpeed);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
         }
-        else if ((playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
+        else
+        //if ((playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
         {
             //if (nowFOV > baseFOV)
             //{
@@ -98,13 +103,13 @@ public class PlayerCameraEffect : MonoBehaviour
             //    nowBloomIntensity -= 0.07f;
             //}
             nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
-
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
         }
         playerCamera.fieldOfView = nowFOV;
         ChromaticAberration.intensity.value = nowCAIntensity;
         MotionBlur.intensity.value = nowMBIntensity;
-        Bloom.intensity.value = nowBloomIntensity;
-        oldPlayerHorizontalSpeed = playerHorizontalSpeed;
-        
+        Bloom.intensity.value = nowBloomIntensity;      
     }
 }
