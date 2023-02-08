@@ -10279,6 +10279,7 @@ GameObject:
   - component: {fileID: 537070963}
   - component: {fileID: 537070966}
   - component: {fileID: 537070965}
+  - component: {fileID: 537070967}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10379,6 +10380,37 @@ MonoBehaviour:
   secDecimal: f2
   initColor: {r: 1, g: 1, b: 1, a: 1}
   finishColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &537070967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537070961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47b44264832a2d49a7ba00076dc730d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 0}
+  playerHorizontalSpeed: 0
+  baseFOV: 60
+  nowFOV: 60
+  maxFOV: 80
+  UAC: {fileID: 0}
+  Volume: {fileID: 0}
+  MotionBlur: {fileID: 0}
+  ChromaticAberration: {fileID: 0}
+  Bloom: {fileID: 0}
+  baseCAIntensity: 0
+  nowCAIntensity: 0
+  maxCAIntensity: 0.8
+  baseMBIntensity: 0
+  nowMBIntensity: 0
+  maxMBIntensity: 0.5
+  baseBloomIntensity: 0
+  nowBloomIntensity: 0
+  maxBloomIntensity: 0.5
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,
