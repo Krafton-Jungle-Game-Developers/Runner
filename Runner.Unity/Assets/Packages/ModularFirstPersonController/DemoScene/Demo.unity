@@ -1190,7 +1190,7 @@ MonoBehaviour:
   enableJump: 1
   jumpKey: 32
   jumpPower: 5
-  dashPower: 100
+  dashPower: 50
 --- !u!1 &533210976
 GameObject:
   m_ObjectHideFlags: 0
