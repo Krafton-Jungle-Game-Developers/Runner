@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         if (currentValue > 0)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+
             currentValue -= 1;
             inventory[AbilityType.ExtraJump] = currentValue;
         }
