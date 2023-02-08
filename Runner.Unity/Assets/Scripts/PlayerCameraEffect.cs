@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 
+
+
 public class PlayerCameraEffect : MonoBehaviour
 {
     public Camera playerCamera;
@@ -31,6 +33,8 @@ public class PlayerCameraEffect : MonoBehaviour
     public float baseBloomIntensity = 0f;
     public float nowBloomIntensity = 0f;
     public float maxBloomIntensity = 0.5f;
+
+
 
     void Awake()
     {
@@ -74,7 +78,7 @@ public class PlayerCameraEffect : MonoBehaviour
             if (nowBloomIntensity <= maxBloomIntensity)
             {
                 nowBloomIntensity += 0.01f;
-        }
+            }
         }
         else
         {
@@ -89,7 +93,7 @@ public class PlayerCameraEffect : MonoBehaviour
             if (nowMBIntensity > baseMBIntensity)
             {
                 nowMBIntensity -= 0.05f;
-        }
+            }
             if (nowBloomIntensity > baseBloomIntensity)
             {
                 nowBloomIntensity -= 0.05f;
