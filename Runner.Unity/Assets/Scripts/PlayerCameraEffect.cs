@@ -13,10 +13,9 @@ public class PlayerCameraEffect : MonoBehaviour
 
     //Post Process
     public float playerHorizontalSpeed = 0f;
-    public float MaxFOV = 110f;
     public float baseFOV = 60f;
     public float nowFOV = 60f;
-    public float maxFOV = 80;
+    public float maxFOV = 80f;
     public UniversalAdditionalCameraData UAC;
 
     void Awake()
@@ -40,18 +39,19 @@ public class PlayerCameraEffect : MonoBehaviour
     private void CameraEffect()
     {
         playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
-        if (playerHorizontalSpeed * 10 > baseFOV && playerHorizontalSpeed * 10 < maxFOV)
+        if (playerHorizontalSpeed * 10 > baseFOV)
         {
-            nowFOV = (playerHorizontalSpeed * 10 + baseFOV) / 2;
-        }
-        else if (playerHorizontalSpeed * 10 < baseFOV)
-        {
-            nowFOV = baseFOV;
-
+            if (nowFOV <= maxFOV)
+            {
+                nowFOV += 0.1f;
+            }
         }
         else
         {
-            nowFOV = maxFOV;
+            if(nowFOV > baseFOV)
+            {
+                nowFOV -= 0.5f;
+            }
         }
         playerCamera.fieldOfView = nowFOV;
 

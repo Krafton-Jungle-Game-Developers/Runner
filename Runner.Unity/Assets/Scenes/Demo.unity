@@ -10276,6 +10276,7 @@ GameObject:
   - component: {fileID: 537070962}
   - component: {fileID: 537070964}
   - component: {fileID: 537070963}
+  - component: {fileID: 537070965}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -10343,6 +10344,25 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &537070965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537070961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47b44264832a2d49a7ba00076dc730d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 1121446067}
+  playerHorizontalSpeed: 0
+  MaxFOV: 110
+  baseFOV: 60
+  nowFOV: 60
+  maxFOV: 80
+  UAC: {fileID: 0}
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,
@@ -22812,8 +22832,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1039402042}
   - component: {fileID: 1039402041}
-  - component: {fileID: 1039402043}
-  - component: {fileID: 1039402044}
   m_Layer: 0
   m_Name: CamHolder
   m_TagString: Untagged
@@ -22850,41 +22868,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1039402043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039402040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47b44264832a2d49a7ba00076dc730d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1121446067}
-  playerHorizontalSpeed: 0
-  MaxFOV: 110
-  baseFOV: 60
-  nowFOV: 60
-  maxFOV: 80
-  UAC: {fileID: 0}
---- !u!54 &1039402044
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039402040}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1040652174
 GameObject:
   m_ObjectHideFlags: 0
