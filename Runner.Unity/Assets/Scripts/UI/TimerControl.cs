@@ -18,33 +18,15 @@ public class TimerControl : MonoBehaviour
     //public Timer timer;
 
 
+    // ========= Timer Control Variables =============
     // Change these Variables for Timer
-    #region TimerControlVariables
     public bool timerRunBool = false;
     public bool isGameFinish = false;
     public string secDecimal = "f2";
     public Color initColor = Color.white;
     public Color finishColor = Color.yellow;
-    #endregion
+    // ===============================================
 
-    #region TimerControlMethods
-    public void StartProcess()
-    {
-        // Timer Init 
-        timerRunBool = true;
-        timerText.color = initColor;
-        timer.StartTimer();
-    }
-    
-    // This Method is currently triggered colliding with "Goal Space". 
-    public void EndProcess()
-    {
-        timerRunBool = false;
-        isGameFinish= true;
-        timerText.color = finishColor;
-        timer.EndTimer();
-    }
-    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -65,10 +47,32 @@ public class TimerControl : MonoBehaviour
             return;
         }
 
-        float timerDuration = timer.Duration();
+        float timerDuration = timer.GetDuration();
         string minutes = ((int)timerDuration / 60).ToString();
         string seconds = (timerDuration % 60).ToString(secDecimal);
 
         timerText.text = minutes + "m  " + seconds + "s";
     }
+
+
+    // ============ Timer Control Methods ===============
+    public void StartProcess()
+    {
+        // Timer Init 
+        timerRunBool = true;
+        timerText.color = initColor;
+        timer.StartTimer();
+    }
+
+
+    // This Method is currently triggered colliding with "Goal Space". 
+    public void EndProcess()
+    {
+        timerRunBool = false;
+        isGameFinish = true;
+        timerText.color = finishColor;
+        timer.EndTimer();
+    }
+
+    // --- End of Timer Control Methods. ---
 }

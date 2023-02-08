@@ -10,14 +10,13 @@ using UnityEngine;
 /// </summary>
 public class Timer 
 {
-    #region TimerVariables 
+    // ============== Timer Variables ==============
     private float _startTime;
     private float _endTime;
     //private float _timerDuration;
+    // =============================================
 
-    #endregion
-
-    #region TimerMethods
+    // ============== Timer Methods ================
     public void StartTimer()
     {
         _startTime = Time.time; 
@@ -35,11 +34,11 @@ public class Timer
         // TODO
     }
 
-    public float Duration()
+    public float GetDuration()
     {
         return Time.time - _startTime;
         
     }
-    #endregion
+    // --- end of Timer Methods. ---
 
 }
