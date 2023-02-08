@@ -7,7 +7,9 @@ public enum AbilityType { ExtraJump, Dash, Stomp }
 public class PlayerController : MonoBehaviour
 {
     public Transform orientation;
+    private float playerHeight;
     private Rigidbody _rb;
+    private bool _isGrounded;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -17,11 +19,6 @@ public class PlayerController : MonoBehaviour
     private float _xInput;
     private float _yInput;
     private Vector3 _moveDirection;
-
-    [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask ground;
-    private bool _isGrounded;
 
     [Header("Ability")]
     public KeyCode abilityKey;
@@ -42,6 +39,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        playerHeight = gameObject.GetComponentInChildren<CapsuleCollider>().height;
         _rb.freezeRotation = true;
         inventory.Add(AbilityType.ExtraJump, 0);
         inventory.Add(AbilityType.Dash, 0);
@@ -71,7 +69,19 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        _isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
+        Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
+        Vector3 direction = transform.TransformDirection(Vector3.down);
+        float distance = (playerHeight * 0.5f) + 0.2f;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        {
+            Debug.DrawRay(origin, direction * distance, Color.red);
+            _isGrounded = true;
+        }
+        else
+        {
+            _isGrounded = false;
+        }
     }
 
     private void MyInput()
