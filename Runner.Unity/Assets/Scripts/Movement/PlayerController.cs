@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
     }
 
+    // Shoot a raycast and check if there is a object below player model
     private void CheckGrounded()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
