@@ -10362,7 +10362,20 @@ MonoBehaviour:
   baseFOV: 60
   nowFOV: 60
   maxFOV: 80
-  UAC: {fileID: 0}
+  UAC: {fileID: 1121446065}
+  Volume: {fileID: 1952501946}
+  MotionBlur: {fileID: 0}
+  ChromaticAberration: {fileID: 0}
+  Bloom: {fileID: 0}
+  baseCAIntensity: 0
+  nowCAIntensity: 0
+  maxCAIntensity: 0.8
+  baseMBIntensity: 0
+  nowMBIntensity: 0
+  maxMBIntensity: 0.5
+  baseBloomIntensity: 0
+  nowBloomIntensity: 0
+  maxBloomIntensity: 0.5
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,
@@ -43025,7 +43038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1952501945
 Transform:
   m_ObjectHideFlags: 0
