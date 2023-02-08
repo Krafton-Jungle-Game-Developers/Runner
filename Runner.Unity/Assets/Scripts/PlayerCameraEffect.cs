@@ -56,8 +56,8 @@ public class PlayerCameraEffect : MonoBehaviour
     }
 
     // Player Camera Effect (React by speed)
-    private float diffFOV = 0;
-    private void CameraEffect()
+/*    private float diffFOV = 0;
+*/    private void CameraEffect()
     {
         playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
         if (playerHorizontalSpeed * 15 > baseFOV && (playerHorizontalSpeed - oldPlayerHorizontalSpeed) >= 0 )
