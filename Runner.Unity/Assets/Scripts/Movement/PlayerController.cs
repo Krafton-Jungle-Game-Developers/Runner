@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AbilityType { ExtraJump, Dash, Stomp }
+public enum AbilityType { Base, ExtraJump, Dash, Stomp }
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ability")]
     public KeyCode abilityKey;
-    public AbilityType currentAbility;
+    public AbilityType currentAbility = AbilityType.Base;
     public InventoryDictionary<AbilityType, int> inventory = new InventoryDictionary<AbilityType, int>();
     private int _currentValue;
 
@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         playerHeight = gameObject.GetComponentInChildren<CapsuleCollider>().height;
         _rb.freezeRotation = true;
+        inventory.Add(AbilityType.Base, 0);
         inventory.Add(AbilityType.ExtraJump, 0);
         inventory.Add(AbilityType.Dash, 0);
         inventory.Add(AbilityType.Stomp, 0);
@@ -149,20 +150,20 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentAbility)
         {
-        case AbilityType.ExtraJump:
-            AirJump();
-            break;
+            case AbilityType.ExtraJump:
+                AirJump();
+                break;
 
-        case AbilityType.Dash:
-            if (!_isDashing)
-            {
-                Dash();
-            }
-            break;
+            case AbilityType.Dash:
+                if (!_isDashing)
+                {
+                    Dash();
+                }
+                break;
 
-        case AbilityType.Stomp:
-            Stomp();
-            break;
+            case AbilityType.Stomp:
+                Stomp();
+                break;
         }
     }
 
@@ -174,9 +175,7 @@ public class PlayerController : MonoBehaviour
             _canJump = false;
 
             Jump();
-
-            _currentValue -= 1;
-            inventory[AbilityType.ExtraJump] = _currentValue;
+            ConsumeInventory(AbilityType.ExtraJump, _currentValue);
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
@@ -190,7 +189,7 @@ public class PlayerController : MonoBehaviour
 /*            GetComponent<>
             Vector3 lookDirection = new Vector3 ()*/
             _rb.AddForce(_rb.velocity.normalized * dashPower, ForceMode.Impulse);
-            _currentValue -= 1;
+            ConsumeInventory(AbilityType.Dash, _currentValue);
             inventory[AbilityType.Dash] = _currentValue;
         }
     }
@@ -201,13 +200,37 @@ public class PlayerController : MonoBehaviour
         if (_currentValue > 0)
         {
             // Stomp
-            _currentValue -= 1;
+            ConsumeInventory(AbilityType.Stomp, _currentValue);
             inventory[AbilityType.Stomp] = _currentValue;
         }
     }
 
-    public void ConsumeInventory()
+    public void ConsumeInventory(AbilityType type, int value)
     {
+        value -= 1;
+        inventory[type] = value;
+        if (value == 0)
+        {
+            SetNextAbility();
+        }
+    }
 
+    private void SetNextAbility()
+    {
+        bool found = false;
+        
+        for (int i = 1; i <= inventory.Count - 1; i++)
+        {
+            if (inventory.GetValueOrDefault((AbilityType)i) > 0)
+            {
+                currentAbility = (AbilityType)i;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            currentAbility = AbilityType.Base;
+        }
     }
 }
