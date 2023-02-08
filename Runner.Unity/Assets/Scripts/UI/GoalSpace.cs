@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// Script for Triggering when playercharacter enters "Goal Space"
 /// Sends trigger to Timer.
@@ -14,7 +15,7 @@ public class GoalSpace : MonoBehaviour
 
     
     private void OnTriggerEnter(Collider other)
-    {
-        GameObject.Find(objectName).SendMessage(message);
+    { 
+        GameObject.FindGameObjectWithTag("Player").SendMessage(message); 
     }
 }
