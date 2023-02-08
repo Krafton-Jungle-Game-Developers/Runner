@@ -80,19 +80,19 @@ public class PlayerCameraEffect : MonoBehaviour
         {
             if (nowFOV > baseFOV)
             {
-                nowFOV -= 0.5f;
+                nowFOV -= 0.1f;
             }
             if (nowCAIntensity > baseCAIntensity)
             {
-                nowCAIntensity -= 0.05f;
+                nowCAIntensity -= 0.01f;
             }
             if (nowMBIntensity > baseMBIntensity)
             {
-                nowMBIntensity -= 0.05f;
+                nowMBIntensity -= 0.01f;
             }
             if (nowBloomIntensity > baseBloomIntensity)
             {
-                nowBloomIntensity -= 0.05f;
+                nowBloomIntensity -= 0.01f;
             }
         }
         playerCamera.fieldOfView = nowFOV;
