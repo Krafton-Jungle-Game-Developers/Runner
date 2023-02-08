@@ -1,26 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
-
+using UnityEngine.Rendering;
 
 public class PlayerCameraEffect : MonoBehaviour
 {
     public Camera playerCamera;
     private Rigidbody rb;
 
-    //Post Process
+    //Reactive FOV
     public float playerHorizontalSpeed = 0f;
     public float baseFOV = 60f;
     public float nowFOV = 60f;
     public float maxFOV = 80f;
     public UniversalAdditionalCameraData UAC;
 
+    //Post processing
+    public Volume Volume;
+    public MotionBlur MotionBlur;
+    public ChromaticAberration ChromaticAberration;
+    public Bloom Bloom;
+
+    public float baseCAIntensity = 0f;
+    public float nowCAIntensity = 0f;
+    public float maxCAIntensity = 0.8f;
+
+    public float baseMBIntensity = 0f;
+    public float nowMBIntensity = 0f;
+    public float maxMBIntensity = 0.5f;
+
+    public float baseBloomIntensity = 0f;
+    public float nowBloomIntensity = 0f;
+    public float maxBloomIntensity = 0.5f;
+
     void Awake()
     {
+        UAC = playerCamera.GetComponent<UniversalAdditionalCameraData>();
         rb = GetComponent<Rigidbody>();
+        Volume.profile.TryGet(out MotionBlur);
+        Volume.profile.TryGet(out ChromaticAberration);
+        Volume.profile.TryGet(out Bloom);
 
     }
 
@@ -45,19 +63,41 @@ public class PlayerCameraEffect : MonoBehaviour
             {
                 nowFOV += 0.1f;
             }
+            if (nowCAIntensity <= maxCAIntensity)
+            {
+                nowCAIntensity += 0.01f;
+            }
+            if (nowMBIntensity <= maxMBIntensity)
+            {
+                nowMBIntensity += 0.01f;
+            }
+            if (nowBloomIntensity <= maxBloomIntensity)
+            {
+                nowBloomIntensity += 0.01f;
+            }
         }
         else
         {
-            if(nowFOV > baseFOV)
+            if (nowFOV > baseFOV)
             {
-                nowFOV -= 0.5f;
+                nowFOV -= 0.1f;
+            }
+            if (nowCAIntensity > baseCAIntensity)
+            {
+                nowCAIntensity -= 0.01f;
+            }
+            if (nowMBIntensity > baseMBIntensity)
+            {
+                nowMBIntensity -= 0.01f;
+            }
+            if (nowBloomIntensity > baseBloomIntensity)
+            {
+                nowBloomIntensity -= 0.01f;
             }
         }
         playerCamera.fieldOfView = nowFOV;
-
-        if (nowFOV >= 60f)
-            UAC.renderPostProcessing = true;
-        else
-            UAC.renderPostProcessing = false;
+        ChromaticAberration.intensity.value = nowCAIntensity;
+        MotionBlur.intensity.value = nowMBIntensity;
+        Bloom.intensity.value = nowBloomIntensity;
     }
 }
