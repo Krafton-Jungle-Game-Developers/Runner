@@ -5,7 +5,8 @@ using UnityEngine;
 public class Consumable : MonoBehaviour
 {
     public AbilityType type;
-    private int currentValue;
+    private int _currentValue;
+    private AbilityType _currentAbility;
     private PlayerController playerController;
 
     void Start()
@@ -25,8 +26,13 @@ public class Consumable : MonoBehaviour
     }
     public void AddToInventory(AbilityType type)
     {
-        currentValue = playerController.inventory.GetValueOrDefault(type);
-        currentValue += 1;
-        playerController.inventory[type] = currentValue;
+        _currentValue = playerController.inventory.GetValueOrDefault(type);
+        _currentAbility = playerController.currentAbility;
+        if (_currentAbility == AbilityType.Base)
+        {
+            playerController.currentAbility = type;
+        }
+        _currentValue += 1;
+        playerController.inventory[type] = _currentValue;
     }
 }
