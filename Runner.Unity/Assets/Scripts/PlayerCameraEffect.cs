@@ -57,7 +57,7 @@ public class PlayerCameraEffect : MonoBehaviour
     private void CameraEffect()
     {
         playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
-        if (playerHorizontalSpeed * 10 > baseFOV)
+        if (playerHorizontalSpeed * 5 > baseFOV)
         {
             if (nowFOV <= maxFOV)
             {
