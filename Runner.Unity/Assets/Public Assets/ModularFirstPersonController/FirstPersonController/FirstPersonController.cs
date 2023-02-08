@@ -4,6 +4,7 @@
 //
 // "Enable/Disable Headbob, Changed look rotations - should result in reduced camera jitters" || version 1.0.1
 
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,6 @@ using UnityEngine.Rendering.Universal;
 using UnityEditor;
 using System.Net;
 #endif
-
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -54,8 +54,10 @@ public class FirstPersonController : MonoBehaviour
     #endregion
 
     #region CameraEffect Variables
-    public float PlayerHorizontalSpeed = 0f;
-    public float MaxFOV = 110f;
+    public float playerHorizontalSpeed = 0f;
+    public float baseFOV = 60f;
+    public float nowFOV = 60f;
+    public float maxFOV = 80;
     public UniversalAdditionalCameraData UAC;
     #endregion
 
@@ -109,19 +111,11 @@ public class FirstPersonController : MonoBehaviour
 
     #endregion
 
-    #region Crouch
-
-    public bool enableCrouch = true;
-    public bool holdToCrouch = true;
-    public KeyCode crouchKey = KeyCode.LeftControl;
-    public float crouchHeight = .75f;
     public float speedReduction = .5f;
 
     // Internal Variables
-    private bool isCrouched = false;
     private Vector3 originalScale;
 
-    #endregion
     #endregion
 
     #region Head Bob
@@ -273,29 +267,6 @@ public class FirstPersonController : MonoBehaviour
 
         #endregion
 
-        #region Crouch
-
-        if (enableCrouch)
-        {
-            if (Input.GetKeyDown(crouchKey) && !holdToCrouch)
-            {
-                Crouch();
-            }
-
-            if (Input.GetKeyDown(crouchKey) && holdToCrouch)
-            {
-                isCrouched = false;
-                Crouch();
-            }
-            else if (Input.GetKeyUp(crouchKey) && holdToCrouch)
-            {
-                isCrouched = true;
-                Crouch();
-            }
-        }
-
-        #endregion
-
         CheckGround();
 
         if (enableHeadBob)
@@ -342,10 +313,6 @@ public class FirstPersonController : MonoBehaviour
                 {
                     isSprinting = true;
 
-                    if (isCrouched)
-                    {
-                        Crouch();
-                    }
 
                     if (hideBarWhenFull && !unlimitedSprint)
                     {
@@ -407,35 +374,8 @@ public class FirstPersonController : MonoBehaviour
             rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
             isGrounded = false;
         }
-
-        // When crouched and using toggle system, will uncrouch for a jump
-        if (isCrouched && !holdToCrouch)
-        {
-            Crouch();
-        }
     }
 
-    private void Crouch()
-    {
-        // Stands player up to full height
-        // Brings walkSpeed back up to original speed
-        if (isCrouched)
-        {
-            transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
-            walkSpeed /= speedReduction;
-
-            isCrouched = false;
-        }
-        // Crouches player down to set height
-        // Reduces walkSpeed
-        else
-        {
-            transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
-            walkSpeed *= speedReduction;
-
-            isCrouched = true;
-        }
-    }
 
     private void HeadBob()
     {
@@ -445,11 +385,6 @@ public class FirstPersonController : MonoBehaviour
             if (isSprinting)
             {
                 timer += Time.deltaTime * (bobSpeed + sprintSpeed);
-            }
-            // Calculates HeadBob speed during crouched movement
-            else if (isCrouched)
-            {
-                timer += Time.deltaTime * (bobSpeed * speedReduction);
             }
             // Calculates HeadBob speed during walking
             else
@@ -495,10 +430,23 @@ public class FirstPersonController : MonoBehaviour
 
         #region CameraFOV
         //Reactive FOV with Player's Velocity
-        PlayerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
-        playerCamera.fieldOfView = PlayerHorizontalSpeed * 10 < fov ? fov : PlayerHorizontalSpeed * 10 > MaxFOV ? MaxFOV : PlayerHorizontalSpeed * 10;
+        playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
+        if(playerHorizontalSpeed * 10 > baseFOV && playerHorizontalSpeed * 10 < maxFOV)
+        {
+            nowFOV = (playerHorizontalSpeed * 10 + baseFOV) / 2;
+        }
+        else if(playerHorizontalSpeed * 10 < baseFOV)
+        {
+            nowFOV = baseFOV;
 
-        if (PlayerHorizontalSpeed > 6f)
+        }
+        else
+        {
+            nowFOV = maxFOV;
+        }
+        playerCamera.fieldOfView = nowFOV;
+
+        if (nowFOV >= 60f)
             UAC.renderPostProcessing = true;
         else
             UAC.renderPostProcessing = false;
@@ -534,6 +482,8 @@ public class FirstPersonControllerEditor : Editor
         GUILayout.Label("By Jess Case", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Normal, fontSize = 12 });
         GUILayout.Label("version 1.0.1", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Normal, fontSize = 12 });
         EditorGUILayout.Space();
+
+        fpc.playerHorizontalSpeed = EditorGUILayout.Slider(new GUIContent("Player Speed", "Determines how fast the player will move while sprinting."), fpc.playerHorizontalSpeed, fpc.playerHorizontalSpeed, 6f);
 
         #region Camera Setup
 
@@ -671,20 +621,6 @@ public class FirstPersonControllerEditor : Editor
 
         #endregion
 
-        #region Crouch
-
-        GUILayout.Label("Crouch", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
-
-        fpc.enableCrouch = EditorGUILayout.ToggleLeft(new GUIContent("Enable Crouch", "Determines if the player is allowed to crouch."), fpc.enableCrouch);
-
-        GUI.enabled = fpc.enableCrouch;
-        fpc.holdToCrouch = EditorGUILayout.ToggleLeft(new GUIContent("Hold To Crouch", "Requires the player to hold the crouch key instead if pressing to crouch and uncrouch."), fpc.holdToCrouch);
-        fpc.crouchKey = (KeyCode)EditorGUILayout.EnumPopup(new GUIContent("Crouch Key", "Determines what key is used to crouch."), fpc.crouchKey);
-        fpc.crouchHeight = EditorGUILayout.Slider(new GUIContent("Crouch Height", "Determines the y scale of the player object when crouched."), fpc.crouchHeight, .1f, 1);
-        fpc.speedReduction = EditorGUILayout.Slider(new GUIContent("Speed Reduction", "Determines the percent 'Walk Speed' is reduced by. 1 being no reduction, and .5 being half."), fpc.speedReduction, .1f, 1);
-        GUI.enabled = true;
-
-        #endregion
 
         #endregion
 
