@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ControlGame : MonoBehaviour
 {
-    #region Key Variables
+    #region KeySettings
     public KeyCode resetKey = KeyCode.R;
     public KeyCode menuKey = KeyCode.Escape;
     #endregion
@@ -22,6 +22,23 @@ public class ControlGame : MonoBehaviour
     // Use this to control inputs when on pause. 
 
     #region ControlGameFunctions
+
+    #region MouseControl Functions
+    // used to unlock mouse on pausemenu. 
+    void UnlockMouse()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    // used when resuming to game 
+    void LockMouse ()
+    {
+        Cursor.lockState = CursorLockMode.Locked;   
+        Cursor.visible = false;
+    }
+    #endregion
+
     public void ResetTheGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -35,6 +52,7 @@ public class ControlGame : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused= true;
+        UnlockMouse();
     }
 
     // if Menu Scene is open, close it and resume to game scene.
@@ -43,6 +61,7 @@ public class ControlGame : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
         isPaused = false;
+        LockMouse();
     }
 
     // works only when built. 

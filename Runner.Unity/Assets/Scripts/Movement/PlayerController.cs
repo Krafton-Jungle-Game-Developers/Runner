@@ -6,9 +6,6 @@ public enum AbilityType { ExtraJump, Dash, Stomp }
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody rb;
-    Vector3 velocity;
-
     [Header("Ability")]
     public KeyCode abilityKey = KeyCode.Mouse1;
     public InventoryDictionary<AbilityType, int> inventory = new InventoryDictionary<AbilityType, int>();
@@ -22,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dash")]
     public float dashPower;
+    private bool isDashing = false;
+
+    private Rigidbody rb;
+    Vector3 velocity;
 
     void Start()
     {
@@ -48,7 +49,10 @@ public class PlayerController : MonoBehaviour
             break;
 
         case AbilityType.Dash:
-            Dash();
+            if (!isDashing)
+            {
+                Dash();
+            }
             break;
 
         case AbilityType.Stomp:
@@ -63,6 +67,7 @@ public class PlayerController : MonoBehaviour
         if (currentValue > 0)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+
             currentValue -= 1;
             inventory[AbilityType.ExtraJump] = currentValue;
         }
@@ -73,6 +78,8 @@ public class PlayerController : MonoBehaviour
         currentValue = inventory.GetValueOrDefault(AbilityType.Dash);
         if (currentValue > 0)
         {
+/*            GetComponent<>
+            Vector3 lookDirection = new Vector3 ()*/
             rb.AddForce(rb.velocity.normalized * dashPower, ForceMode.Impulse);
             currentValue -= 1;
             inventory[AbilityType.Dash] = currentValue;
