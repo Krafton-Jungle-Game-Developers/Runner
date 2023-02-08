@@ -10285,7 +10285,7 @@ MonoBehaviour:
   playerHorizontalSpeed: 0
   baseFOV: 60
   nowFOV: 60
-  maxFOV: 110
+  maxFOV: 80
   UAC: {fileID: 1121446065}
   Volume: {fileID: 1952501946}
   MotionBlur: {fileID: 0}
@@ -25185,7 +25185,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
