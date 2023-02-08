@@ -190,7 +190,6 @@ public class PlayerController : MonoBehaviour
             Vector3 lookDirection = new Vector3 ()*/
             _rb.AddForce(_rb.velocity.normalized * dashPower, ForceMode.Impulse);
             ConsumeInventory(AbilityType.Dash, _currentValue);
-            inventory[AbilityType.Dash] = _currentValue;
         }
     }
 
@@ -201,7 +200,6 @@ public class PlayerController : MonoBehaviour
         {
             // Stomp
             ConsumeInventory(AbilityType.Stomp, _currentValue);
-            inventory[AbilityType.Stomp] = _currentValue;
         }
     }
 
