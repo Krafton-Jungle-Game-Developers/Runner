@@ -10363,7 +10363,7 @@ MonoBehaviour:
   isGameFinish: 0
   secDecimal: f2
   initColor: {r: 1, g: 1, b: 1, a: 1}
-  finishColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  finishColor: {r: 0.048094694, g: 1, b: 0.015686274, a: 1}
 --- !u!114 &537070966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10378,7 +10378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetKey: 114
   menuKey: 27
-  pauseMenu: {fileID: 1091666193}
+  pauseMenu: {fileID: 104645765}
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,

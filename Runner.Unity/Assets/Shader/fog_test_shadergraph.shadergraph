@@ -53,9 +53,6 @@
         },
         {
             "m_Id": "7938a8ef2f9842549bf26e8f561b5a62"
-        },
-        {
-            "m_Id": "fa0aad5e1c7947ae8a9b9d9a643ca304"
         }
     ],
     "m_GroupDatas": [],
@@ -85,20 +82,6 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "3615fe3cb06d4001872ef52a3233b459"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "7938a8ef2f9842549bf26e8f561b5a62"
-                },
-                "m_SlotId": 7
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "fa0aad5e1c7947ae8a9b9d9a643ca304"
                 },
                 "m_SlotId": 0
             }
@@ -158,9 +141,6 @@
             },
             {
                 "m_Id": "ec71d0eb138f4f83939a972d5633bc31"
-            },
-            {
-                "m_Id": "fa0aad5e1c7947ae8a9b9d9a643ca304"
             }
         ]
     },
@@ -452,7 +432,7 @@
     "isMainTexture": false,
     "useTilingAndOffset": false,
     "m_Modifiable": true,
-    "m_DefaultType": 0
+    "m_DefaultType": 1
 }
 
 {
@@ -674,21 +654,6 @@
     },
     "m_Labels": [],
     "m_Space": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "8735d8f3007d4f95b0cca667029426d0",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Alpha",
-    "m_StageCapability": 2,
-    "m_Value": 1.0,
-    "m_DefaultValue": 1.0,
-    "m_Labels": []
 }
 
 {
@@ -1078,39 +1043,6 @@
     },
     "m_Labels": [],
     "m_Space": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "fa0aad5e1c7947ae8a9b9d9a643ca304",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.Alpha",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 62.00004196166992,
-            "y": 626.0,
-            "width": 200.00001525878907,
-            "height": 41.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "8735d8f3007d4f95b0cca667029426d0"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.Alpha"
 }
 
 {
