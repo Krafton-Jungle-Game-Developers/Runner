@@ -10277,7 +10277,6 @@ GameObject:
   - component: {fileID: 537070962}
   - component: {fileID: 537070964}
   - component: {fileID: 537070963}
-  - component: {fileID: 537070966}
   - component: {fileID: 537070965}
   m_Layer: 0
   m_Name: Player
@@ -10346,39 +10345,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &537070965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537070961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8126dd26a9a903e41a2051f29c02618d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerText: {fileID: 1344898732}
-  timerRunBool: 0
-  isGameFinish: 0
-  secDecimal: f2
-  initColor: {r: 1, g: 1, b: 1, a: 1}
-  finishColor: {r: 0.048094694, g: 1, b: 0.015686274, a: 1}
---- !u!114 &537070966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537070961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35909df284656734e91030f8f6eb5a94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resetKey: 114
-  menuKey: 27
-  pauseMenu: {fileID: 104645765}
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,
