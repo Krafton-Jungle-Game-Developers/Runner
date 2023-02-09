@@ -591,6 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 740631869}
+  - component: {fileID: 740631870}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -613,6 +614,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &740631870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740631867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3e6c8047a34c747b549eca77b21dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1254388550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6623624755294990148, guid: 07021220668aba3489458b0022cfb33a,
@@ -1095,6 +1108,7 @@ MonoBehaviour:
   optionsButton: {fileID: 1254388552}
   quitButton: {fileID: 1636821435}
   fadeCanvasGroup: {fileID: 2097566707}
+  sceneLoader: {fileID: 740631870}
 --- !u!1 &1872668088
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,8 +6159,8 @@ CanvasGroup:
   m_GameObject: {fileID: 2097566705}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &2097566708
 MonoBehaviour:
@@ -6162,7 +6176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6185,7 +6199,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097566705}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1001 &7065640209523455443
 PrefabInstance:
   m_ObjectHideFlags: 0

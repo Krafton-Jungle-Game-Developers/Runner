@@ -17,9 +17,9 @@ namespace Runner.UI
 
         private void Awake()
         {
-            playButton.OnClickAsObservable().ThrottleFirst(TimeSpan.FromSeconds(1)).Subscribe(_ =>
+            playButton.OnClickAsObservable().ThrottleFirst(TimeSpan.FromSeconds(1)).Subscribe(async _ =>
             {
-                fadeCanvasGroup.DOFade(0f, 0.5f);
+                await fadeCanvasGroup.DOFade(1f, 0.5f);
                 sceneLoader.LoadSceneAsync("Demo").Forget();
             });
 
