@@ -1078,6 +1078,7 @@ MonoBehaviour:
   quitButton: {fileID: 1636821435}
   fadeCanvasGroup: {fileID: 2097566707}
   sceneLoader: {fileID: 740631870}
+  titleImage: {fileID: 2081690319}
 --- !u!1 &1872668088
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,7 +6017,7 @@ GameObject:
   - component: {fileID: 2081690320}
   - component: {fileID: 2081690319}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Title Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
