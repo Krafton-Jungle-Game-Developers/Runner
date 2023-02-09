@@ -8,8 +8,10 @@ public class PlayerCameraEffect : MonoBehaviour
     private Rigidbody rb;
 
     //Reactive FOV
-    public float playerHorizontalSpeed = 0f;
-    public float oldPlayerHorizontalSpeed = 0f;
+    public float playerVelocity = 0f;
+    public float oldPlayerVelocity = 0f;
+    public float playerAcceleration = 0f;
+
     public float baseFOV = 60f;
     public float nowFOV = 60f;
     public float maxFOV = 80f;
@@ -51,16 +53,22 @@ public class PlayerCameraEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        oldPlayerHorizontalSpeed = playerHorizontalSpeed;
         CameraEffect();
     }
 
-    // Player Camera Effect (React by speed)
-/*    private float diffFOV = 0;
-*/    private void CameraEffect()
+    private void FixedUpdate()
     {
-        playerHorizontalSpeed = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
-        if (playerHorizontalSpeed * 15 > baseFOV && (playerHorizontalSpeed - oldPlayerHorizontalSpeed) >= 0 )
+        playerVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
+        playerAcceleration = (playerVelocity - oldPlayerVelocity) / Time.deltaTime;
+        oldPlayerVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
+    }
+
+    // Player Camera Effect (React by speed)
+    /*    private float diffFOV = 0;
+    */
+    private void CameraEffect()
+    {
+        if (playerVelocity * 15 > baseFOV && playerAcceleration >= 0 )
         {
             //if (nowFOV <= maxFOV)
             //{
@@ -78,34 +86,39 @@ public class PlayerCameraEffect : MonoBehaviour
             //{
             //    nowBloomIntensity += 0.03f;
             //}
-            nowFOV = Mathf.Lerp(nowFOV, maxFOV, Time.deltaTime * playerHorizontalSpeed);
-            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, Time.deltaTime * playerHorizontalSpeed);
-            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, Time.deltaTime * playerHorizontalSpeed);
-            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
+            //nowFOV = Mathf.Lerp(nowFOV, maxFOV, Time.deltaTime * playerHorizontalSpeed);
+            //nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, Time.deltaTime * playerHorizontalSpeed);
+            //nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, Time.deltaTime * playerHorizontalSpeed);
+            //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
+
+            nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                 0.001f * playerVelocity);
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,         0.001f * playerVelocity);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,         0.001f * playerVelocity);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity,0.001f * playerVelocity);
         }
-        else
-        //if ((playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
+        else if(playerVelocity * 15 <= baseFOV)
+        //if (playerHorizontalSpeed * 15 <= baseFOV  (playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
         {
-            //if (nowFOV > baseFOV)
-            //{
-            //    nowFOV -= 0.7f;
-            //}
-            //if (nowCAIntensity > baseCAIntensity)
-            //{
-            //    nowCAIntensity -= 0.07f;
-            //}
-            //if (nowMBIntensity > baseMBIntensity)
-            //{
-            //    nowMBIntensity -= 0.07f;
-            //}
-            //if (nowBloomIntensity > baseBloomIntensity)
-            //{
-            //    nowBloomIntensity -= 0.07f;
-            //}
-            nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
-            nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
-            nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
-            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
+            if (nowFOV > baseFOV)
+            {
+                nowFOV -= 0.7f;
+            }
+            if (nowCAIntensity > baseCAIntensity)
+            {
+                nowCAIntensity -= 0.07f;
+            }
+            if (nowMBIntensity > baseMBIntensity)
+            {
+                nowMBIntensity -= 0.07f;
+            }
+            if (nowBloomIntensity > baseBloomIntensity)
+            {
+                nowBloomIntensity -= 0.07f;
+            }
+            //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
+            //nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
+            //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
+            //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
         }
         playerCamera.fieldOfView = nowFOV;
         ChromaticAberration.intensity.value = nowCAIntensity;
