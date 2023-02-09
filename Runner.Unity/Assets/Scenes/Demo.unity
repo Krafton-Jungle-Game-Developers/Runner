@@ -1789,7 +1789,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: Second(DJ)
+      value: ExtraJump
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -5402,7 +5402,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: First(DJ)
+      value: ExtraJump
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -10677,19 +10677,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: {fileID: 537070962}
-  moveSpeed: 10
+  playerCam: {fileID: 1121446063}
+  runForce: 10
+  maxYSpeed: 15
   groundDrag: 2
   airMultiplier: 0.4
-  gravity: 2
+  gravity: 2.5
   abilityKey: 324
   currentAbility: 0
   inventory:
     keys: 
     values: 
   jumpKey: 32
-  jumpPower: 10
+  jumpForce: 10
   jumpCooldown: 0.25
-  dashPower: 50
+  dashForce: 25
+  dashSpeedChangeFactor: 50
+  dashCooldown: 0.25
 --- !u!54 &537070964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17147,7 +17151,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: Fifth(DASH)
+      value: Dash
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -31796,7 +31800,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: AbilityCapsule(DASH)
+      value: Dash
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -41675,7 +41679,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: Fourth(DASH)
+      value: Dash
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -45321,7 +45325,7 @@ PrefabInstance:
     - target: {fileID: 5572668890343988884, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_Name
-      value: Third(DJ)
+      value: ExtraJump
       objectReference: {fileID: 0}
     - target: {fileID: 7216091688584938606, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
