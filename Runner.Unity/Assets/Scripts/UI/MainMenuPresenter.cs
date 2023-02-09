@@ -21,17 +21,17 @@ namespace Runner.UI
             {
                 await fadeCanvasGroup.DOFade(1f, 0.5f);
                 sceneLoader.LoadSceneAsync("Demo").Forget();
-            });
+            }).AddTo(this);
 
             optionsButton.OnClickAsObservable().ThrottleFirst(TimeSpan.FromSeconds(1)).Subscribe(_ =>
             {
                 Debug.Log("Options Button Pressed.");
-            });
+            }).AddTo(this);
 
             quitButton.OnClickAsObservable().ThrottleFirst(TimeSpan.FromSeconds(1)).Subscribe(_ =>
             {
                 Application.Quit();
-            });
+            }).AddTo(this);
         }
     }    
 }

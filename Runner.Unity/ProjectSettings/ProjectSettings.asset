@@ -772,7 +772,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
-    Standalone: UNITASK_DOTWEEN_SUPPORT;UNITASK_PARTICLESYSTEM_SUPPORT;UNITASK_UGUI_SUPPORT;UNITASK_PHYSICS_SUPPORT;UNITASK_TEXTMESHPRO_SUPPORT;VCONTAINER_UNITASK_INTEGRATION;UNITY_PIPELINE_URP
+  scriptingDefineSymbols:
+    Standalone: UNITASK_DOTWEEN_SUPPORT;UNITY_PIPELINE_URP
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
