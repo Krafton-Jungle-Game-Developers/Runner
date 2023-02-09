@@ -1243,7 +1243,7 @@ GameObject:
   - component: {fileID: 104645767}
   - component: {fileID: 104645766}
   m_Layer: 5
-  m_Name: PauseCanvas
+  m_Name: Pause Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,8 +1323,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1091666194}
-  m_Father: {fileID: 1998163614}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3644,7 +3644,7 @@ Transform:
   - {fileID: 1172038195}
   - {fileID: 398819852}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &207343417
 GameObject:
@@ -10767,7 +10767,7 @@ Transform:
   - {fileID: 1658537461}
   - {fileID: 1121446063}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &537070963
 MonoBehaviour:
@@ -28050,7 +28050,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1271922359
 GameObject:
@@ -34245,7 +34245,7 @@ GameObject:
   - component: {fileID: 1527004575}
   - component: {fileID: 1527004574}
   m_Layer: 5
-  m_Name: PlayCanvas
+  m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34326,8 +34326,8 @@ RectTransform:
   m_Children:
   - {fileID: 1344898731}
   - {fileID: 586300199}
-  m_Father: {fileID: 1998163614}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -44893,7 +44893,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1955287799
 MonoBehaviour:
