@@ -1263,7 +1263,8 @@ GameObject:
   m_Component:
   - component: {fileID: 537070962}
   - component: {fileID: 537070964}
-  - component: {fileID: 537070963}
+  - component: {fileID: 537070969}
+  - component: {fileID: 537070968}
   - component: {fileID: 537070966}
   - component: {fileID: 537070965}
   - component: {fileID: 537070967}
@@ -1291,36 +1292,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &537070963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537070961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45d8517a7aae81f4b8b1080f3727bd49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 537070962}
-  playerCam: {fileID: 1121446063}
-  runForce: 10
-  maxYSpeed: 15
-  groundDrag: 2
-  airMultiplier: 0.4
-  gravity: 2.5
-  abilityKey: 324
-  currentAbility: 0
-  inventory:
-    keys: 
-    values: 
-  jumpKey: 32
-  jumpForce: 10
-  jumpCooldown: 0.25
-  dashForce: 25
-  dashSpeedChangeFactor: 50
-  dashCooldown: 0.25
 --- !u!54 &537070964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1401,6 +1372,46 @@ MonoBehaviour:
   baseBloomIntensity: 0
   nowBloomIntensity: 0
   maxBloomIntensity: 0.5
+--- !u!114 &537070968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537070961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d8517a7aae81f4b8b1080f3727bd49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 1121446063}
+  runForce: 10
+  maxYSpeed: 15
+  groundDrag: 2
+  airMultiplier: 0.4
+  gravity: 2.5
+  abilityKey: 324
+  currentAbility: 0
+  jumpKey: 32
+  jumpForce: 10
+  jumpCooldown: 0.25
+  dashForce: 25
+  dashSpeedChangeFactor: 50
+  dashCooldown: 0.25
+--- !u!136 &537070969
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537070961}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &548119915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098055629891004, guid: 5955f14f91ce8c640af25df03d15ce27,
@@ -2397,6 +2408,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b2f73d74399c9b42a421c45109ede92, type: 3}
+--- !u!1 &957492753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 957492754}
+  - component: {fileID: 957492755}
+  m_Layer: 0
+  m_Name: SceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &957492754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957492753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957492755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957492753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3e6c8047a34c747b549eca77b21dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &958770757
 GameObject:
   m_ObjectHideFlags: 0
@@ -4771,7 +4826,6 @@ GameObject:
   - component: {fileID: 1658537461}
   - component: {fileID: 1658537464}
   - component: {fileID: 1658537463}
-  - component: {fileID: 1658537462}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -4794,20 +4848,6 @@ Transform:
   m_Father: {fileID: 537070962}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1658537462
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658537460}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1658537463
 MeshRenderer:
   m_ObjectHideFlags: 0

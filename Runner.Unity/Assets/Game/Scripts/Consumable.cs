@@ -6,11 +6,11 @@ public class Consumable : MonoBehaviour
     public AbilityType type;
     private int _currentValue;
     private AbilityType _currentAbility;
-    private PlayerController playerController;
+    private PlayerMovementController playerController;
 
     private void Start()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
     }
 
     private void Update()

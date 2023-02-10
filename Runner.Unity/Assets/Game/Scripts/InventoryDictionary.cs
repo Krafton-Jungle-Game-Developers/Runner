@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[SerializeField]
 public class InventoryDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 {
     [SerializeField] private List<TKey> keys = new();
     [SerializeField] private List<TValue> values = new();
+
     public void OnBeforeSerialize()
     {
         keys.Clear();

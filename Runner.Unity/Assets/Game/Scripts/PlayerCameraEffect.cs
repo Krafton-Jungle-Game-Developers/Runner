@@ -15,6 +15,7 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float playerVelocity = 0f;
     [SerializeField] private float oldPlayerVelocity = 0f;
     [SerializeField] private float playerAcceleration = 0f;
+    [Space]
 
     [SerializeField] private float baseFOV = 60f;
     [SerializeField] private float nowFOV = 60f;
