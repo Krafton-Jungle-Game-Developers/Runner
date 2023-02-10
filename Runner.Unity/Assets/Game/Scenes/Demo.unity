@@ -1266,7 +1266,6 @@ GameObject:
   - component: {fileID: 537070969}
   - component: {fileID: 537070968}
   - component: {fileID: 537070966}
-  - component: {fileID: 537070965}
   - component: {fileID: 537070967}
   m_Layer: 0
   m_Name: Player
@@ -1308,21 +1307,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &537070965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537070961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35909df284656734e91030f8f6eb5a94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resetKey: 114
-  menuKey: 27
-  pauseMenu: {fileID: 1527004573}
 --- !u!114 &537070966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,6 +1376,9 @@ MonoBehaviour:
   gravity: 2.5
   abilityKey: 324
   currentAbility: 0
+  inventory:
+    keys: 00000000010000000200000003000000
+    values: 00000000000000000000000000000000
   jumpKey: 32
   jumpForce: 10
   jumpCooldown: 0.25
@@ -2575,7 +2562,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 537070965}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ControlGame, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -3337,8 +3324,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165901276}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 964.91174, y: 539.2478, z: -10.336983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3489,7 +3476,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84f708f03f42564999db26579c4f2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetKey: 114
+  menuKey: 27
+  pauseMenu: {fileID: 1527004573}
   fadePanelImage: {fileID: 586300200}
+  isPaused: 0
 --- !u!4 &1252984300
 Transform:
   m_ObjectHideFlags: 0
@@ -5160,7 +5151,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 537070965}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ControlGame, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1

@@ -23,14 +23,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float groundDrag;
     [SerializeField] private float airMultiplier;
     [SerializeField] private float gravity;
-
     private float _ySpeedLimit;
     private float _moveSpeed;
     private float _desiredMoveSpeed;
     private float _lastDesiredMoveSpeed;
     private float _xInput;
     private float _yInput;
-
     private Vector3 _moveDirection;
 
     [Space][Header("Ability")]
@@ -65,7 +63,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
-        _playerHeight = gameObject.GetComponent<CapsuleCollider>().height;
+        _playerHeight = GetComponent<CapsuleCollider>().height;
     }
 
     private void Update()
