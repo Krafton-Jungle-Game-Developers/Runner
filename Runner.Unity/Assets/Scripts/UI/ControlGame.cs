@@ -25,6 +25,7 @@ public class ControlGame : MonoBehaviour
     private void Start()
     {
         // Game Starts with pausemenu deactivated. 
+        LockMouse();
         pauseMenu.SetActive(false);
     }
 
