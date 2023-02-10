@@ -5,7 +5,7 @@ using UnityEngine;
 /// Please keep do not modify this class. 
 /// All timer control methods are in class TimerControl.
 /// </summary>
-public class Timer 
+public class Timer
 {
     // ============== Timer Variables ==============
     private float _startTime;

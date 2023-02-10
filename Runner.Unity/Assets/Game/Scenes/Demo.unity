@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 104645768}
   - component: {fileID: 104645767}
   - component: {fileID: 104645766}
+  - component: {fileID: 104645770}
   m_Layer: 5
   m_Name: HUD Canvas
   m_TagString: Untagged
@@ -481,6 +482,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &104645770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104645765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e6acca38c580d4f9686a76605baf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &114847193 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4013152523926618, guid: 77ee7bb0fd1e3e744904a868dcb2ea5a,
@@ -1265,7 +1278,6 @@ GameObject:
   - component: {fileID: 537070964}
   - component: {fileID: 537070969}
   - component: {fileID: 537070968}
-  - component: {fileID: 537070966}
   - component: {fileID: 537070967}
   m_Layer: 0
   m_Name: Player
@@ -1307,24 +1319,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &537070966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537070961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8126dd26a9a903e41a2051f29c02618d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerText: {fileID: 1344898734}
-  timerRunBool: 0
-  isGameFinish: 0
-  secDecimal: f2
-  initColor: {r: 1, g: 1, b: 1, a: 1}
-  finishColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &537070967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,7 +2915,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1091666194
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3617,6 +3611,7 @@ GameObject:
   - component: {fileID: 1344898731}
   - component: {fileID: 1344898733}
   - component: {fileID: 1344898734}
+  - component: {fileID: 1344898735}
   m_Layer: 5
   m_Name: TimerText
   m_TagString: Untagged
@@ -3742,6 +3737,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1344898735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344898730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8126dd26a9a903e41a2051f29c02618d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1344898734}
+  timerRunBool: 0
+  isGameFinish: 0
+  secDecimal: f2
+  initColor: {r: 1, g: 1, b: 1, a: 1}
+  finishColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1001 &1355149551
 PrefabInstance:
   m_ObjectHideFlags: 0
