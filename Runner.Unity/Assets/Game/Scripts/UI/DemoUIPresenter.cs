@@ -58,7 +58,7 @@ namespace Runner.UI
             UnlockMouse();
         }
 
-        private void ResumeGame()
+        public void ResumeGame()
         {
             pauseMenu.SetActive(false);
             Time.timeScale = 1.0f;

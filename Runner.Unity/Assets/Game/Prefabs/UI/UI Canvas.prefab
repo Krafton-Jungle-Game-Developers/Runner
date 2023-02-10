@@ -394,8 +394,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ControlGame, Assembly-CSharp
+      - m_Target: {fileID: 3588435431487799489}
+        m_TargetAssemblyTypeName: Runner.UI.DemoUIPresenter, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
         m_Arguments:

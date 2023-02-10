@@ -11,6 +11,6 @@ public class GoalSpace : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     { 
-        GameObject.FindGameObjectWithTag("Player").SendMessage(message); 
+        GameObject.FindGameObjectWithTag("TimerText").SendMessage(message); 
     }
 }

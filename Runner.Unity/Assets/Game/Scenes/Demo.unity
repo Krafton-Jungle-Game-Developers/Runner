@@ -169,7 +169,7 @@ PrefabInstance:
     - target: {fileID: 221224819710866071, guid: 6da7f2234b14d3eeb95315b44015b487,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 221224819710866071, guid: 6da7f2234b14d3eeb95315b44015b487,
         type: 3}
@@ -184,7 +184,7 @@ PrefabInstance:
     - target: {fileID: 221224819710866071, guid: 6da7f2234b14d3eeb95315b44015b487,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -16.15497
+      value: -10.9
       objectReference: {fileID: 0}
     - target: {fileID: 221224819710866071, guid: 6da7f2234b14d3eeb95315b44015b487,
         type: 3}
@@ -515,7 +515,7 @@ PrefabInstance:
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.515028
+      value: 17.09497
       objectReference: {fileID: 0}
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -1684,7 +1684,7 @@ PrefabInstance:
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.275028
+      value: 20.85497
       objectReference: {fileID: 0}
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -2322,12 +2322,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c3e8d22f04de761459ee8a1a2b63bde4, type: 3}
---- !u!1 &1091666193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2023009225950008561, guid: c46e36c64ed374243b3a69c3f5fe9993,
-    type: 3}
-  m_PrefabInstance: {fileID: 2023009227039512032}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1108859452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2686,10 +2680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84f708f03f42564999db26579c4f2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetKey: 114
-  menuKey: 27
-  isPaused: 0
-  pauseMenu: {fileID: 1091666193}
   fadePanelImage: {fileID: 586300200}
 --- !u!4 &1252984300
 Transform:
@@ -4331,7 +4321,7 @@ PrefabInstance:
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.345028
+      value: 10.924971
       objectReference: {fileID: 0}
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -4746,7 +4736,7 @@ PrefabInstance:
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.685028
+      value: 14.264971
       objectReference: {fileID: 0}
     - target: {fileID: 3084321211141220474, guid: 13f4c7979fb782b44b6cc96d5a815578,
         type: 3}
@@ -4993,6 +4983,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 116869433240336689, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: m_TagString
+      value: TimerText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291220c80bf819b4295c9a48d34ef99a, type: 3}
 --- !u!1001 &2023009227039512032
@@ -5131,6 +5126,11 @@ PrefabInstance:
       propertyPath: m_Cameras.Array.data[0]
       value: 
       objectReference: {fileID: 1165901279}
+    - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Drag
+      value: Infinity
+      objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: globalVolume
