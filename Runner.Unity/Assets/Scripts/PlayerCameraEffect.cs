@@ -58,14 +58,13 @@ public class PlayerCameraEffect : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Get player's Velocity & cceleration
         playerVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
+        //TODO: don't use Deltatime
         playerAcceleration = (playerVelocity - oldPlayerVelocity) / Time.deltaTime;
         oldPlayerVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z).magnitude;
     }
 
-    // Player Camera Effect (React by speed)
-    /*    private float diffFOV = 0;
-    */
     private void CameraEffect()
     {
         if (playerVelocity * 15 > baseFOV && playerAcceleration >= 0 )
@@ -86,11 +85,7 @@ public class PlayerCameraEffect : MonoBehaviour
             //{
             //    nowBloomIntensity += 0.03f;
             //}
-            //nowFOV = Mathf.Lerp(nowFOV, maxFOV, Time.deltaTime * playerHorizontalSpeed);
-            //nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, Time.deltaTime * playerHorizontalSpeed);
-
+            //Not use Delta Time
             nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                 0.001f * playerVelocity);
             nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,         0.001f * playerVelocity);
             nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,         0.001f * playerVelocity);
@@ -115,6 +110,8 @@ public class PlayerCameraEffect : MonoBehaviour
             {
                 nowBloomIntensity -= 0.07f;
             }
+
+            //NOTE: Not use deltatime
             //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
             //nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
             //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
