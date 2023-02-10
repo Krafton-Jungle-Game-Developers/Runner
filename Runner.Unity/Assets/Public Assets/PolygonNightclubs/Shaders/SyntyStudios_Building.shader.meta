@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a711ca3b984db6a4e81ec2d50ca4c0ca
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Buildings_Diffuse_01: {fileID: 2800000, guid: 8d62ef60a478479458b717cd16718c5a,
+      type: 3}
+  - _Buildings_Normal_Map: {fileID: 2800000, guid: ee65395a565e9074f804642904a21ef2,
+      type: 3}
+  - _Buildings_Emissive_01: {fileID: 2800000, guid: 6f440ff87739f9142b8ba7ca4e302e31,
+      type: 3}
+  - _Gradient: {fileID: 2800000, guid: 1aa1a60b399b5474f980a840ef7b2cec, type: 3}
+  - _Buildings_Emissive_Mask_01: {fileID: 2800000, guid: 7c238865282a2d14fadd596afbe715f4,
+      type: 3}
+  - _Buildings_Spec_01: {fileID: 2800000, guid: 1eb07476c28635546917d90068c7baed,
+      type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
