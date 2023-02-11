@@ -112,7 +112,7 @@ public class PlayerMovementController : MonoBehaviour
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKeyDown(jumpKey) && _canJump && _isGrounded)
+        if (Input.GetKeyDown(jumpKey) && _canJump && _isGrounded)
         {
             _canJump = false;
 
@@ -172,6 +172,14 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void MovePlayer()
     {
+/*        Vector3 _moveInput = new Vector3(_xInput, _yInput, 0);
+        _moveDirection = transform.forward * _yInput + transform.right * _xInput;
+        Vector3 _targetSpeed = _moveInput * _moveSpeed;
+        Vector3 speedDiff = _targetSpeed - _rigidbody.velocity;
+        Vector3 movement = Mathf.Pow(Mathf.Abs(speedDiff) * _targetSpeed, )
+
+        _rigidbody.AddForce(movement, ForceMode.Force);
+*/
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
         _rigidbody.AddForce(Physics.gravity * (gravity - 1) * _rigidbody.mass);
 
