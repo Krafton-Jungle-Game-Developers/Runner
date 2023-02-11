@@ -9,12 +9,14 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     private Rigidbody _rigidbody;
+    private Collider _collider;
 
     private MovementState state;
     private MovementState lastState;
 
-    private float _playerHeight;
-    private bool _isGrounded;
+    private float _playerRadius;
+    [SerializeField] private bool _isGrounded;
+    [SerializeField] private bool _isCollide;
     private bool _keepMomentum;
 
     [Space][Header("Movement")]
@@ -23,6 +25,9 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float groundDrag;
     [SerializeField] private float airMultiplier;
     [SerializeField] private float gravity;
+    [Space]
+    [SerializeField] private float distance;
+
     private float _ySpeedLimit;
     private float _moveSpeed;
     private float _desiredMoveSpeed;
@@ -62,8 +67,11 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
         _rigidbody.freezeRotation = true;
-        _playerHeight = GetComponent<CapsuleCollider>().height;
+        _playerRadius = GetComponent<CapsuleCollider>().radius;
+        distance = (_playerRadius * 1.414f) + 0.5f;
+
     }
 
     private void Update()
@@ -93,17 +101,26 @@ public class PlayerMovementController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = (_playerHeight * 0.5f) + 0.2f;
-
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
             Debug.DrawRay(origin, direction * distance, Color.red);
+            Debug.Log(hit.distance);
             _isGrounded = true;
         }
         else
         {
             _isGrounded = false;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        _isCollide = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        _isCollide = false;
     }
 
     private void MyInput()
@@ -184,7 +201,7 @@ public class PlayerMovementController : MonoBehaviour
             _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * 10f, ForceMode.Force);
         }
         // in air
-        else if(!_isGrounded)
+        else if(!_isGrounded && !_isCollide)
         {
             _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
