@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 3
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.6008575, g: 0.37891603, b: 0.6132076, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: e76fd1a8054078a47b2176672c278a17, type: 2}
@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: f7786ecab1006e64585f964479283357,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 747f9dcfdb839dc40811cce2f25a9c9a,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 19fc45642ac8d4d4385bf5955a0b26ed,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -5061,6 +5061,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 116869432474567869, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 116869433240336693, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
