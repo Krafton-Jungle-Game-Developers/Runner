@@ -14,7 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     private MovementState lastState;
 
     private float _playerHeight;
-    private bool _isGrounded;
+    [SerializeField] private bool _isGrounded;
     private bool _keepMomentum;
 
     [Space][Header("Movement")]
