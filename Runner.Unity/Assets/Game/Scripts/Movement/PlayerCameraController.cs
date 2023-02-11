@@ -24,12 +24,12 @@ public class PlayerCameraController : MonoBehaviour
         //float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSensitivity;
         //float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySensitivity;
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * 0.001f * xSensitivity;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * 0.001f * ySensitivity;
+        float mouseX = Input.GetAxisRaw("Mouse X") * 0.01f * xSensitivity;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * 0.01f * ySensitivity;
 
         _yRotation += mouseX;
         _xRotation -= mouseY;
-        _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
+        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
 
         orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
         transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
