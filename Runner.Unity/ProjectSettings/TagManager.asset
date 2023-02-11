@@ -7,6 +7,8 @@ TagManager:
   - CameraSetting
   - CameraEffect
   - TimerText
+  - Enemy
+  - EnemyCounter
   layers:
   - Default
   - TransparentFX
