@@ -104,7 +104,6 @@ public class PlayerMovementController : MonoBehaviour
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
         {
             Debug.DrawRay(origin, direction * distance, Color.red);
-            Debug.Log(hit.distance);
             _isGrounded = true;
         }
         else
