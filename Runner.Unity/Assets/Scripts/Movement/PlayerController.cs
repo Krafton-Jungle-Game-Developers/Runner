@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
     private bool keepMomentum;
 
+    public float coyoteTime;
+    public float coyoteTimeCounter;
+
     [Header("Movement")]
     public float runForce;
     public float maxYSpeed;
@@ -97,6 +100,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // 0.2초 동안 점프 누를수 있게?
             _isGrounded = false;
         }
     }
