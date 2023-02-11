@@ -2459,7 +2459,7 @@ PrefabInstance:
     - target: {fileID: 7459004889234300937, guid: 4d7eeb1b3da957a45b6c705134816aba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.29
+      value: 4.79
       objectReference: {fileID: 0}
     - target: {fileID: 7459004889234300937, guid: 4d7eeb1b3da957a45b6c705134816aba,
         type: 3}
@@ -3417,28 +3417,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300016, guid: c3e8d22f04de761459ee8a1a2b63bde4, type: 3}
---- !u!1 &1560392346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7609239868517586429, guid: c271a033504fff64bb9faeed01c8986b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7609239869054261388}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1560392352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560392346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyModels:
-  - {fileID: 6419745320743780065}
-  - {fileID: 1149875463}
-  - {fileID: 1758426756}
 --- !u!1 &1575929315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4254,7 +4232,7 @@ PrefabInstance:
     - target: {fileID: 7459004889234300937, guid: 4d7eeb1b3da957a45b6c705134816aba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.29
+      value: 3.29
       objectReference: {fileID: 0}
     - target: {fileID: 7459004889234300937, guid: 4d7eeb1b3da957a45b6c705134816aba,
         type: 3}
@@ -5409,6 +5387,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2045490481757638490, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: enemyModels.Array.data[0]
+      value: 
+      objectReference: {fileID: 6419745320743780065}
+    - target: {fileID: 2045490481757638490, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: enemyModels.Array.data[1]
+      value: 
+      objectReference: {fileID: 1149875463}
+    - target: {fileID: 2045490481757638490, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: enemyModels.Array.data[2]
+      value: 
+      objectReference: {fileID: 1758426756}
     - target: {fileID: 7609239868009345085, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Cameras.Array.data[0]

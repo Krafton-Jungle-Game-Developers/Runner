@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 7609239868517586421}
   - component: {fileID: 7609239868517586420}
   - component: {fileID: 7609239868517586427}
+  - component: {fileID: 2045490481757638490}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -298,11 +299,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 7609239868009345059}
+  _isGrounded: 0
+  _isCollide: 0
   runForce: 10
   maxYSpeed: 15
   groundDrag: 2
   airMultiplier: 0.4
   gravity: 2.5
+  distance: 0
   abilityKey: 324
   currentAbility: 0
   inventory:
@@ -345,3 +349,19 @@ MonoBehaviour:
   baseBloomIntensity: 0
   nowBloomIntensity: 0
   maxBloomIntensity: 0.5
+--- !u!114 &2045490481757638490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609239868517586429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
