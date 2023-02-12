@@ -188,7 +188,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
         Vector3 _xyVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
-        Vector3 _rightVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         if (_isDashing)
         {
             _moveSpeed = dashForce;
