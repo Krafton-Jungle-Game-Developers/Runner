@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
-using System.Collections;
 
-[RequireComponent(typeof(ParticleSystem))]
 public class PlayerCameraEffect : MonoBehaviour
 {
     [Header("References")]
@@ -44,10 +42,8 @@ public class PlayerCameraEffect : MonoBehaviour
     [Space]
 
     [Header("SpeedLine")]
-    private ParticleSystem ps;
-    ParticleSystem.EmissionModule speedemission;
-    public float ParticleValue = 5.0f;
-    //private EmissionModule emission;
+    [SerializeField] private ParticleSystem ps;
+    private ParticleSystem.EmissionModule _speedEmission;
     [Space]
 
     [SerializeField] private float baseParticleIntensity = 0f;
@@ -67,19 +63,13 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
-    }
 
-    //ADD: Test (To be Delete)
-    private void Start()
-    {
-        ps = GetComponent<ParticleSystem>();
-        speedemission = ps.emission;
+        _speedEmission = ps.emission;
     }
 
     private void Update()
     {
         CameraEffect();
-        speedemission.rateOverTime = nowParticleIntensity;
     }
 
     private void FixedUpdate()
@@ -145,19 +135,21 @@ public class PlayerCameraEffect : MonoBehaviour
             }
             if (nowParticleIntensity > baseParticleIntensity)
             {
-                nowParticleIntensity -= 0.1f;
+                nowParticleIntensity -= 0.5f;
             }
-
+            //
             //NOTE: Not use deltatime
             //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
             //nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
             //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
             //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
+            //
         }
         playerCamera.fieldOfView                = nowFOV;
         _chromaticAberration.intensity.value    = nowCAIntensity;
         _motionBlur.intensity.value             = nowMBIntensity;
         _bloom.intensity.value                  = nowBloomIntensity;
+        _speedEmission.rateOverTime             = nowParticleIntensity;
 
     }
 }
