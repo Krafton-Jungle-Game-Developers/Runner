@@ -5032,6 +5032,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: indicatorPanel
+      value: 
+      objectReference: {fileID: 116869431896686492}
+    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: elementContainer
+      value: 
+      objectReference: {fileID: 116869431896686493}
     - target: {fileID: 116869431865473810, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -5175,6 +5185,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291220c80bf819b4295c9a48d34ef99a, type: 3}
+--- !u!224 &116869431896686492 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8009525450615743506, guid: 291220c80bf819b4295c9a48d34ef99a,
+    type: 3}
+  m_PrefabInstance: {fileID: 116869431896686491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &116869431896686493 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6614678430965771842, guid: 291220c80bf819b4295c9a48d34ef99a,
+    type: 3}
+  m_PrefabInstance: {fileID: 116869431896686491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2023009227039512032
 PrefabInstance:
   m_ObjectHideFlags: 0
