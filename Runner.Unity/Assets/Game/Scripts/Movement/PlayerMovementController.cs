@@ -8,7 +8,7 @@ public enum MovementState { Running, Dashing, Air }
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
-    private Rigidbody _rigidbody;
+    private Rigidbody _rb;
     private Collider _collider;
 
     private MovementState state;
@@ -16,18 +16,21 @@ public class PlayerMovementController : MonoBehaviour
 
     private float _playerRadius;
     [SerializeField] private bool _isGrounded;
-    [SerializeField] private bool _isCollide;
     private bool _keepMomentum;
 
     [Space][Header("Movement")]
-    [SerializeField] private float runForce;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
+    [SerializeField] private float _maxSpeed;
     [SerializeField] private float maxYSpeed;
-    [SerializeField] private float groundDrag;
-    [SerializeField] private float airMultiplier;
     [SerializeField] private float gravity;
     [Space]
-    [SerializeField] private float distance;
 
+    private float _coyoteTime = 0.2f;
+    private float _coyoteTimeCounter;
+    private float _jumpBufferTime = 0.2f;
+    private float _jumpBufferCounter;
+    private float _distance;
     private float _ySpeedLimit;
     private float _moveSpeed;
     private float _desiredMoveSpeed;
@@ -66,12 +69,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        _rigidbody.freezeRotation = true;
+        _rb.freezeRotation = true;
         _playerRadius = GetComponent<CapsuleCollider>().radius;
-        distance = (_playerRadius * 1.414f) + 0.5f;
-
+        _distance = (_playerRadius * 1.414f) + 0.5f;
     }
 
     private void Update()
@@ -80,14 +82,18 @@ public class PlayerMovementController : MonoBehaviour
         StateHandler();
         MyInput();
         SpeedControl();
-
-        if(state == MovementState.Running)
+        if(!_canJump)
         {
-            _rigidbody.drag = groundDrag;
+            _coyoteTimeCounter = 0;
+        }
+
+        if (Input.GetKeyDown(jumpKey))
+        {
+            _jumpBufferCounter = _jumpBufferTime;
         }
         else
         {
-            _rigidbody.drag = 0;
+            _jumpBufferCounter -= Time.deltaTime;
         }
     }
 
@@ -101,26 +107,15 @@ public class PlayerMovementController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance))
         {
-            Debug.DrawRay(origin, direction * distance, Color.red);
+            Debug.DrawRay(origin, direction * _distance, Color.red);
             _isGrounded = true;
         }
         else
         {
-            // 0.2초 동안 점프 누를수 있게?
             _isGrounded = false;
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        _isCollide = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        _isCollide = false;
     }
 
     private void MyInput()
@@ -128,9 +123,10 @@ public class PlayerMovementController : MonoBehaviour
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(jumpKey) && _canJump && _isGrounded)
+        if (_jumpBufferCounter > 0 && _canJump && _coyoteTimeCounter > 0)
         {
             _canJump = false;
+            _jumpBufferCounter = 0;
 
             Jump();
 
@@ -155,13 +151,15 @@ public class PlayerMovementController : MonoBehaviour
         else if (_isGrounded)
         {
             state = MovementState.Running;
-            _desiredMoveSpeed = runForce;
+            _coyoteTimeCounter = _coyoteTime;
+            _desiredMoveSpeed = acceleration;
         }
 
         else if (!_isGrounded)
         {
             state = MovementState.Air;
-            _desiredMoveSpeed = runForce;
+            _coyoteTimeCounter -= Time.deltaTime;
+            _desiredMoveSpeed = acceleration;
         }
 
         bool desiredMoveSpeedChanged = _desiredMoveSpeed != _lastDesiredMoveSpeed;
@@ -188,17 +186,9 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void MovePlayer()
     {
-/*        Vector3 _moveInput = new Vector3(_xInput, _yInput, 0);
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
-        Vector3 _targetSpeed = _moveInput * _moveSpeed;
-        Vector3 speedDiff = _targetSpeed - _rigidbody.velocity;
-        Vector3 movement = Mathf.Pow(Mathf.Abs(speedDiff) * _targetSpeed, )
-
-        _rigidbody.AddForce(movement, ForceMode.Force);
-*/
-        _moveDirection = transform.forward * _yInput + transform.right * _xInput;
-        _rigidbody.AddForce(Physics.gravity * (gravity - 1) * _rigidbody.mass);
-
+        Vector3 _xyVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+        Vector3 _rightVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         if (_isDashing)
         {
             _moveSpeed = dashForce;
@@ -206,28 +196,35 @@ public class PlayerMovementController : MonoBehaviour
         // on ground
         if(_isGrounded)
         {
-            _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * 10f, ForceMode.Force);
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * Mathf.Sqrt(deceleration) * 10f);
         }
+
         // in air
-        else if(!_isGrounded && !_isCollide)
+        else if(!_isGrounded)
         {
-            _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * Mathf.Sqrt(deceleration) * 10f);
+            _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
+        }
+
+        if (_yInput == 0 || _xInput == 0)
+        {
+            _rb.AddForce(_xyVelocity * -deceleration);
         }
     }
 
     private void SpeedControl()
     {
-        Vector3 _flatVelocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+        Vector3 _flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
 
-        if(_flatVelocity.magnitude > _moveSpeed)
+        if(_flatVelocity.magnitude > _maxSpeed)
         {
-            Vector3 _limitedVelocity = _flatVelocity.normalized * _moveSpeed;
-            _rigidbody.velocity = new Vector3(_limitedVelocity.x, _rigidbody.velocity.y, _limitedVelocity.z);
+            Vector3 _limitedVelocity = _flatVelocity.normalized * _maxSpeed;
+            _rb.velocity = new Vector3(_limitedVelocity.x, _rb.velocity.y, _limitedVelocity.z);
         }
 
-        if (_ySpeedLimit != 0 && _rigidbody.velocity.y > _ySpeedLimit)
+        if (_ySpeedLimit != 0 && _rb.velocity.y > _ySpeedLimit)
         {
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _ySpeedLimit, _rigidbody.velocity.z);
+            _rb.velocity = new Vector3(_rb.velocity.x, _ySpeedLimit, _rb.velocity.z);
         }
     }
 
@@ -272,8 +269,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Jump()
     {
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
-        _rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
     private void ResetJump()
@@ -305,7 +302,7 @@ public class PlayerMovementController : MonoBehaviour
             Vector3 direction = GetDirection(cameraTransform);
             Vector3 forceToApply = direction * dashForce;
 
-            _rigidbody.useGravity = false;
+            _rb.useGravity = false;
             _delayedForce = forceToApply;
 
             Invoke(nameof(DelayedDashForce), 0.025f);
@@ -330,14 +327,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private void DelayedDashForce()
     {
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.AddForce(_delayedForce, ForceMode.Impulse);
+        _rb.velocity = Vector3.zero;
+        _rb.AddForce(_delayedForce, ForceMode.Impulse);
     }
 
     private void ResetDash()
     {
         _isDashing = false;
-        _rigidbody.useGravity = true;
+        _rb.useGravity = true;
         _ySpeedLimit = 0;
     }
 
