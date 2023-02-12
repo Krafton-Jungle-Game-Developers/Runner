@@ -1,16 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using UniRx;
 
 namespace Runner.Game
 {
     public class PlayerEnemyPresenter : MonoBehaviour
     {
-        [SerializeField] private List<EnemyModel> enemyModels = new();
+        private List<EnemyModel> _enemyModels;
 
+        [Inject]
+        private void Construct(List<EnemyModel> enemyModels)
+        {
+            _enemyModels = enemyModels;
+        }
+        
         private void Awake()
         {
-            foreach (var enemyModel in enemyModels)
+            foreach (var enemyModel in _enemyModels)
             {
                 enemyModel.OnEnemyBecameVisibleObservable.Subscribe(_ =>
                 {
