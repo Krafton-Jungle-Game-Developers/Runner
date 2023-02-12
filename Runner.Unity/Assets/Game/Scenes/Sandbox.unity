@@ -39577,6 +39577,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
       propertyPath: deceleration
       value: 13
       objectReference: {fileID: 0}
@@ -39590,6 +39595,26 @@ PrefabInstance:
       propertyPath: _jumpBuferTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: currentAbility
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[1]
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[2]
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[3]
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586421, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Material
@@ -39599,6 +39624,11 @@ PrefabInstance:
     - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
