@@ -1,20 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Runner.UI
 {
     public class EnemyPresenter : MonoBehaviour
     {
         [SerializeField] private GameObject indicatorPrefab;
+        private HUDPresenter _HUD;
         private HUDIndicator _indicator;
-        
 
-        private void CreateIndicator(Transform parent)
+        [Inject]
+        private void Construct(HUDPresenter HUD)
         {
-            GameObject indicator = Instantiate(indicatorPrefab.gameObject, 
+            _HUD = HUD;
+        }
+
+        private void Awake()
+        {
+            GameObject indicator = Instantiate(indicatorPrefab,
                                                Vector3.zero,
                                                Quaternion.identity,
-                                               parent);
+                                               _HUD.elementContainer);
 
             _indicator = indicator.GetComponent<HUDIndicator>();
         }

@@ -1,3 +1,4 @@
+using Runner.UI;
 using UnityEngine;
 using Zenject;
 
@@ -7,7 +8,13 @@ namespace Runner.Game
     {
         public override void InstallBindings()
         {
-            Container.Bind<EnemyModel>().FromComponentsInHierarchy().AsCached();
+            Container.Bind<EnemyModel>().FromComponentsInHierarchy()
+                                        .AsCached()
+                                        .NonLazy();
+
+            Container.Bind<HUDPresenter>().FromComponentInHierarchy()
+                                          .AsCached()
+                                          .NonLazy();
         }
     }
 }

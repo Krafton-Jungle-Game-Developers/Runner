@@ -666,6 +666,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b868ccf3ab60224d90ec6afc673eb62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 224424057372183896}
+  canvasGroup: {fileID: 6358987341177517804}
+  onScreenRect: {fileID: 224470117859348906}
+  onScreenIcon: {fileID: 114812316014883280}
+  offScreenRect: {fileID: 224401391670222220}
+  offScreenPointer: {fileID: 224351502661603824}
+  offScreenIcon: {fileID: 114175470107171544}
+  onScreenDistanceText: {fileID: 7150142314883380329}
+  offScreenDistanceText: {fileID: 5982732568840229665}
 --- !u!225 &6358987341177517804
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -675,6 +684,6 @@ CanvasGroup:
   m_GameObject: {fileID: 1964079307588546}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
