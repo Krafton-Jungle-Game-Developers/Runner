@@ -349,6 +349,9 @@ MonoBehaviour:
   baseBloomIntensity: 0
   nowBloomIntensity: 0
   maxBloomIntensity: 0.5
+  baseParticleIntensity: 0
+  nowParticleIntensity: 0
+  maxParticleIntensity: 50
 --- !u!114 &2045490481757638490
 MonoBehaviour:
   m_ObjectHideFlags: 0

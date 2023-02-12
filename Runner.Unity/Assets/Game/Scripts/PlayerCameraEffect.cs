@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using System.Collections;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class PlayerCameraEffect : MonoBehaviour
 {
     [Header("References")]
@@ -17,28 +19,46 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float playerAcceleration = 0f;
     [Space]
 
+    [Header("FOV")]
     [SerializeField] private float baseFOV = 60f;
     [SerializeField] private float nowFOV = 60f;
     [SerializeField] private float maxFOV = 80f;
     [Space]
 
+    [Header("Chromatic Aberration")]
     [SerializeField] private float baseCAIntensity = 0f;
     [SerializeField] private float nowCAIntensity = 0f;
     [SerializeField] private float maxCAIntensity = 0.8f;
     [Space]
 
+    [Header("Motion Blur")]
     [SerializeField] private float baseMBIntensity = 0f;
     [SerializeField] private float nowMBIntensity = 0f;
     [SerializeField] private float maxMBIntensity = 0.5f;
     [Space]
 
+    [Header("Bloom")]
     [SerializeField] private float baseBloomIntensity = 0f;
     [SerializeField] private float nowBloomIntensity = 0f;
     [SerializeField] private float maxBloomIntensity = 0.5f;
+    [Space]
+
+    [Header("SpeedLine")]
+    private ParticleSystem ps;
+    ParticleSystem.EmissionModule speedemission;
+    public float ParticleValue = 5.0f;
+    //private EmissionModule emission;
+    [Space]
+
+    [SerializeField] private float baseParticleIntensity = 0f;
+    [SerializeField] private float nowParticleIntensity = 0f;
+    [SerializeField] private float maxParticleIntensity = 50f;
+    [Space]
 
     private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motionBlur;
+
 
     private void Awake()
     {
@@ -47,12 +67,19 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
+    }
 
+    //ADD: Test (To be Delete)
+    private void Start()
+    {
+        ps = GetComponent<ParticleSystem>();
+        speedemission = ps.emission;
     }
 
     private void Update()
     {
         CameraEffect();
+        speedemission.rateOverTime = nowParticleIntensity;
     }
 
     private void FixedUpdate()
@@ -71,6 +98,7 @@ public class PlayerCameraEffect : MonoBehaviour
 
     private void CameraEffect()
     {
+        //if(isDashing)
         if (playerVelocity * 15 > baseFOV && playerAcceleration >= 0 )
         {
             //if (nowFOV <= maxFOV)
@@ -90,10 +118,11 @@ public class PlayerCameraEffect : MonoBehaviour
             //    nowBloomIntensity += 0.03f;
             //}
             //Not use Delta Time
-            nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                 0.001f * playerVelocity);
-            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,         0.001f * playerVelocity);
-            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,         0.001f * playerVelocity);
-            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity,0.001f * playerVelocity);
+            nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                             0.001f * playerVelocity);
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,                     0.001f * playerVelocity);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,                     0.001f * playerVelocity);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity,            0.001f * playerVelocity);
+            nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity,   0.1f   * playerVelocity);
         }
         else if(playerVelocity * 15 <= baseFOV)
         //if (playerHorizontalSpeed * 15 <= baseFOV  (playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
@@ -114,6 +143,10 @@ public class PlayerCameraEffect : MonoBehaviour
             {
                 nowBloomIntensity -= 0.07f;
             }
+            if (nowParticleIntensity > baseParticleIntensity)
+            {
+                nowParticleIntensity -= 0.1f;
+            }
 
             //NOTE: Not use deltatime
             //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
@@ -121,10 +154,10 @@ public class PlayerCameraEffect : MonoBehaviour
             //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
             //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
         }
-        playerCamera.fieldOfView = nowFOV;
+        playerCamera.fieldOfView                = nowFOV;
+        _chromaticAberration.intensity.value    = nowCAIntensity;
+        _motionBlur.intensity.value             = nowMBIntensity;
+        _bloom.intensity.value                  = nowBloomIntensity;
 
-        _chromaticAberration.intensity.value = nowCAIntensity;
-        _motionBlur.intensity.value = nowMBIntensity;
-        _bloom.intensity.value = nowBloomIntensity;    
     }
 }
