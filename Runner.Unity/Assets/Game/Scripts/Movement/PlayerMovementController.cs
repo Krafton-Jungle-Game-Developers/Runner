@@ -19,6 +19,7 @@ public class PlayerMovementController : MonoBehaviour
     private float _playerRadius;
     private bool _isGrounded;
     private bool _keepMomentum;
+    private bool _hasDrag;
 
     [Space][Header("Movement")]
     [SerializeField] private float acceleration;
@@ -64,7 +65,8 @@ public class PlayerMovementController : MonoBehaviour
     [Space][Header("Dash")]
     [SerializeField] private float dashForce;
     [SerializeField] private float dashSpeedChangeFactor;
-    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashDuration;
+    private float _dashTimer;
     private float _speedChangeFactor;
     private Vector3 _delayedForce;
     private bool _isDashing = false;
@@ -102,7 +104,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        UpdateVelocity();
     }
 
     // Shoot a raycast and check if there is a object below player model
@@ -148,6 +150,7 @@ public class PlayerMovementController : MonoBehaviour
         if (_isDashing)
         {
             state = MovementState.Dashing;
+            _hasDrag = false;
             _desiredMoveSpeed = dashForce;
             _speedChangeFactor = dashSpeedChangeFactor;
         }
@@ -155,6 +158,7 @@ public class PlayerMovementController : MonoBehaviour
         else if (_isGrounded)
         {
             state = MovementState.Running;
+            _hasDrag = true;
             _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
         }
@@ -162,6 +166,7 @@ public class PlayerMovementController : MonoBehaviour
         else if (!_isGrounded)
         {
             state = MovementState.Air;
+            _hasDrag = true;
             _coyoteTimeCounter -= Time.deltaTime;
             _desiredMoveSpeed = acceleration;
         }
@@ -188,62 +193,62 @@ public class PlayerMovementController : MonoBehaviour
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
         lastState = state;
     }
-    private float easeOutQuad(float t, float b, float c, float d)
+
+    public static float EaseOutQuad(float start, float end, float value)
     {
-        return -c * (t /= d) * (t - 2) + b;
+        end -= start;
+        return -end * value * (value - 2) + start;
     }
 
-    private void MovePlayer()
+    private void UpdateVelocity()
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
-        if (_isDashing)
-        {
-            Vector3 direction = GetDirection(cameraTransform);
-            direction.y = 0f;
 
-            _rb.useGravity = false;
-            _delayedForce = direction * easeOutQuad(Time.deltaTime, dashForce, _moveSpeed, dashCooldown);
-/*            _rb.velocity = Vector3.zero;
-*/            _rb.AddForce(_delayedForce * 10f);
-            ConsumeInventory(AbilityType.Dash, _currentValue);
-            Invoke(nameof(ResetDash), dashCooldown);
-            return;
+        if (state == MovementState.Dashing)
+        {
+            Vector3 dashDirection = -GetDirection(cameraTransform) * EaseOutQuad(dashForce * 0f, dashForce, _dashTimer / dashDuration);
+            dashDirection.y = 0f;
+            _dashTimer -= 1f * Time.deltaTime;
+
+            _rb.AddForce(dashDirection, ForceMode.Impulse);
         }
-        // on ground
-        if(_isGrounded)
+        // on ground running
+        else if(state == MovementState.Running)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         // in air
-        else if(!_isGrounded)
+        else if(state == MovementState.Air)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
             _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
         }
-
-        // x-axis, z-axis drag calculation
-        if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
+        if (_hasDrag)
         {
-            Vector3 direction = GetDirection(cameraTransform);
-            velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-            velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-            _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
-        }
-/*        else if (Mathf.Abs(_yInput) < 0.1f)
-        {
-            velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-            _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, _rb.velocity.z);
-        }
-        else if (Mathf.Abs(_xInput) < 0.1f)
-        {
-            velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, velocity.z);
-        }*/
-        else
-        {
-            velocity.x *= 1f / (1f + deceleration * Time.deltaTime);
-            velocity.z *= 1f / (1f + deceleration * Time.deltaTime);
+            // x-axis, z-axis drag calculation
+            if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
+            {
+                Vector3 direction = GetDirection(cameraTransform);
+                velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+            }
+            /*        else if (Mathf.Abs(_yInput) < 0.1f)
+                    {
+                        velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, _rb.velocity.z);
+                    }
+                    else if (Mathf.Abs(_xInput) < 0.1f)
+                    {
+                        velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                        _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, velocity.z);
+                    }*/
+            else
+            {
+                velocity.x *= 1f / (1f + deceleration * Time.deltaTime);
+                velocity.z *= 1f / (1f + deceleration * Time.deltaTime);
+            }
         }
     }
 
@@ -332,14 +337,10 @@ public class PlayerMovementController : MonoBehaviour
         if (_currentValue > 0 && !_isDashing)
         {
             _isDashing = true;
-/*            Vector3 direction = GetDirection(cameraTransform);
-            direction.y = 0f;
-            
             _rb.useGravity = false;
-            _delayedForce = direction * EaseOutQuad(dashForce, _moveSpeed, dashCooldown);
 
             ConsumeInventory(AbilityType.Dash, _currentValue);
-            Invoke(nameof(ResetDash), dashCooldown);*/
+            Invoke(nameof(ResetDash), dashDuration);
         }
     }
 

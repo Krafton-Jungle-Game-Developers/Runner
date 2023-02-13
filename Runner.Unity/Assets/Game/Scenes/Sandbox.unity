@@ -39553,7 +39553,7 @@ PrefabInstance:
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: dashForce
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
@@ -39578,6 +39578,11 @@ PrefabInstance:
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashDuration
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
