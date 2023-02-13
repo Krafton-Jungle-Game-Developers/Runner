@@ -9,6 +9,7 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
+        [SerializeField] private SphereCollider collider;
         private PlayerEnemyPresenter _player;
         private HUDPresenter _HUD;
 
@@ -32,6 +33,12 @@ namespace Runner.Game
             _onEnemyBecameInvisibleObservable = this.OnBecameInvisibleAsObservable();
 
             _isDeadProperty = new();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, collider.radius);
         }
     }
 }
