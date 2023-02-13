@@ -5367,6 +5367,16 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -5589,6 +5599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: baseMBIntensity
       value: 7.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: lastingDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}

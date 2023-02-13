@@ -16,6 +16,8 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private UniversalAdditionalCameraData UAC;
     [Space]
 
+    [SerializeField] private float lastingDuration = 1f;
+    [Space]
     //Reactive FOV
     [SerializeField] private float playerVelocity = 0f;
     [SerializeField] private float oldPlayerVelocity = 0f;
@@ -82,10 +84,7 @@ public class PlayerCameraEffect : MonoBehaviour
 
     private void Update()
     {
-        //playerState = playerMovementController.state;
-        CameraEffect();
-        _speedParticleEmission.rateOverTime = nowParticleIntensity;
-
+        FowordCameraEffect();
     }
 
     private void FixedUpdate()
@@ -95,19 +94,19 @@ public class PlayerCameraEffect : MonoBehaviour
                                      0.0f,
                                      playerRigidbody.velocity.z).magnitude;
 
-        //TODO: don't use Deltatime
+        //NOTE: Don't use Delta Time (Jittering)
         playerAcceleration = (playerVelocity - oldPlayerVelocity) / Time.deltaTime;
         oldPlayerVelocity = new Vector3(playerRigidbody.velocity.x,
                                         0.0f,
                                         playerRigidbody.velocity.z).magnitude;
     }
 
-    private void CameraEffect()
+    private void FowordCameraEffect()
     {
         if (playerMovementController.state == MovementState.Dashing)
         //if(playerVelocity * 15 > baseFOV && playerAcceleration > 0)
         {
-            //Not use Delta Time
+            //NOTE: Don't use Delta Time (Jittering)
             nowFOV = Mathf.Lerp(nowFOV, maxFOV, 0.001f * playerVelocity);
             nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, 0.001f * playerVelocity);
             nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, 0.001f * playerVelocity);
@@ -116,45 +115,39 @@ public class PlayerCameraEffect : MonoBehaviour
             nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity, 0.1f * playerVelocity);
 
         }
-        else if (playerVelocity * 15 <= baseFOV)
+        else
         {
+            //NOTE: Don't use Delta Time (Jittering)
             if (nowFOV > baseFOV)
             {
-                nowFOV -= 0.7f;
+                nowFOV -= 0.7f * lastingDuration;
             }
             if (nowCAIntensity > baseCAIntensity)
             {
-                nowCAIntensity -= 0.07f;
+                nowCAIntensity -= 0.07f * lastingDuration;
             }
             if (nowMBIntensity > baseMBIntensity)
             {
-                nowMBIntensity -= 0.07f;
+                nowMBIntensity -= 0.07f* lastingDuration;
             }
             if (nowBloomIntensity > baseBloomIntensity)
             {
-                nowBloomIntensity -= 0.07f;
+                nowBloomIntensity -= 0.07f* lastingDuration;
             }
             if (nowRadialBlurIntensity > baseRadialBlurIntensity)
             {
-                nowRadialBlurIntensity -= 0.7f;
+                nowRadialBlurIntensity -= 0.7f* lastingDuration;
             }
             if (nowParticleIntensity > baseParticleIntensity)
             {
-                nowParticleIntensity -= 0.7f;
+                nowParticleIntensity -= 10f* lastingDuration;
             }
-            //
-            //NOTE: Not use deltatime
-            //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
-            //nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
-            //
         }
         playerCamera.fieldOfView = nowFOV;
         _chromaticAberration.intensity.value = nowCAIntensity;
         _motionBlur.intensity.value = nowMBIntensity;
         _radialBlur.amount.value = nowRadialBlurIntensity;
         _bloom.intensity.value = nowBloomIntensity;
-
+        _speedParticleEmission.rateOverTime = nowParticleIntensity;
     }
 }
