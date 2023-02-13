@@ -1,8 +1,14 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Runner.Unity/Assets/Graphics/Materials/Accent Particle.mat.meta
+guid: aae5a7e9efd2a6f49966170f7b79c731
+NativeFormatImporter:
+========
 guid: be39de238e6f3b74fbefc924a126a522
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> main:Runner.Unity/Assets/Game/Scenes/Demo.meta
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
