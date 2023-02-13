@@ -39559,6 +39559,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2045490481757638490, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239867471650171, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e69d1fe177c167d4b96306eea30c416c, type: 2}
     - target: {fileID: 7609239868009345085, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Cameras.Array.size
@@ -39571,8 +39581,28 @@ PrefabInstance:
       objectReference: {fileID: 1220052993}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
+      propertyPath: gravity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
       propertyPath: runForce
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: jumpForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: maxYSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
@@ -39586,8 +39616,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
+      propertyPath: acceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
       propertyPath: dashCooldown
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: deceleration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
@@ -39598,6 +39643,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _jumpBuferTime
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: currentAbility
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashSpeedChangeFactor
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
@@ -39614,12 +39669,6 @@ PrefabInstance:
       propertyPath: inventory.values.Array.data[3]
       value: 1000
       objectReference: {fileID: 0}
-    - target: {fileID: 7609239868517586421, guid: c271a033504fff64bb9faeed01c8986b,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: d6f62e76f2febeb4d977c6d3c40e1bac,
-        type: 2}
     - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Mass
@@ -39658,7 +39707,7 @@ PrefabInstance:
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
@@ -39674,6 +39723,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586429, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586430, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
