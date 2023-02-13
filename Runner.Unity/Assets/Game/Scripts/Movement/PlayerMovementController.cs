@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody _rb;
     private Collider _collider;
 
-    public MovementState state;
+    [SerializeField] public MovementState state;
     private MovementState lastState;
 
     private float _playerRadius;

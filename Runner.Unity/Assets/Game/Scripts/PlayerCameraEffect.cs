@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements.Experimental;
+using UnityEngine.Playables;
+using SCPE;
 
 public class PlayerCameraEffect : MonoBehaviour
 {
-    MovementState state;
+    PlayerMovementController playerMovementController;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -44,6 +46,12 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float maxBloomIntensity = 0.5f;
     [Space]
 
+    [Header("RadialBlur")]
+    [SerializeField] private float baseRadialBlurIntensity = 0f;
+    [SerializeField] private float nowRadialBlurIntensity = 0f;
+    [SerializeField] private float maxRadialBlurIntensity = 0.5f;
+    [Space]
+
     [Header("SpeedLine")]
     [SerializeField] private ParticleSystem _speedParticleSystem;
     private ParticleSystem.EmissionModule _speedParticleEmission;
@@ -57,20 +65,24 @@ public class PlayerCameraEffect : MonoBehaviour
     private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motionBlur;
+    private RadialBlur _radialBlur;
 
 
     private void Awake()
     {
+        playerMovementController = GetComponent<PlayerMovementController>();
         UAC = playerCamera.GetComponent<UniversalAdditionalCameraData>();
 
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
+        globalVolume.profile.TryGet(out _radialBlur);
         _speedParticleEmission = _speedParticleSystem.emission;
     }
 
     private void Update()
     {
+        //playerState = playerMovementController.state;
         CameraEffect();
         _speedParticleEmission.rateOverTime = nowParticleIntensity;
 
@@ -92,34 +104,19 @@ public class PlayerCameraEffect : MonoBehaviour
 
     private void CameraEffect()
     {
-        //if(isDashing)
-        if (state == MovementState.Dashing)
+        if (playerMovementController.state == MovementState.Dashing)
+        //if(playerVelocity * 15 > baseFOV && playerAcceleration > 0)
         {
-            //if (nowFOV <= maxFOV)
-            //{
-            //    nowFOV += 0.3f;
-            //}
-            //if (nowCAIntensity <= maxCAIntensity)
-            //{
-            //    nowCAIntensity += 0.03f;
-            //}
-            //if (nowMBIntensity <= maxMBIntensity)
-            //{
-            //    nowMBIntensity += 0.03f;
-            //}
-            //if (nowBloomIntensity <= maxBloomIntensity)
-            //{
-            //    nowBloomIntensity += 0.03f;
-            //}
             //Not use Delta Time
-            nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                             0.001f * playerVelocity);
-            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,                     0.001f * playerVelocity);
-            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,                     0.001f * playerVelocity);
-            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity,            0.001f * playerVelocity);
-            nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity,   0.1f   * playerVelocity);
+            nowFOV = Mathf.Lerp(nowFOV, maxFOV, 0.001f * playerVelocity);
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, 0.001f * playerVelocity);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, 0.001f * playerVelocity);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, 0.001f * playerVelocity);
+            nowRadialBlurIntensity = Mathf.Lerp(nowRadialBlurIntensity, maxRadialBlurIntensity, 0.001f * playerVelocity);
+            nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity, 0.1f * playerVelocity);
+
         }
-        else if(playerVelocity * 15 <= baseFOV)
-        //if (playerHorizontalSpeed * 15 <= baseFOV  (playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
+        else if (playerVelocity * 15 <= baseFOV)
         {
             if (nowFOV > baseFOV)
             {
@@ -137,6 +134,10 @@ public class PlayerCameraEffect : MonoBehaviour
             {
                 nowBloomIntensity -= 0.07f;
             }
+            if (nowRadialBlurIntensity > baseRadialBlurIntensity)
+            {
+                nowRadialBlurIntensity -= 0.7f;
+            }
             if (nowParticleIntensity > baseParticleIntensity)
             {
                 nowParticleIntensity -= 0.7f;
@@ -149,10 +150,11 @@ public class PlayerCameraEffect : MonoBehaviour
             //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
             //
         }
-        playerCamera.fieldOfView                = nowFOV;
-        _chromaticAberration.intensity.value    = nowCAIntensity;
-        _motionBlur.intensity.value             = nowMBIntensity;
-        _bloom.intensity.value                  = nowBloomIntensity;
+        playerCamera.fieldOfView = nowFOV;
+        _chromaticAberration.intensity.value = nowCAIntensity;
+        _motionBlur.intensity.value = nowMBIntensity;
+        _radialBlur.amount.value = nowRadialBlurIntensity;
+        _bloom.intensity.value = nowBloomIntensity;
 
     }
 }
