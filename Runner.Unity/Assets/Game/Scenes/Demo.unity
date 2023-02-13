@@ -3394,6 +3394,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb2086f956cbad542b41820eafc0c8fb, type: 3}
+--- !u!198 &1495336236 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
+    type: 3}
+  m_PrefabInstance: {fileID: 116869431896686491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1497158670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2258258708217068018, guid: 0c747b6457982a0e0b99fbaf5e572c04,
@@ -5540,17 +5546,12 @@ PrefabInstance:
         type: 3}
       propertyPath: ps
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1495336236}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: globalVolume
       value: 
       objectReference: {fileID: 1952501946}
-    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
-        type: 3}
-      propertyPath: playerCamera
-      value: 
-      objectReference: {fileID: 688698166}
     - target: {fileID: 7609239868517586429, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Name

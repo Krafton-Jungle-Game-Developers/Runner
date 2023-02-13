@@ -298,25 +298,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 7609239868009345059}
-  _isGrounded: 0
-  _isCollide: 0
-  runForce: 10
+  velocity: {x: 0, y: 0, z: 0}
+  state: 0
+  acceleration: 13
+  deceleration: 13
+  _maxSpeed: 15
   maxYSpeed: 15
-  groundDrag: 2
-  airMultiplier: 0.4
   gravity: 2.5
-  distance: 0
   abilityKey: 324
   currentAbility: 0
   inventory:
     keys: 00000000010000000200000003000000
     values: 00000000000000000000000000000000
   jumpKey: 32
-  jumpForce: 10
+  jumpForce: 25
   jumpCooldown: 0.25
   dashForce: 25
   dashSpeedChangeFactor: 50
-  dashCooldown: 0.25
+  dashDuration: 1
 --- !u!114 &7609239868517586427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,10 +328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b44264832a2d49a7ba00076dc730d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 2160720465682470924}
   playerRigidbody: {fileID: 7609239868517586424}
   globalVolume: {fileID: 0}
-  UAC: {fileID: 0}
+  UAC: {fileID: 2842476489524682591}
   playerVelocity: 0
   oldPlayerVelocity: 0
   playerAcceleration: 0
@@ -364,7 +363,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyModels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
