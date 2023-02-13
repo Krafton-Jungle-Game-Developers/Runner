@@ -15,7 +15,7 @@ namespace Runner.Game
             _enemyModels = enemyModels;
         }
         
-        private void Awake()
+        private void Start()
         {
             foreach (var enemyModel in _enemyModels)
             {
