@@ -63,7 +63,7 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
-
+        _speedParticleSystem.
         _speedParticleEmission = _speedParticleSystem.emission;
     }
 

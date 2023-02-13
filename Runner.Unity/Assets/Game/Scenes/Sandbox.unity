@@ -30905,7 +30905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84f708f03f42564999db26579c4f2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanelImage: {fileID: 0}
 --- !u!4 &1372567802
 Transform:
   m_ObjectHideFlags: 0
@@ -39546,6 +39545,112 @@ PrefabInstance:
       propertyPath: m_Cameras.Array.data[0]
       value: 
       objectReference: {fileID: 1220052993}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: runForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: _maxSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashForce
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: jumpForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: groundDrag
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: _coyoteTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: acceleration
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: dashDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: deceleration
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: airMultiplier
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: _jumpBuferTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: currentAbility
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[1]
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[2]
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: inventory.values.Array.data[3]
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586421, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: d6f62e76f2febeb4d977c6d3c40e1bac,
+        type: 2}
+    - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586424, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: globalVolume
