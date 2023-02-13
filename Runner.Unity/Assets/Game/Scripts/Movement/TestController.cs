@@ -1,18 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public enum AbilityType { Base, ExtraJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Air }
-
-public class PlayerMovementController : MonoBehaviour
+public class TestController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float playerVelocity;
-    private Vector3 myVelocity;
-    private Rigidbody _rb;
+    [SerializeField] private Vector3 velocity;
+    private CharacterController _cc;
 
     public MovementState state;
     private MovementState lastState;
@@ -20,9 +14,10 @@ public class PlayerMovementController : MonoBehaviour
     private float _playerRadius;
     private bool _isGrounded;
     private bool _keepMomentum;
-    [SerializeField] private bool _hasDrag;
+    private bool _hasDrag;
 
-    [Space][Header("Movement")]
+    [Space]
+    [Header("Movement")]
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
     [SerializeField] private float _maxSpeed = 15f;
@@ -43,7 +38,8 @@ public class PlayerMovementController : MonoBehaviour
     private float _yInput;
     private Vector3 _moveDirection;
 
-    [Space][Header("Ability")]
+    [Space]
+    [Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
     [SerializeField] public AbilityType currentAbility = AbilityType.ExtraJump;
 
@@ -57,37 +53,39 @@ public class PlayerMovementController : MonoBehaviour
 
     private int _currentValue;
 
-    [Space][Header("Jump")]
+    [Space]
+    [Header("Jump")]
     [SerializeField] private KeyCode jumpKey;
     [SerializeField] private float jumpForce = 25;
     [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
 
-    [Space][Header("Dash")]
+    [Space]
+    [Header("Dash")]
     [SerializeField] private float dashForce = 25f;
     [SerializeField] private float dashSpeedChangeFactor = 50f;
     [SerializeField] private float dashDuration = 1f;
     private float _dashTimer;
     private float _speedChangeFactor;
-    private Vector3 _dashDirection;
+    private Vector3 _delayedForce;
     private bool _isDashing = false;
+    private Rigidbody _rb;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
-        _rb.freezeRotation = true;
+        _cc = GetComponent<CharacterController>();
         _playerRadius = GetComponent<CapsuleCollider>().radius;
         _distance = (_playerRadius * 1.414f) + 0.5f;
     }
 
     private void Update()
     {
-        playerVelocity = new Vector3(_rb.velocity.x , 0f, _rb.velocity.z).magnitude;
+        velocity = _rb.velocity;
         CheckGrounded();
         StateHandler();
         MyInput();
         SpeedControl();
-        if(!_canJump)
+        if (!_canJump)
         {
             _coyoteTimeCounter = 0;
         }
@@ -127,8 +125,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
-/*        float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
-*/
+        float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
+
         if (_jumpBufferCounter > 0 && _canJump && _coyoteTimeCounter > 0)
         {
             _canJump = false;
@@ -194,45 +192,67 @@ public class PlayerMovementController : MonoBehaviour
         lastState = state;
     }
 
+    public static float EaseOutQuad(float start, float end, float value)
+    {
+        end -= start;
+        return -end * value * (value - 2) + start;
+    }
+
     private void UpdateVelocity()
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
 
         if (state == MovementState.Dashing)
         {
-            _dashDirection = GetDirection(transform) * EaseOutQuad(dashForce * 0f, dashForce, _dashTimer / dashDuration);
+            Vector3 forceToApply = GetDirection(transform) * dashForce;
+            _rb.AddForce(forceToApply, ForceMode.Impulse);
+
+/*            velocity = Vector3.zero;
+            Vector3 dashDirection = GetDirection(transform) * EaseOutQuad(dashForce * 0f, dashForce, _dashTimer / dashDuration);
+
+            _moveDirection = dashDirection;
             _dashTimer -= 1f * Time.deltaTime;
 
-            _rb.AddForce(_dashDirection, ForceMode.Impulse);
+            dashDirection.y = 0f;
+            _rb.AddForce(dashDirection, ForceMode.Impulse);
+*/
         }
-
         // on ground running
-        else if(state == MovementState.Running)
+        else if (state == MovementState.Running)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         // in air
-        else if(state == MovementState.Air)
+        else if (state == MovementState.Air)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
-            _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
+            _rb.AddForce(Physics.gravity * (gravity - 1) * Time.deltaTime);
         }
-
         if (_hasDrag)
         {
             // x-axis, z-axis drag calculation
             if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
             {
                 Vector3 direction = GetDirection(cameraTransform);
-                myVelocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-                myVelocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-                _rb.velocity = new Vector3(myVelocity.x, _rb.velocity.y, myVelocity.z);
+                velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
             }
+            /*        else if (Mathf.Abs(_yInput) < 0.1f)
+                    {
+                        velocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, _rb.velocity.z);
+                    }
+                    else if (Mathf.Abs(_xInput) < 0.1f)
+                    {
+                        velocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                        _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, velocity.z);
+                    }*/
             else
             {
-                myVelocity.x *= 1f / (1f + deceleration * Time.deltaTime);
-                myVelocity.z *= 1f / (1f + deceleration * Time.deltaTime);
+                velocity.x *= 1f / (1f + deceleration * Time.deltaTime);
+                velocity.z *= 1f / (1f + deceleration * Time.deltaTime);
             }
         }
     }
@@ -241,7 +261,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         Vector3 _flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
 
-        if(_flatVelocity.magnitude > _maxSpeed)
+        if (_flatVelocity.magnitude > _maxSpeed)
         {
             Vector3 _limitedVelocity = _flatVelocity.normalized * _maxSpeed;
             _rb.velocity = new Vector3(_limitedVelocity.x, _rb.velocity.y, _limitedVelocity.z);
@@ -251,12 +271,6 @@ public class PlayerMovementController : MonoBehaviour
         {
             _rb.velocity = new Vector3(_rb.velocity.x, _ySpeedLimit, _rb.velocity.z);
         }
-    }
-
-    public static float EaseOutQuad(float start, float end, float value)
-    {
-        end -= start;
-        return -end * value * (value - 2) + start;
     }
 
     private IEnumerator LerpMoveSpeed()
@@ -278,12 +292,6 @@ public class PlayerMovementController : MonoBehaviour
         _moveSpeed = _desiredMoveSpeed;
         _speedChangeFactor = 1f;
         _keepMomentum = false;
-    }
-
-    private void ResetMomentum()
-    {
-        _rb.isKinematic = true;
-        _rb.isKinematic = false;
     }
 
     public void UseAbility()
@@ -335,20 +343,23 @@ public class PlayerMovementController : MonoBehaviour
         {
             _isDashing = true;
             _rb.useGravity = false;
-            _dashTimer = dashDuration;
-            ResetMomentum();
+            ResetVelocity();
 
             ConsumeInventory(AbilityType.Dash, _currentValue);
             Invoke(nameof(ResetDash), dashDuration);
         }
     }
 
+    private void ResetVelocity()
+    {
+        velocity = Vector3.zero;
+    }
     private Vector3 GetDirection(Transform forwardTransform)
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
+        /* Vector3 direction = forwardTransform.forward * verticalInput + forwardTransform.right * horizontalInput; */
         Vector3 direction = forwardTransform.forward;
-
         if (verticalInput == 0 && horizontalInput == 0)
         {
             direction = forwardTransform.forward;
@@ -361,7 +372,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = false;
         _rb.useGravity = true;
-        _dashDirection = Vector3.zero;
+        velocity.y = 0f;
     }
 
     private void Stomp()
