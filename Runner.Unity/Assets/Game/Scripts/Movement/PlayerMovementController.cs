@@ -64,12 +64,13 @@ public class PlayerMovementController : MonoBehaviour
     private bool _canJump = true;
 
     [Space][Header("Dash")]
-    [SerializeField] private float dashForce = 25f;
+    [SerializeField] private float dashForce = 150f;
     [SerializeField] private float dashSpeedChangeFactor = 50f;
     [SerializeField] private float dashDuration = 1f;
     private float _dashTimer;
     private float _speedChangeFactor;
     private Vector3 _dashDirection;
+    private Vector3 _dashSpeed;
     private bool _isDashing = false;
 
     private void Awake()
@@ -151,7 +152,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             state = MovementState.Dashing;
             _hasDrag = false;
-            _desiredMoveSpeed = dashForce;
+            _desiredMoveSpeed = dashForce * 10f;
             _speedChangeFactor = dashSpeedChangeFactor;
         }
 
@@ -200,10 +201,10 @@ public class PlayerMovementController : MonoBehaviour
 
         if (state == MovementState.Dashing)
         {
-            _dashDirection = GetDirection(transform) * EaseOutQuad(dashForce * 0f, dashForce, _dashTimer / dashDuration);
+            _dashSpeed =  _dashDirection * EaseOutQuad(dashForce * 0f * 10f, dashForce * 10f, _dashTimer / dashDuration);
             _dashTimer -= 1f * Time.deltaTime;
 
-            _rb.AddForce(_dashDirection, ForceMode.Impulse);
+            _rb.AddForce(_dashSpeed, ForceMode.Impulse);
         }
 
         // on ground running
@@ -270,7 +271,7 @@ public class PlayerMovementController : MonoBehaviour
         while (time < difference)
         {
             _moveSpeed = Mathf.Lerp(startValue, _desiredMoveSpeed, time / difference);
-            time += Time.deltaTime * boostFactor;
+            time += Time.deltaTime * boostFactor * 10f;
 
             yield return null;
         }
@@ -336,6 +337,8 @@ public class PlayerMovementController : MonoBehaviour
             _isDashing = true;
             _rb.useGravity = false;
             _dashTimer = dashDuration;
+            _ySpeedLimit = maxYSpeed;
+            _dashDirection = GetDirection(transform);
             ResetMomentum();
 
             ConsumeInventory(AbilityType.Dash, _currentValue);
@@ -361,7 +364,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = false;
         _rb.useGravity = true;
-        _dashDirection = Vector3.zero;
+        _dashSpeed = Vector3.zero;
+        _ySpeedLimit = 0;
     }
 
     private void Stomp()
