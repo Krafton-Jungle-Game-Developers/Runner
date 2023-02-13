@@ -68,7 +68,7 @@ public class PlayerCameraEffect : MonoBehaviour
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motionBlur;
     private RadialBlur _radialBlur;
-
+    
 
     private void Awake()
     {
