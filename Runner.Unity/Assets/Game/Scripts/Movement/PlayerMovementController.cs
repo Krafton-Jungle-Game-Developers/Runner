@@ -22,11 +22,11 @@ public class PlayerMovementController : MonoBehaviour
     private bool _hasDrag;
 
     [Space][Header("Movement")]
-    [SerializeField] private float acceleration;
-    [SerializeField] private float deceleration;
-    [SerializeField] private float _maxSpeed;
-    [SerializeField] private float maxYSpeed;
-    [SerializeField] private float gravity;
+    [SerializeField] private float acceleration = 13f;
+    [SerializeField] private float deceleration = 13f;
+    [SerializeField] private float _maxSpeed = 15f;
+    [SerializeField] private float maxYSpeed = 15f;
+    [SerializeField] private float gravity = 2.5f;
     [Space]
 
     private float _coyoteTime = 0.2f;
@@ -44,7 +44,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
-    [SerializeField] public AbilityType currentAbility = AbilityType.Base;
+    [SerializeField] public AbilityType currentAbility = AbilityType.ExtraJump;
 
     public InventoryDictionary<AbilityType, int> inventory = new()
     {
@@ -58,14 +58,14 @@ public class PlayerMovementController : MonoBehaviour
 
     [Space][Header("Jump")]
     [SerializeField] private KeyCode jumpKey;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float jumpCooldown;
+    [SerializeField] private float jumpForce = 25;
+    [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
 
     [Space][Header("Dash")]
-    [SerializeField] private float dashForce;
-    [SerializeField] private float dashSpeedChangeFactor;
-    [SerializeField] private float dashDuration;
+    [SerializeField] private float dashForce = 25f;
+    [SerializeField] private float dashSpeedChangeFactor = 50f;
+    [SerializeField] private float dashDuration = 1f;
     private float _dashTimer;
     private float _speedChangeFactor;
     private Vector3 _delayedForce;
