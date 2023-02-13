@@ -42,8 +42,8 @@ public class PlayerCameraEffect : MonoBehaviour
     [Space]
 
     [Header("SpeedLine")]
-    [SerializeField] private ParticleSystem ps;
-    private ParticleSystem.EmissionModule _speedEmission;
+    [SerializeField] private ParticleSystem _speedParticleSystem;
+    private ParticleSystem.EmissionModule _speedParticleEmission;
     [Space]
 
     [SerializeField] private float baseParticleIntensity = 0f;
@@ -63,13 +63,15 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
-
-        _speedEmission = ps.emission;
+        _speedParticleSystem.
+        _speedParticleEmission = _speedParticleSystem.emission;
     }
 
     private void Update()
     {
         CameraEffect();
+        _speedParticleEmission.rateOverTime = nowParticleIntensity;
+
     }
 
     private void FixedUpdate()
@@ -149,7 +151,6 @@ public class PlayerCameraEffect : MonoBehaviour
         _chromaticAberration.intensity.value    = nowCAIntensity;
         _motionBlur.intensity.value             = nowMBIntensity;
         _bloom.intensity.value                  = nowBloomIntensity;
-        _speedEmission.rateOverTime             = nowParticleIntensity;
 
     }
 }

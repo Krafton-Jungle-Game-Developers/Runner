@@ -1734,6 +1734,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 02e30f8154b82f248818c8372318b875, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f4c7979fb782b44b6cc96d5a815578, type: 3}
+--- !u!198 &786795815 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
+    type: 3}
+  m_PrefabInstance: {fileID: 116869431896686491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &794050965
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,8 +3475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f044a811038d94aa8b0e4664e4d265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 1964079307588546, guid: e2896c72efdaf4b42ad1845d3a5a2c04,
-    type: 3}
 --- !u!4 &1497685551
 Transform:
   m_ObjectHideFlags: 0
@@ -5120,6 +5124,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 72d0b935ce0bb1f4c82f35ef4f4cf067, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f4c7979fb782b44b6cc96d5a815578, type: 3}
+--- !u!114 &2114568024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2842476489524682591, guid: c271a033504fff64bb9faeed01c8986b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7609239869054261388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2122326835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5546,12 +5562,32 @@ PrefabInstance:
         type: 3}
       propertyPath: ps
       value: 
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: UAC
+      value: 
+      objectReference: {fileID: 2114568024}
       objectReference: {fileID: 1495336236}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: globalVolume
       value: 
       objectReference: {fileID: 1952501946}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 688698166}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: baseMBIntensity
+      value: 7.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: _speedParticleSystem
+      value: 
+      objectReference: {fileID: 786795815}
     - target: {fileID: 7609239868517586429, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: m_Name
