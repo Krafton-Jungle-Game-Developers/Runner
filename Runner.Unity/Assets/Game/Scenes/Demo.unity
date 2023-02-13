@@ -2859,6 +2859,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &1255636073 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
+    type: 3}
+  m_PrefabInstance: {fileID: 116869431896686491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1272730959
 GameObject:
   m_ObjectHideFlags: 0
@@ -5436,16 +5442,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21082280118058838, guid: e5b74945cc63c014984b2519679d8a48,
         type: 2}
-    - target: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1084699441027314640, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -5479,7 +5475,7 @@ PrefabInstance:
     - target: {fileID: 8876336286813365444, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291220c80bf819b4295c9a48d34ef99a, type: 3}
@@ -5679,6 +5675,11 @@ PrefabInstance:
       propertyPath: _speedParticleSystem
       value: 
       objectReference: {fileID: 786795815}
+    - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: _verticalParticleSystem
+      value: 
+      objectReference: {fileID: 1255636073}
     - target: {fileID: 7609239868517586427, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: playerMovementController

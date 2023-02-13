@@ -57,6 +57,8 @@ public class PlayerCameraEffect : MonoBehaviour
     [Header("SpeedLine")]
     [SerializeField] private ParticleSystem _speedParticleSystem;
     private ParticleSystem.EmissionModule _speedParticleEmission;
+    [SerializeField] private ParticleSystem _verticalParticleSystem;
+    private ParticleSystem.EmissionModule _verticalParticleEmission;
     [Space]
 
     [SerializeField] private float baseParticleIntensity = 0f;
@@ -64,11 +66,15 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float maxParticleIntensity = 50f;
     [Space]
 
+    [SerializeField] private float baseVerticalIntensity = 0f;
+    [SerializeField] private float nowVerticalIntensity = 0f;
+    [SerializeField] private float maxVerticalIntensity = 100f;
+
     private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motionBlur;
     private RadialBlur _radialBlur;
-    
+
 
     private void Awake()
     {
@@ -80,11 +86,13 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _bloom);
         globalVolume.profile.TryGet(out _radialBlur);
         _speedParticleEmission = _speedParticleSystem.emission;
+        _verticalParticleEmission = _verticalParticleSystem.emission;
     }
 
     private void Update()
     {
         FowordCameraEffect();
+        //UpsideCameraEffect();
     }
 
     private void FixedUpdate()
@@ -128,19 +136,19 @@ public class PlayerCameraEffect : MonoBehaviour
             }
             if (nowMBIntensity > baseMBIntensity)
             {
-                nowMBIntensity -= 0.07f* lastingDuration;
+                nowMBIntensity -= 0.07f * lastingDuration;
             }
             if (nowBloomIntensity > baseBloomIntensity)
             {
-                nowBloomIntensity -= 0.07f* lastingDuration;
+                nowBloomIntensity -= 0.07f * lastingDuration;
             }
             if (nowRadialBlurIntensity > baseRadialBlurIntensity)
             {
-                nowRadialBlurIntensity -= 0.7f* lastingDuration;
+                nowRadialBlurIntensity -= 0.7f * lastingDuration;
             }
             if (nowParticleIntensity > baseParticleIntensity)
             {
-                nowParticleIntensity -= 10f* lastingDuration;
+                nowParticleIntensity -= 10f * lastingDuration;
             }
         }
         playerCamera.fieldOfView = nowFOV;
@@ -150,4 +158,21 @@ public class PlayerCameraEffect : MonoBehaviour
         _bloom.intensity.value = nowBloomIntensity;
         _speedParticleEmission.rateOverTime = nowParticleIntensity;
     }
+    private void UpsideCameraEffect()
+    {
+        //TODO: Change if Condition
+        //if (playerMovementController.state == MovementState.Doublejump)
+        if (true)
+        {
+            nowVerticalIntensity = Mathf.Lerp(nowVerticalIntensity, maxVerticalIntensity, 0.1f * playerVelocity);
+        }
+        else
+        {
+            if (nowVerticalIntensity > baseVerticalIntensity)
+            {
+                nowVerticalIntensity -= 10f * lastingDuration;
+            }
+        }
+    }
+
 }
