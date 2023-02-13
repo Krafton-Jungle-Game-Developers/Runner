@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements.Experimental;
 
 public class PlayerCameraEffect : MonoBehaviour
 {
+    MovementState state;
+
     [Header("References")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Rigidbody playerRigidbody;
@@ -63,7 +66,6 @@ public class PlayerCameraEffect : MonoBehaviour
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
-        _speedParticleSystem.
         _speedParticleEmission = _speedParticleSystem.emission;
     }
 
@@ -91,7 +93,7 @@ public class PlayerCameraEffect : MonoBehaviour
     private void CameraEffect()
     {
         //if(isDashing)
-        if (playerVelocity * 15 > baseFOV && playerAcceleration >= 0 )
+        if (state == MovementState.Dashing)
         {
             //if (nowFOV <= maxFOV)
             //{
