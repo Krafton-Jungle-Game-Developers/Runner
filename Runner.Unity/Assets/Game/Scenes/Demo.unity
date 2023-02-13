@@ -5255,11 +5255,6 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 1956403555691503703, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -5284,7 +5279,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 6017a64302157524d8b8ed693896e279, type: 2}
+      objectReference: {fileID: 2100000, guid: 658580d6e9a6a4646b7bd7ae50d4cc1d, type: 2}
     - target: {fileID: 6831434625464986559, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_IsActive

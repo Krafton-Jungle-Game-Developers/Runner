@@ -135,7 +135,7 @@ public class PlayerCameraEffect : MonoBehaviour
             }
             if (nowParticleIntensity > baseParticleIntensity)
             {
-                nowParticleIntensity -= 0.5f;
+                nowParticleIntensity -= 0.7f;
             }
             //
             //NOTE: Not use deltatime
