@@ -9,7 +9,7 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
-        [SerializeField] private GameObject indicatorPrefab;
+        [SerializeField] private SphereCollider collider;
         private PlayerEnemyPresenter _player;
         private HUDPresenter _HUD;
 
@@ -24,16 +24,21 @@ namespace Runner.Game
         private IObservable<Unit> _onEnemyBecameInvisibleObservable;
         public IObservable<Unit> OnEnemyBecameVisibleObservable => _onEnemyBecameVisibleObservable;
         public IObservable<Unit> OnEnemyBecameInvisibleObservable => _onEnemyBecameInvisibleObservable;
+        private ReactiveProperty<bool> _isDeadProperty;
+        public IReactiveProperty<bool> IsDeadProperty => _isDeadProperty;
 
         private void Awake()
         {
             _onEnemyBecameVisibleObservable = this.OnBecameVisibleAsObservable();
             _onEnemyBecameInvisibleObservable = this.OnBecameInvisibleAsObservable();
+
+            _isDeadProperty = new();
         }
 
-        private void Start()
+        private void OnDrawGizmos()
         {
-            _HUD.CreateIndicator(this);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, collider.radius);
         }
     }
 }

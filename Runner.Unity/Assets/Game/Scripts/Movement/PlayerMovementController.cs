@@ -14,7 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 myVelocity;
     private Rigidbody _rb;
 
-    public MovementState state;
+    [SerializeField] public MovementState state;
     private MovementState lastState;
 
     private float _playerRadius;

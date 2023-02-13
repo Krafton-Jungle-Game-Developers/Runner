@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements.Experimental;
+using UnityEngine.Playables;
+using SCPE;
 
 public class PlayerCameraEffect : MonoBehaviour
 {
-    MovementState state;
+    PlayerMovementController playerMovementController;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -14,6 +16,8 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private UniversalAdditionalCameraData UAC;
     [Space]
 
+    [SerializeField] private float lastingDuration = 1f;
+    [Space]
     //Reactive FOV
     [SerializeField] private float playerVelocity = 0f;
     [SerializeField] private float oldPlayerVelocity = 0f;
@@ -44,9 +48,17 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float maxBloomIntensity = 0.5f;
     [Space]
 
+    [Header("RadialBlur")]
+    [SerializeField] private float baseRadialBlurIntensity = 0f;
+    [SerializeField] private float nowRadialBlurIntensity = 0f;
+    [SerializeField] private float maxRadialBlurIntensity = 0.5f;
+    [Space]
+
     [Header("SpeedLine")]
     [SerializeField] private ParticleSystem _speedParticleSystem;
     private ParticleSystem.EmissionModule _speedParticleEmission;
+    [SerializeField] private ParticleSystem _verticalParticleSystem;
+    private ParticleSystem.EmissionModule _verticalParticleEmission;
     [Space]
 
     [SerializeField] private float baseParticleIntensity = 0f;
@@ -54,26 +66,33 @@ public class PlayerCameraEffect : MonoBehaviour
     [SerializeField] private float maxParticleIntensity = 50f;
     [Space]
 
+    [SerializeField] private float baseVerticalIntensity = 0f;
+    [SerializeField] private float nowVerticalIntensity = 0f;
+    [SerializeField] private float maxVerticalIntensity = 100f;
+
     private Bloom _bloom;
     private ChromaticAberration _chromaticAberration;
     private MotionBlur _motionBlur;
+    private RadialBlur _radialBlur;
 
 
     private void Awake()
     {
+        playerMovementController = GetComponent<PlayerMovementController>();
         UAC = playerCamera.GetComponent<UniversalAdditionalCameraData>();
 
         globalVolume.profile.TryGet(out _motionBlur);
         globalVolume.profile.TryGet(out _chromaticAberration);
         globalVolume.profile.TryGet(out _bloom);
+        globalVolume.profile.TryGet(out _radialBlur);
         _speedParticleEmission = _speedParticleSystem.emission;
+        _verticalParticleEmission = _verticalParticleSystem.emission;
     }
 
     private void Update()
     {
-        CameraEffect();
-        _speedParticleEmission.rateOverTime = nowParticleIntensity;
-
+        FowordCameraEffect();
+        //UpsideCameraEffect();
     }
 
     private void FixedUpdate()
@@ -83,76 +102,77 @@ public class PlayerCameraEffect : MonoBehaviour
                                      0.0f,
                                      playerRigidbody.velocity.z).magnitude;
 
-        //TODO: don't use Deltatime
+        //NOTE: Don't use Delta Time (Jittering)
         playerAcceleration = (playerVelocity - oldPlayerVelocity) / Time.deltaTime;
         oldPlayerVelocity = new Vector3(playerRigidbody.velocity.x,
                                         0.0f,
                                         playerRigidbody.velocity.z).magnitude;
     }
 
-    private void CameraEffect()
+    private void FowordCameraEffect()
     {
-        //if(isDashing)
-        if (state == MovementState.Dashing)
+        if (playerMovementController.state == MovementState.Dashing)
+        //if(playerVelocity * 15 > baseFOV && playerAcceleration > 0)
         {
-            //if (nowFOV <= maxFOV)
-            //{
-            //    nowFOV += 0.3f;
-            //}
-            //if (nowCAIntensity <= maxCAIntensity)
-            //{
-            //    nowCAIntensity += 0.03f;
-            //}
-            //if (nowMBIntensity <= maxMBIntensity)
-            //{
-            //    nowMBIntensity += 0.03f;
-            //}
-            //if (nowBloomIntensity <= maxBloomIntensity)
-            //{
-            //    nowBloomIntensity += 0.03f;
-            //}
-            //Not use Delta Time
-            nowFOV = Mathf.Lerp(nowFOV, maxFOV,                                             0.001f * playerVelocity);
-            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity,                     0.001f * playerVelocity);
-            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity,                     0.001f * playerVelocity);
-            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity,            0.001f * playerVelocity);
-            nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity,   0.1f   * playerVelocity);
+            //NOTE: Don't use Delta Time (Jittering)
+            nowFOV = Mathf.Lerp(nowFOV, maxFOV, 0.001f * playerVelocity);
+            nowCAIntensity = Mathf.Lerp(nowCAIntensity, maxCAIntensity, 0.001f * playerVelocity);
+            nowMBIntensity = Mathf.Lerp(nowMBIntensity, maxMBIntensity, 0.001f * playerVelocity);
+            nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, maxBloomIntensity, 0.001f * playerVelocity);
+            nowRadialBlurIntensity = Mathf.Lerp(nowRadialBlurIntensity, maxRadialBlurIntensity, 0.001f * playerVelocity);
+            nowParticleIntensity = Mathf.Lerp(nowParticleIntensity, maxParticleIntensity, 0.1f * playerVelocity);
+
         }
-        else if(playerVelocity * 15 <= baseFOV)
-        //if (playerHorizontalSpeed * 15 <= baseFOV  (playerHorizontalSpeed - oldPlayerHorizontalSpeed) < 0)
+        else
         {
+            //NOTE: Don't use Delta Time (Jittering)
             if (nowFOV > baseFOV)
             {
-                nowFOV -= 0.7f;
+                nowFOV -= 0.7f * lastingDuration;
             }
             if (nowCAIntensity > baseCAIntensity)
             {
-                nowCAIntensity -= 0.07f;
+                nowCAIntensity -= 0.07f * lastingDuration;
             }
             if (nowMBIntensity > baseMBIntensity)
             {
-                nowMBIntensity -= 0.07f;
+                nowMBIntensity -= 0.07f * lastingDuration;
             }
             if (nowBloomIntensity > baseBloomIntensity)
             {
-                nowBloomIntensity -= 0.07f;
+                nowBloomIntensity -= 0.07f * lastingDuration;
+            }
+            if (nowRadialBlurIntensity > baseRadialBlurIntensity)
+            {
+                nowRadialBlurIntensity -= 0.7f * lastingDuration;
             }
             if (nowParticleIntensity > baseParticleIntensity)
             {
-                nowParticleIntensity -= 0.7f;
+                nowParticleIntensity -= 10f * lastingDuration;
             }
-            //
-            //NOTE: Not use deltatime
-            //nowFOV = Mathf.Lerp(nowFOV, baseFOV, Time.deltaTime * playerHorizontalSpeed);
-            //nowCAIntensity = Mathf.Lerp(nowCAIntensity, baseCAIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowMBIntensity = Mathf.Lerp(nowMBIntensity, baseMBIntensity, Time.deltaTime * playerHorizontalSpeed);
-            //nowBloomIntensity = Mathf.Lerp(nowBloomIntensity, baseBloomIntensity, Time.deltaTime * playerHorizontalSpeed
-            //
         }
-        playerCamera.fieldOfView                = nowFOV;
-        _chromaticAberration.intensity.value    = nowCAIntensity;
-        _motionBlur.intensity.value             = nowMBIntensity;
-        _bloom.intensity.value                  = nowBloomIntensity;
-
+        playerCamera.fieldOfView = nowFOV;
+        _chromaticAberration.intensity.value = nowCAIntensity;
+        _motionBlur.intensity.value = nowMBIntensity;
+        _radialBlur.amount.value = nowRadialBlurIntensity;
+        _bloom.intensity.value = nowBloomIntensity;
+        _speedParticleEmission.rateOverTime = nowParticleIntensity;
     }
+    private void UpsideCameraEffect()
+    {
+        //TODO: Change if Condition
+        //if (playerMovementController.state == MovementState.Doublejump)
+        if (true)
+        {
+            nowVerticalIntensity = Mathf.Lerp(nowVerticalIntensity, maxVerticalIntensity, 0.1f * playerVelocity);
+        }
+        else
+        {
+            if (nowVerticalIntensity > baseVerticalIntensity)
+            {
+                nowVerticalIntensity -= 10f * lastingDuration;
+            }
+        }
+    }
+
 }

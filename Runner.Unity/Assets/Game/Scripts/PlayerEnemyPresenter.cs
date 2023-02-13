@@ -30,5 +30,15 @@ namespace Runner.Game
                 }).AddTo(this);
             }
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("TriggerEnter called from Player");
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            Debug.Log("TriggerStay called from Player");
+        }
     }
 }
