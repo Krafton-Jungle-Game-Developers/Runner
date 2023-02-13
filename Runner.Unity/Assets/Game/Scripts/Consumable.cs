@@ -27,10 +27,17 @@ public class Consumable : MonoBehaviour
     {
         _currentValue = playerController.inventory.GetValueOrDefault(type);
         _currentAbility = playerController.currentAbility;
-        if (_currentAbility == AbilityType.Base)
+
+        if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility != AbilityType.Base)
         {
-            playerController.currentAbility = type;
+            playerController.inventory[playerController.secondaryAbility] = 0;
+            playerController.secondaryAbility = playerController.currentAbility;
         }
+        else if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility == AbilityType.Base)
+        {
+            playerController.secondaryAbility = playerController.currentAbility;
+        }
+        playerController.currentAbility = type;
         _currentValue += 1;
         playerController.inventory[type] = _currentValue;
     }

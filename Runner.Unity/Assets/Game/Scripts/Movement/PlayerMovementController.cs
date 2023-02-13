@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public enum AbilityType { Base, ExtraJump, Dash, Stomp }
+public enum AbilityType { Base, AirJump, Dash, Stomp }
 public enum MovementState { Running, Dashing, Air }
 
 public class PlayerMovementController : MonoBehaviour
@@ -45,12 +45,13 @@ public class PlayerMovementController : MonoBehaviour
 
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
-    [SerializeField] public AbilityType currentAbility = AbilityType.ExtraJump;
-
+    [SerializeField] private KeyCode swapKey;
+    public AbilityType currentAbility;
+    public AbilityType secondaryAbility;
     public InventoryDictionary<AbilityType, int> inventory = new()
     {
         { AbilityType.Base, 0 },
-        { AbilityType.ExtraJump, 0 },
+        { AbilityType.AirJump, 0 },
         { AbilityType.Dash, 0 },
         { AbilityType.Stomp, 0 },
     };
@@ -88,19 +89,6 @@ public class PlayerMovementController : MonoBehaviour
         StateHandler();
         MyInput();
         SpeedControl();
-        if(!_canJump)
-        {
-            _coyoteTimeCounter = 0;
-        }
-
-        if (Input.GetKeyDown(jumpKey))
-        {
-            _jumpBufferCounter = _jumpBufferTime;
-        }
-        else
-        {
-            _jumpBufferCounter -= Time.deltaTime;
-        }
     }
 
     private void FixedUpdate()
@@ -108,7 +96,9 @@ public class PlayerMovementController : MonoBehaviour
         UpdateVelocity();
     }
 
-    // Shoot a raycast and check if there is a object below player model
+    /// <summary>
+    /// Check if there is an object below player model
+    /// </summary>
     private void CheckGrounded()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
@@ -128,8 +118,17 @@ public class PlayerMovementController : MonoBehaviour
     {
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
-/*        float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
-*/
+        float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
+
+        if (Input.GetKeyDown(jumpKey))
+        {
+            _jumpBufferCounter = _jumpBufferTime;
+        }
+        else
+        {
+            _jumpBufferCounter -= Time.deltaTime;
+        }
+
         if (_jumpBufferCounter > 0 && _canJump && _coyoteTimeCounter > 0)
         {
             _canJump = false;
@@ -140,9 +139,19 @@ public class PlayerMovementController : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
+        if (!_canJump)
+        {
+            _coyoteTimeCounter = 0;
+        }
+
         if (Input.GetKeyDown(abilityKey))
         {
             UseAbility();
+        }
+
+        if (Input.GetKeyDown(swapKey))
+        {
+            SwapInventory();
         }
     }
 
@@ -238,6 +247,9 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Limits player speed
+    /// </summary>
     private void SpeedControl()
     {
         Vector3 _flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
@@ -260,6 +272,9 @@ public class PlayerMovementController : MonoBehaviour
         return -end * value * (value - 2) + start;
     }
 
+    /// <summary>
+    /// Exponentially reduce given speed to target speed
+    /// </summary>
     private IEnumerator LerpMoveSpeed()
     {
         float time = 0;
@@ -281,26 +296,45 @@ public class PlayerMovementController : MonoBehaviour
         _keepMomentum = false;
     }
 
+    /// <summary>
+    /// Completely stops the player
+    /// </summary>
     private void ResetMomentum()
     {
         _rb.isKinematic = true;
         _rb.isKinematic = false;
     }
 
+    /// <summary>
+    /// Use current ability if applicable
+    /// </summary>
     public void UseAbility()
     {
+        _currentValue = inventory.GetValueOrDefault(currentAbility);
         switch (currentAbility)
         {
-            case AbilityType.ExtraJump:
-                AirJump();
+            case AbilityType.AirJump:
+                if (_currentValue > 0 && _canJump && !_isGrounded)
+                {
+                    AirJump();
+                    ConsumeInventory(currentAbility, _currentValue);
+                }
                 break;
 
             case AbilityType.Dash:
-                Dash();
+                if (_currentValue > 0 && !_isDashing)
+                {
+                    Dash();
+                    ConsumeInventory(currentAbility, _currentValue);
+                }
                 break;
 
             case AbilityType.Stomp:
-                Stomp();
+                if (_currentValue > 0)
+                {
+                    Stomp();
+                    ConsumeInventory(currentAbility, _currentValue);
+                }
                 break;
         }
     }
@@ -311,41 +345,41 @@ public class PlayerMovementController : MonoBehaviour
         _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
+    private void AirJump()
+    {
+        _canJump = false;
+        Jump();
+
+        Invoke(nameof(ResetJump), jumpCooldown);
+    }
+
     private void ResetJump()
     {
         _canJump = true;
     }
 
-    private void AirJump()
-    {
-        _currentValue = inventory.GetValueOrDefault(AbilityType.ExtraJump);
-        if (_currentValue > 0 && _canJump && !_isGrounded)
-        {
-            _canJump = false;
-            Jump();
-
-            ConsumeInventory(AbilityType.ExtraJump, _currentValue);
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
-    }
-
     private void Dash()
     {
-        _currentValue = inventory.GetValueOrDefault(AbilityType.Dash);
-        if (_currentValue > 0 && !_isDashing)
-        {
-            _isDashing = true;
-            _rb.useGravity = false;
-            _dashTimer = dashDuration;
-            _ySpeedLimit = maxYSpeed;
-            _dashDirection = GetDirection(transform);
-            ResetMomentum();
-
-            ConsumeInventory(AbilityType.Dash, _currentValue);
-            Invoke(nameof(ResetDash), dashDuration);
-        }
+        _isDashing = true;
+        _rb.useGravity = false;
+        _dashTimer = dashDuration;
+        _ySpeedLimit = maxYSpeed;
+        _dashDirection = GetDirection(transform);
+        ResetMomentum();
+        Invoke(nameof(ResetDash), dashDuration);
     }
 
+    private void ResetDash()
+    {
+        _isDashing = false;
+        _rb.useGravity = true;
+        _dashSpeed = Vector3.zero;
+        _ySpeedLimit = 0;
+    }
+
+    /// <summary>
+    /// Return where the player is facing as a Vector3 value (excluding y-axis)
+    /// </summary>
     private Vector3 GetDirection(Transform forwardTransform)
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -360,45 +394,36 @@ public class PlayerMovementController : MonoBehaviour
         return direction.normalized;
     }
 
-    private void ResetDash()
-    {
-        _isDashing = false;
-        _rb.useGravity = true;
-        _dashSpeed = Vector3.zero;
-        _ySpeedLimit = 0;
-    }
-
     private void Stomp()
     {
-        _currentValue = inventory.GetValueOrDefault(AbilityType.Stomp);
-        if (_currentValue > 0)
-        {
-            // Stomp
-            ConsumeInventory(AbilityType.Stomp, _currentValue);
-        }
+        // Stomp
     }
 
+    /// <summary>
+    /// Reduce current ability count by 1
+    /// </summary>
     public void ConsumeInventory(AbilityType type, int value)
     {
         value -= 1;
         inventory[type] = value;
+
         if (value == 0)
         {
-            bool found = false;
+            currentAbility = secondaryAbility;
+            secondaryAbility = AbilityType.Base;
+        }
+    }
 
-            for (int i = 1; i <= inventory.Count - 1; i++)
-            {
-                if (inventory.GetValueOrDefault((AbilityType)i) > 0)
-                {
-                    currentAbility = (AbilityType)i;
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                currentAbility = AbilityType.Base;
-            }
+    /// <summary>
+    /// Change current ability and secondary ability
+    /// </summary>
+    public void SwapInventory()
+    {
+        if (secondaryAbility != AbilityType.Base) 
+        {
+            AbilityType tempAbility = currentAbility;
+            currentAbility = secondaryAbility;
+            secondaryAbility = tempAbility;
         }
     }
 }
