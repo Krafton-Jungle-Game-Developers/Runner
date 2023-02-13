@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements.Experimental;
 
 public class PlayerCameraEffect : MonoBehaviour
 {
+    MovementState state;
+
     [Header("References")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Rigidbody playerRigidbody;
@@ -90,7 +93,7 @@ public class PlayerCameraEffect : MonoBehaviour
     private void CameraEffect()
     {
         //if(isDashing)
-        if (playerVelocity * 15 > baseFOV && playerAcceleration >= 0 )
+        if (state == MovementState.Dashing)
         {
             //if (nowFOV <= maxFOV)
             //{
