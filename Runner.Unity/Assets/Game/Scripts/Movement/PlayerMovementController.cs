@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody _rb;
     private Collider _collider;
 
-    private MovementState state;
+    public MovementState state;
     private MovementState lastState;
 
     private float _playerRadius;
