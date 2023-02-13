@@ -120,6 +120,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indicatorPanel: {fileID: 8009525450615743506}
   elementContainer: {fileID: 6614678430965771842}
+  playerCamera: {fileID: 0}
+  player: {fileID: 0}
+  indicatorRadius: 25
+  indicatorHideDistance: 3
+  indicatorOffscreenBorder: 0.075
+  indicatorScaleRadius: 15
+  indicatorMinScale: 0.8
+  indicatorFadeRadius: 15
+  indicatorMinFade: 0
 --- !u!1 &116869432474567869
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +513,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -557,7 +566,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
