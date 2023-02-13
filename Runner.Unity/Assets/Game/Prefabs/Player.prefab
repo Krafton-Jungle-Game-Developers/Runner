@@ -298,24 +298,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 7609239868009345059}
-  velocity: {x: 0, y: 0, z: 0}
+  playerVelocity: 0
   state: 0
-  acceleration: 13
-  deceleration: 13
+  _hasDrag: 0
+  acceleration: 10
+  deceleration: 10
   _maxSpeed: 15
-  maxYSpeed: 15
-  gravity: 2.5
+  maxYSpeed: 3
+  gravity: 4
   abilityKey: 324
-  currentAbility: 0
+  currentAbility: 2
   inventory:
     keys: 00000000010000000200000003000000
     values: 00000000000000000000000000000000
   jumpKey: 32
-  jumpForce: 25
+  jumpForce: 30
   jumpCooldown: 0.25
-  dashForce: 25
-  dashSpeedChangeFactor: 50
-  dashDuration: 1
+  dashForce: 15
+  dashSpeedChangeFactor: 20
+  dashDuration: 0.5
 --- !u!114 &7609239868517586427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,7 +348,7 @@ MonoBehaviour:
   baseBloomIntensity: 0
   nowBloomIntensity: 0
   maxBloomIntensity: 0.5
-  ps: {fileID: 0}
+  _speedParticleSystem: {fileID: 0}
   baseParticleIntensity: 0
   nowParticleIntensity: 0
   maxParticleIntensity: 50
