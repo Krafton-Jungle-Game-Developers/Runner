@@ -69,6 +69,31 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-5985313469297650719
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6be0f3e2e9c92846ae26c4e591cb156, type: 3}
+  m_Name: RadialBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  amount:
+    m_OverrideState: 1
+    m_Value: 0.57
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  angle:
+    m_OverrideState: 0
+    m_Value: 0
+  iterations:
+    m_OverrideState: 0
+    m_Value: 6
 --- !u!114 &-1698021201240679671
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -128,6 +153,7 @@ MonoBehaviour:
   - {fileID: -7011558710299706105}
   - {fileID: -1395269058104156744}
   - {fileID: -1698021201240679671}
+  - {fileID: -5985313469297650719}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -773,7 +773,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: UNITASK_DOTWEEN_SUPPORT;UNITY_PIPELINE_URP
+    Standalone: UNITASK_DOTWEEN_SUPPORT;UNITY_PIPELINE_URP;UNITASK_TEXTMESHPRO_SUPPORT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
