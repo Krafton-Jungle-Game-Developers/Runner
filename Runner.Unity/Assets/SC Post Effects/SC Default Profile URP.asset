@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74483714bbf784b45b0c9c7c76035dd8, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   useSceneSettings:
     m_OverrideState: 1
     m_Value: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
     m_Value: 0
   fogColor:
     m_OverrideState: 1
-    m_Value: {r: 0.022441708, g: 0, b: 0.101960786, a: 1}
+    m_Value: {r: 0.033627536, g: 0, b: 0.122641504, a: 1}
   fogColorGradient:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Value: 1
   distanceDensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.7
   useRadialDistance:
     m_OverrideState: 1
     m_Value: 1
@@ -272,7 +272,7 @@ MonoBehaviour:
     m_Value: 1
   height:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 30
   heightDensity:
     m_OverrideState: 1
     m_Value: 10
