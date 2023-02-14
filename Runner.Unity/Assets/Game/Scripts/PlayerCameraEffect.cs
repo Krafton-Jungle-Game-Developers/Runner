@@ -111,7 +111,7 @@ public class PlayerCameraEffect : MonoBehaviour
 
     private void FowordCameraEffect()
     {
-        if (playerMovementController.state == MovementState.Dashing)
+        if (playerMovementController.State.Value == MovementState.Dashing)
         //if(playerVelocity * 15 > baseFOV && playerAcceleration > 0)
         {
             //NOTE: Don't use Delta Time (Jittering)
