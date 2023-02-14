@@ -188,11 +188,6 @@ public class PlayerMovementController : MonoBehaviour
         {
             SwapInventory();
         }
-
-        if (Input.GetKeyDown(executeKey))
-        {
-            _onExecuteInput.OnNext(transform.position);
-        }
     }
 
     private void StateHandler()
