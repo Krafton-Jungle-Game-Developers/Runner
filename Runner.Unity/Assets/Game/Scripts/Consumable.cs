@@ -56,5 +56,7 @@ public class Consumable : MonoBehaviour
             value += 1;
             playerController.inventory[type] = value;
         }
+
+        itemCounter.ItemCounterUpdate();
     }
 }
