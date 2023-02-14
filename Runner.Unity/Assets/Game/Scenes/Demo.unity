@@ -5408,7 +5408,7 @@ PrefabInstance:
     - target: {fileID: 116869432474567869, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 116869433240336688, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
@@ -5467,6 +5467,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 658580d6e9a6a4646b7bd7ae50d4cc1d, type: 2}
+    - target: {fileID: 3384849506674691156, guid: 291220c80bf819b4295c9a48d34ef99a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6831434625464986559, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_IsActive
@@ -5635,6 +5640,16 @@ PrefabInstance:
       propertyPath: m_Cameras.Array.data[0]
       value: 
       objectReference: {fileID: 1165901279}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: swapKey
+      value: 113
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
+        type: 3}
+      propertyPath: currentAbility
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
       propertyPath: DecellerationForce

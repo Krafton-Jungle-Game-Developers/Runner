@@ -6,10 +6,12 @@ public class Consumable : MonoBehaviour
 {
     public AbilityType type;
     private PlayerMovementController playerController;
+    private ItemUI itemCounter;
 
     private void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
+        itemCounter = GameObject.FindObjectOfType<ItemUI>();
     }
 
     private void Update()

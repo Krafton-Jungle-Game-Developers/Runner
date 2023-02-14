@@ -55,6 +55,7 @@ public class PlayerMovementController : MonoBehaviour
         { AbilityType.Dash, 0 },
         { AbilityType.Stomp, 0 },
     };
+    private ItemUI itemCounter;
 
     private int _currentValue;
 
@@ -74,12 +75,18 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
 
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
         _playerRadius = GetComponent<CapsuleCollider>().radius;
         _distance = (_playerRadius * 1.414f) + 0.5f;
+    }
+
+    private void Start()
+    {
+        itemCounter = GameObject.FindObjectOfType<ItemUI>();
     }
 
     private void Update()
@@ -412,6 +419,7 @@ public class PlayerMovementController : MonoBehaviour
             currentAbility = secondaryAbility;
             secondaryAbility = AbilityType.Base;
         }
+        itemCounter.ItemCounterUpdate();
     }
 
     /// <summary>
@@ -425,5 +433,6 @@ public class PlayerMovementController : MonoBehaviour
             currentAbility = secondaryAbility;
             secondaryAbility = tempAbility;
         }
+        itemCounter.ItemCounterUpdate();
     }
 }
