@@ -6,29 +6,32 @@ using UniRx.Triggers;
 using UnityEngine;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Air }
+public enum MovementState { Running, Dashing, Stomping, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float playerVelocity;
-    private Vector3 myVelocity;
+    [SerializeField] public float playerVelocity;
+    private Vector3 _myVelocity;
     private Rigidbody _rb;
 
     private ReactiveProperty<MovementState> _state;
     public IReactiveProperty<MovementState> State => _state;
     private MovementState lastState;
-
+    [SerializeField] private LayerMask groundLayer;
+    public MovementState state;
+    private MovementState _lastState;
     private float _playerRadius;
-    private bool _isGrounded;
+    public bool isGrounded;
     private bool _keepMomentum;
-    [SerializeField] private bool _hasDrag;
+    private bool _hasDrag;
+    private bool _canControl = true;
 
     [Space][Header("Movement")]
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
-    [SerializeField] private float _maxSpeed = 15f;
-    [SerializeField] private float maxYSpeed = 15f;
+    [SerializeField] private float maxSpeed = 15f;
+    [SerializeField] private float maxDropSpeed = 30f;
     [SerializeField] private float gravity = 2.5f;
     [Space]
 
@@ -61,6 +64,7 @@ public class PlayerMovementController : MonoBehaviour
         { AbilityType.Dash, 0 },
         { AbilityType.Stomp, 0 },
     };
+    private ItemUI itemCounter;
 
     private int _currentValue;
 
@@ -74,12 +78,18 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float dashForce = 150f;
     [SerializeField] private float dashSpeedChangeFactor = 50f;
     [SerializeField] private float dashDuration = 1f;
+    [SerializeField] private float dashYSpeedLimit = 15f;
     private float _dashTimer;
     private float _speedChangeFactor;
     private Vector3 _dashDirection;
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
 
+    [Space][Header("Stomp")]
+    [SerializeField] private float stompForce;
+    private bool _isStomping = false;
+
+    
     private void Awake()
     {
         _state = new(MovementState.Running);
@@ -87,9 +97,15 @@ public class PlayerMovementController : MonoBehaviour
                                                              .ThrottleFirst(TimeSpan.FromSeconds(0.5f));
         
         _rb = GetComponent<Rigidbody>();
+        cameraTransform = GetComponentInChildren<Camera>().transform;
         _rb.freezeRotation = true;
         _playerRadius = GetComponent<CapsuleCollider>().radius;
         _distance = (_playerRadius * 1.414f) + 0.5f;
+    }
+
+    private void Start()
+    {
+        itemCounter = GameObject.FindObjectOfType<ItemUI>();
     }
 
     private void Update()
@@ -113,50 +129,60 @@ public class PlayerMovementController : MonoBehaviour
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * 0.5f - 0.5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance))
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance, groundLayer))
         {
             Debug.DrawRay(origin, direction * _distance, Color.red);
-            _isGrounded = true;
+            isGrounded = true;
         }
         else
         {
-            _isGrounded = false;
+            isGrounded = false;
         }
     }
 
     private void MyInput()
     {
-        _xInput = Input.GetAxisRaw("Horizontal");
-        _yInput = Input.GetAxisRaw("Vertical");
-        float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
-
-        if (Input.GetKeyDown(jumpKey))
+        if (_canControl)
         {
-            _jumpBufferCounter = _jumpBufferTime;
-        }
-        else
-        {
-            _jumpBufferCounter -= Time.deltaTime;
-        }
+            _xInput = Input.GetAxisRaw("Horizontal");
+            _yInput = Input.GetAxisRaw("Vertical");
+            float num = ((_xInput != 0f && _yInput != 0f) ? 0.7071f : 1f);
 
-        if (_jumpBufferCounter > 0 && _canJump && _coyoteTimeCounter > 0)
-        {
-            _canJump = false;
-            _jumpBufferCounter = 0;
+            if (Input.GetKeyDown(jumpKey))
+            {
+                _jumpBufferCounter = _jumpBufferTime;
+            }
+            else
+            {
+                _jumpBufferCounter -= Time.deltaTime;
+            }
 
-            Jump();
+            if (_jumpBufferCounter > 0 && _coyoteTimeCounter > 0 && _canJump )
+            {
+                _canJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+                _jumpBufferCounter = 0;
+            }
 
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
+            else if (_jumpBufferCounter > 0 && _coyoteTimeCounter > 0 && _canJump && state == MovementState.Air)
+            {
+                _canJump = false;
 
-        if (!_canJump)
-        {
-            _coyoteTimeCounter = 0;
-        }
+                Invoke(nameof(Jump), _jumpBufferCounter);
+                Invoke(nameof(ResetJump), _jumpBufferCounter + jumpCooldown);
+                _jumpBufferCounter = 0;
+            }
 
-        if (Input.GetKeyDown(abilityKey))
-        {
-            UseAbility();
+            if (!_canJump)
+            {
+                _coyoteTimeCounter = 0;
+            }
+
+            if (Input.GetKeyDown(abilityKey))
+            {
+                UseAbility();
+            }
         }
 
         if (Input.GetKeyDown(swapKey))
@@ -181,15 +207,15 @@ public class PlayerMovementController : MonoBehaviour
             _speedChangeFactor = dashSpeedChangeFactor;
         }
 
-        else if (_isGrounded && !_isDashing)
+        else if (_isStomping)
         {
-            _state.Value = MovementState.Running;
+            state = MovementState.Running;
             _hasDrag = true;
             _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
         }
 
-        else if (!_isGrounded && !_isDashing)
+        else if (!isGrounded && !_isDashing)
         {
             _state.Value = MovementState.Air;
             _hasDrag = true;
@@ -198,7 +224,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         bool desiredMoveSpeedChanged = _desiredMoveSpeed != _lastDesiredMoveSpeed;
-        if (lastState == MovementState.Dashing)
+        if (_lastState == MovementState.Dashing)
         {
             _keepMomentum = true;
         }
@@ -217,7 +243,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
-        lastState = _state;
+        lastState = state;
     }
 
     private void UpdateVelocity()
@@ -231,7 +257,14 @@ public class PlayerMovementController : MonoBehaviour
 
             _rb.AddForce(_dashSpeed, ForceMode.Impulse);
         }
-
+        else if (state == MovementState.Stomping)
+        {
+            _rb.velocity = new Vector3(0f + _xInput, 0f - stompForce * 10f, 0f + _yInput);
+            if (isGrounded)
+            {
+                ResetStomp();
+            }
+        }
         // on ground running
         else if(_state.Value == MovementState.Running)
         {
@@ -251,14 +284,14 @@ public class PlayerMovementController : MonoBehaviour
             if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
             {
                 Vector3 direction = GetDirection(cameraTransform);
-                myVelocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-                myVelocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
-                _rb.velocity = new Vector3(myVelocity.x, _rb.velocity.y, myVelocity.z);
+                _myVelocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                _myVelocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
+                _rb.velocity = new Vector3(_myVelocity.x, _rb.velocity.y, _myVelocity.z);
             }
             else
             {
-                myVelocity.x *= 1f / (1f + deceleration * Time.deltaTime);
-                myVelocity.z *= 1f / (1f + deceleration * Time.deltaTime);
+                _myVelocity.x *= 1f / (1f + deceleration * Time.deltaTime);
+                _myVelocity.z *= 1f / (1f + deceleration * Time.deltaTime);
             }
         }
     }
@@ -269,11 +302,17 @@ public class PlayerMovementController : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 _flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        Vector3 _fallSpeed = new Vector3(0f, _rb.velocity.y, 0f);
 
-        if(_flatVelocity.magnitude > _maxSpeed)
+        if (_flatVelocity.magnitude > maxSpeed)
         {
-            Vector3 _limitedVelocity = _flatVelocity.normalized * _maxSpeed;
+            Vector3 _limitedVelocity = _flatVelocity.normalized * maxSpeed;
             _rb.velocity = new Vector3(_limitedVelocity.x, _rb.velocity.y, _limitedVelocity.z);
+        }
+        if (_fallSpeed.magnitude > maxDropSpeed)
+        {
+            Vector3 _limitedFallSpeed = _fallSpeed.normalized * maxDropSpeed;
+            _rb.velocity = new Vector3(_rb.velocity.x, _limitedFallSpeed.y, _rb.velocity.z);
         }
 
         if (_ySpeedLimit != 0 && _rb.velocity.y > _ySpeedLimit)
@@ -330,7 +369,7 @@ public class PlayerMovementController : MonoBehaviour
         switch (currentAbility)
         {
             case AbilityType.AirJump:
-                if (_currentValue > 0 && _canJump && !_isGrounded)
+                if (_currentValue > 0 && _canJump && !isGrounded)
                 {
                     AirJump();
                     ConsumeInventory(currentAbility, _currentValue);
@@ -346,7 +385,7 @@ public class PlayerMovementController : MonoBehaviour
                 break;
 
             case AbilityType.Stomp:
-                if (_currentValue > 0)
+                if (_currentValue > 0 && !_isStomping)
                 {
                     Stomp();
                     ConsumeInventory(currentAbility, _currentValue);
@@ -378,8 +417,9 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = true;
         _rb.useGravity = false;
+        _canControl = false;
         _dashTimer = dashDuration;
-        _ySpeedLimit = maxYSpeed;
+        _ySpeedLimit = dashYSpeedLimit;
         _dashDirection = GetDirection(transform);
         ResetMomentum();
         Invoke(nameof(ResetDash), dashDuration);
@@ -389,6 +429,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = false;
         _rb.useGravity = true;
+        _canControl = true;
         _dashSpeed = Vector3.zero;
         _ySpeedLimit = 0;
     }
@@ -412,12 +453,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Stomp()
     {
-        // Stomp
-    }
-
-    private void Execute()
-    {
-        Debug.Log($"Execute called from: {gameObject.name}");
+        _isStomping = true;
+        _rb.useGravity = false;
+        ResetMomentum();
     }
 
     /// <summary>
@@ -433,6 +471,7 @@ public class PlayerMovementController : MonoBehaviour
             currentAbility = secondaryAbility;
             secondaryAbility = AbilityType.Base;
         }
+        itemCounter.ItemCounterUpdate();
     }
 
     /// <summary>
@@ -446,5 +485,6 @@ public class PlayerMovementController : MonoBehaviour
             currentAbility = secondaryAbility;
             secondaryAbility = tempAbility;
         }
+        itemCounter.ItemCounterUpdate();
     }
 }

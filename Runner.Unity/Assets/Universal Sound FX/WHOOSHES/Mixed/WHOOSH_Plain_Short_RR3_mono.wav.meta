@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 9abbc43e9c6c5de40a2f6170d586219c
+labels:
+- usfx
+- imphenzia
+- mono
+- whoosh
+- swoosh
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
