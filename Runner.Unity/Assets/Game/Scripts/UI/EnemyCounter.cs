@@ -10,49 +10,50 @@ using UnityEngine;
 /// </summary>
 public class EnemyCounter : MonoBehaviour
 {
-    [SerializeField] private TMP_Text enemyCounter;
+    [SerializeField] private TMP_Text SlayCounterText;
+    [SerializeField] private TMP_Text TotalEnemyText;
+    
 
     // ============= Enemy Counter Variables ==============
     private int allEnemyNumInScene;
     private int killedEnemyNum;
-    
+
     // ====================================================
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        killedEnemyNum= 0;
+        killedEnemyNum = 0;
         allEnemyNumInScene = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        enemyCounter.text = killedEnemyNum.ToString() 
-                            + "/" 
-                            + allEnemyNumInScene.ToString(); 
+        SlayCounterText.text = killedEnemyNum.ToString();
+        TotalEnemyText.text = allEnemyNumInScene.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /* if (killedEnemyNum == allEnemyNumInScene)
+        /*if (killedEnemyNum == allEnemyNumInScene)
         {
             AllEnemyKill();
-        }
-        */
+        }*/
+
     }
 
     // ============== Enemy Counter Methods ================
-    
+
     // Method is called when player kills Tag : Enemy
-    private void KillCountUp() 
+    private void KillCountUp()
     {
         killedEnemyNum++;
-        enemyCounter.text = killedEnemyNum.ToString()
-                            + "/"
-                            + allEnemyNumInScene.ToString();
+        SlayCounterText.text = killedEnemyNum.ToString();
+        TotalEnemyText.text = allEnemyNumInScene.ToString();
     }
 
-    private void AllEnemyKill()
+    /*private void AllEnemyKill()
     {
-
-    }
+        enemyCounter.text = "ALL KILL!";
+        enemyCounter.color = Color.green;
+    }*/
 
 
     // --- End of Enemy Counter Methods ---
