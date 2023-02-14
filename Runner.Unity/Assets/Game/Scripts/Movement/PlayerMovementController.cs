@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UniRx;
 using System;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Stomping, Air }
+public enum MovementState { Running, Dashing, Stomping, Boosting, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -14,25 +17,29 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _myVelocity;
     private Rigidbody _rb;
 
+    private ReactiveProperty<MovementState> _state;
+    public IReactiveProperty<MovementState> State => _state;
+    private MovementState lastState;
     [SerializeField] private LayerMask groundLayer;
     public MovementState state;
     public MovementState lastState;
     private IObservable<MovementState> _onMovementStateChange;
     public IObservable<MovementState> OnMovementStateChangeObservable => _onMovementStateChange;
 
+    [HideInInspector] public bool _keepMomentum;
+    [HideInInspector] public bool isBoosting = false;
+    private MovementState _lastState;
     private float _playerRadius;
     public bool isGrounded;
-    private bool _keepMomentum;
     private bool _hasDrag;
     private bool _canControl = true;
 
     [Space][Header("Movement")]
-    [SerializeField] private float acceleration = 13f;
-    [SerializeField] private float deceleration = 13f;
-    [SerializeField] private float maxSpeed = 15f;
+    public float acceleration = 13f;
+    public float deceleration = 13f;
+    public float maxSpeed = 15f;
     [SerializeField] private float maxDropSpeed = 30f;
     [SerializeField] private float gravity = 2.5f;
-    [Space]
 
     private float _coyoteTime = 0.2f;
     private float _coyoteTimeCounter;
@@ -50,6 +57,10 @@ public class PlayerMovementController : MonoBehaviour
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
     [SerializeField] private KeyCode swapKey;
+    [SerializeField] private KeyCode executeKey = KeyCode.Mouse0;
+    private Subject<Vector3> _onExecuteInput;
+    public IObservable<Vector3> OnExecuteInputObservable => _onExecuteInput;
+
     public AbilityType currentAbility;
     public AbilityType secondaryAbility;
     public InventoryDictionary<AbilityType, int> inventory = new()
@@ -64,7 +75,7 @@ public class PlayerMovementController : MonoBehaviour
     private int _currentValue;
 
     [Space][Header("Jump")]
-    [SerializeField] private KeyCode jumpKey;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     [SerializeField] private float jumpForce = 25;
     [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
@@ -74,8 +85,8 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float dashSpeedChangeFactor = 50f;
     [SerializeField] private float dashDuration = 1f;
     [SerializeField] private float dashYSpeedLimit = 15f;
+    [HideInInspector] public float _speedChangeFactor;
     private float _dashTimer;
-    private float _speedChangeFactor;
     private Vector3 _dashDirection;
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
@@ -98,7 +109,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Start()
     {
-        itemCounter = GameObject.FindObjectOfType<ItemUI>();
+        itemCounter = FindObjectOfType<ItemUI>();
     }
 
     private void Update()
@@ -203,7 +214,7 @@ public class PlayerMovementController : MonoBehaviour
             _yInput *= 0.1f;
         }
 
-        else if (isGrounded && !_isDashing)
+        else if (isGrounded && !_isDashing && !isBoosting)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -216,6 +227,14 @@ public class PlayerMovementController : MonoBehaviour
             state = MovementState.Air;
             _hasDrag = true;
             _coyoteTimeCounter -= Time.deltaTime;
+            _desiredMoveSpeed = acceleration;
+        }
+
+        else if (isBoosting)
+        {
+            state = MovementState.Boosting;
+            _hasDrag = true;
+            _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
         }
 
@@ -246,7 +265,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
 
-        if (state == MovementState.Dashing)
+        if (_state.Value == MovementState.Dashing)
         {
             _dashSpeed =  _dashDirection * EaseOutQuad(dashForce * 0f * 10f, dashForce * 10f, _dashTimer / dashDuration);
             _dashTimer -= 1f * Time.deltaTime;
@@ -262,16 +281,20 @@ public class PlayerMovementController : MonoBehaviour
             }
         }
         // on ground running
-        else if(state == MovementState.Running)
+        else if(_state.Value == MovementState.Running)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         // in air
-        else if(state == MovementState.Air)
+        else if(_state.Value == MovementState.Air)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
             _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
+        }
+        else if(state == MovementState.Boosting)
+        {
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         if (_hasDrag)
@@ -429,6 +452,11 @@ public class PlayerMovementController : MonoBehaviour
         _canControl = true;
         _dashSpeed = Vector3.zero;
         _ySpeedLimit = 0;
+    }
+
+    private void Execute()
+    {
+        Debug.Log($"Excute Called from {gameObject.name}!");
     }
 
     /// <summary>
