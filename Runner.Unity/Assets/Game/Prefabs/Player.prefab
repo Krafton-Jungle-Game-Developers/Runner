@@ -142,7 +142,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 100
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -307,7 +307,9 @@ MonoBehaviour:
   maxYSpeed: 3
   gravity: 4
   abilityKey: 324
+  swapKey: 0
   currentAbility: 2
+  secondaryAbility: 0
   inventory:
     keys: 00000000010000000200000003000000
     values: 00000000000000000000000000000000
@@ -333,6 +335,7 @@ MonoBehaviour:
   playerRigidbody: {fileID: 7609239868517586424}
   globalVolume: {fileID: 0}
   UAC: {fileID: 2842476489524682591}
+  lastingDuration: 1
   playerVelocity: 0
   oldPlayerVelocity: 0
   playerAcceleration: 0
@@ -348,10 +351,17 @@ MonoBehaviour:
   baseBloomIntensity: 0
   nowBloomIntensity: 0
   maxBloomIntensity: 0.5
+  baseRadialBlurIntensity: 0
+  nowRadialBlurIntensity: 0
+  maxRadialBlurIntensity: 0.5
   _speedParticleSystem: {fileID: 0}
+  _verticalParticleSystem: {fileID: 0}
   baseParticleIntensity: 0
   nowParticleIntensity: 0
   maxParticleIntensity: 50
+  baseVerticalIntensity: 0
+  nowVerticalIntensity: 0
+  maxVerticalIntensity: 100
 --- !u!114 &2045490481757638490
 MonoBehaviour:
   m_ObjectHideFlags: 0
