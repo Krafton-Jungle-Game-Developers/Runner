@@ -93,8 +93,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         _state = new(MovementState.Running);
-        _onExecuteInput = this.UpdateAsObservable().Where(_ => Input.GetKeyDown(executeKey))
-                                                             .ThrottleFirst(TimeSpan.FromSeconds(0.5f));
+        
         
         _rb = GetComponent<Rigidbody>();
         cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -193,7 +192,6 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyDown(executeKey))
         {
             _onExecuteInput.OnNext(transform.position);
-            Execute();
         }
     }
 
@@ -208,6 +206,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         else if (_isStomping)
+        {
+            state = MovementState.Stomping;
+            _hasDrag = false;
+            _xInput = 0.1f;
+            _yInput = 0.1f;
+        }
+
+        else if (isGrounded && !_isDashing)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -455,6 +461,13 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isStomping = true;
         _rb.useGravity = false;
+        ResetMomentum();
+    }
+
+    private void ResetStomp()
+    {
+        _isStomping = false;
+        _rb.useGravity = true;
         ResetMomentum();
     }
 

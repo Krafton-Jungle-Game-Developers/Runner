@@ -22,16 +22,9 @@ namespace Runner.Game
             _enemyModels = enemyModels;
         }
 
-        private void Awake()
+       /* private void Awake()
         {
-            _playerController = GetComponent<PlayerMovementController>();
-            _canExecute = new(true);
-            
-            var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
-                                                    .Take(1));
-            Observable.ZipLatest(_playerController.OnExecuteInputObservable,
-                    merged)
-                .Subscribe(_ => _);
-        }
+           
+        }*/
     }
 }
