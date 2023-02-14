@@ -149,7 +149,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -299,18 +299,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d8517a7aae81f4b8b1080f3727bd49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 7609239868009345059}
   playerVelocity: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   state: 0
   isGrounded: 0
   _hasDrag: 0
   acceleration: 10
   deceleration: 10
-  _maxSpeed: 15
-  maxYSpeed: 3
-  gravity: 4
+  maxSpeed: 15
+  maxDropSpeed: 30
+  gravity: 5
   abilityKey: 324
-  currentAbility: 2
+  swapKey: 113
+  currentAbility: 0
+  secondaryAbility: 0
   inventory:
     keys: 00000000010000000200000003000000
     values: 00000000000000000000000000000000
@@ -320,6 +324,8 @@ MonoBehaviour:
   dashForce: 15
   dashSpeedChangeFactor: 20
   dashDuration: 0.5
+  dashYSpeedLimit: 3
+  stompForce: 10
 --- !u!114 &7609239868517586427
 MonoBehaviour:
   m_ObjectHideFlags: 0
