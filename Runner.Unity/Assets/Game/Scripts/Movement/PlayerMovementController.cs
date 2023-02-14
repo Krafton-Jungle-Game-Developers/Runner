@@ -94,6 +94,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _state = new(MovementState.Running);
         
+        
         _rb = GetComponent<Rigidbody>();
         cameraTransform = GetComponentInChildren<Camera>().transform;
         _rb.freezeRotation = true;
@@ -191,7 +192,6 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKeyDown(executeKey))
         {
             _onExecuteInput.OnNext(transform.position);
-            Execute();
         }
     }
 

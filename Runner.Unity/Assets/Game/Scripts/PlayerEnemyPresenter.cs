@@ -22,7 +22,7 @@ namespace Runner.Game
             _enemyModels = enemyModels;
         }
 
-        private void Awake()
+       /* private void Awake()
         {
             //_playerController = GetComponent<PlayerMovementController>();
             //_canExecute = new(true);
