@@ -7,8 +7,6 @@ TagManager:
   - CameraSetting
   - CameraEffect
   - TimerText
-  - Enemy
-  - EnemyCounter
   layers:
   - Default
   - TransparentFX
@@ -16,8 +14,8 @@ TagManager:
   - ground
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 
