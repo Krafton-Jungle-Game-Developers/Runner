@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements.Experimental;
-using UnityEngine.Playables;
 using SCPE;
 
 public class PlayerCameraEffect : MonoBehaviour

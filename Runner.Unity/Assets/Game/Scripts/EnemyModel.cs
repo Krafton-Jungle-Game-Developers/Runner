@@ -1,8 +1,6 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UniRx;
-using UniRx.Triggers;
 using Runner.UI;
 using Zenject;
 
@@ -10,11 +8,11 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
-        private PlayerEnemyPresenter _player;
+        private PlayerAbilityController _player;
         private HUDPresenter _HUD;
 
         [Inject]
-        private void Construct(PlayerEnemyPresenter player, HUDPresenter HUD)
+        private void Construct(PlayerAbilityController player, HUDPresenter HUD)
         {
             _player = player;
             _HUD = HUD;
