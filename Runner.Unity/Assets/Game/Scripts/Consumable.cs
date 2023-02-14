@@ -1,11 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Consumable : MonoBehaviour
 {
     public AbilityType type;
-    private int _currentValue;
-    private AbilityType _currentAbility;
     private PlayerMovementController playerController;
 
     private void Start()
@@ -25,20 +24,35 @@ public class Consumable : MonoBehaviour
     }
     private void AddToInventory(AbilityType type)
     {
-        _currentValue = playerController.inventory.GetValueOrDefault(type);
-        _currentAbility = playerController.currentAbility;
+        AbilityType currentAbility = playerController.currentAbility;
+        AbilityType secondaryAbility = playerController.secondaryAbility;
+        int value = playerController.inventory.GetValueOrDefault(type);
 
-        if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility != AbilityType.Base)
+        if (currentAbility == type)
         {
-            playerController.inventory[playerController.secondaryAbility] = 0;
-            playerController.secondaryAbility = playerController.currentAbility;
+            value += 1;
+            playerController.inventory[type] = value;
         }
-        else if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility == AbilityType.Base)
+        else if (secondaryAbility == type)
         {
-            playerController.secondaryAbility = playerController.currentAbility;
+            value += 1;
+            playerController.inventory[type] = value;
+            playerController.SwapInventory();
         }
-        playerController.currentAbility = type;
-        _currentValue += 1;
-        playerController.inventory[type] = _currentValue;
+        else
+        {
+            if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility != AbilityType.Base)
+            {
+                playerController.inventory[secondaryAbility] = 0;
+                playerController.secondaryAbility = currentAbility;
+            }
+            else if (playerController.currentAbility != AbilityType.Base && playerController.secondaryAbility == AbilityType.Base)
+            {
+                playerController.secondaryAbility = currentAbility;
+            }
+            playerController.currentAbility = type;
+            value += 1;
+            playerController.inventory[type] = value;
+        }
     }
 }
