@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
@@ -14,7 +15,8 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 myVelocity;
     private Rigidbody _rb;
 
-    [SerializeField] public MovementState state;
+    private ReactiveProperty<MovementState> _state;
+    public IReactiveProperty<MovementState> State => _state;
     private MovementState lastState;
 
     private float _playerRadius;
@@ -46,6 +48,10 @@ public class PlayerMovementController : MonoBehaviour
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
     [SerializeField] private KeyCode swapKey;
+    [SerializeField] private KeyCode executeKey = KeyCode.Mouse0;
+    private Subject<Vector3> _onExecuteInput;
+    public IObservable<Vector3> OnExecuteInputObservable => _onExecuteInput;
+
     public AbilityType currentAbility;
     public AbilityType secondaryAbility;
     public InventoryDictionary<AbilityType, int> inventory = new()
@@ -59,7 +65,7 @@ public class PlayerMovementController : MonoBehaviour
     private int _currentValue;
 
     [Space][Header("Jump")]
-    [SerializeField] private KeyCode jumpKey;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     [SerializeField] private float jumpForce = 25;
     [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
@@ -76,6 +82,10 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Awake()
     {
+        _state = new(MovementState.Running);
+        _onExecuteInput = this.UpdateAsObservable().Where(_ => Input.GetKeyDown(executeKey))
+                                                             .ThrottleFirst(TimeSpan.FromSeconds(0.5f));
+        
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
         _playerRadius = GetComponent<CapsuleCollider>().radius;
@@ -153,13 +163,19 @@ public class PlayerMovementController : MonoBehaviour
         {
             SwapInventory();
         }
+
+        if (Input.GetKeyDown(executeKey))
+        {
+            _onExecuteInput.OnNext(transform.position);
+            Execute();
+        }
     }
 
     private void StateHandler()
     {
         if (_isDashing)
         {
-            state = MovementState.Dashing;
+            _state.Value = MovementState.Dashing;
             _hasDrag = false;
             _desiredMoveSpeed = dashForce * 10f;
             _speedChangeFactor = dashSpeedChangeFactor;
@@ -167,7 +183,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (_isGrounded && !_isDashing)
         {
-            state = MovementState.Running;
+            _state.Value = MovementState.Running;
             _hasDrag = true;
             _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
@@ -175,7 +191,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (!_isGrounded && !_isDashing)
         {
-            state = MovementState.Air;
+            _state.Value = MovementState.Air;
             _hasDrag = true;
             _coyoteTimeCounter -= Time.deltaTime;
             _desiredMoveSpeed = acceleration;
@@ -201,14 +217,14 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
-        lastState = state;
+        lastState = _state;
     }
 
     private void UpdateVelocity()
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
 
-        if (state == MovementState.Dashing)
+        if (_state.Value == MovementState.Dashing)
         {
             _dashSpeed =  _dashDirection * EaseOutQuad(dashForce * 0f * 10f, dashForce * 10f, _dashTimer / dashDuration);
             _dashTimer -= 1f * Time.deltaTime;
@@ -217,13 +233,13 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         // on ground running
-        else if(state == MovementState.Running)
+        else if(_state.Value == MovementState.Running)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         // in air
-        else if(state == MovementState.Air)
+        else if(_state.Value == MovementState.Air)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
             _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
@@ -397,6 +413,11 @@ public class PlayerMovementController : MonoBehaviour
     private void Stomp()
     {
         // Stomp
+    }
+
+    private void Execute()
+    {
+        Debug.Log($"Execute called from: {gameObject.name}");
     }
 
     /// <summary>
