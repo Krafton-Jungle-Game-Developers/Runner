@@ -222,8 +222,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   fogColor:
-    m_OverrideState: 0
-    m_Value: {r: 0.76, g: 0.94, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.033627536, g: 0, b: 0.122641504, a: 1}
   fogColorGradient:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -235,13 +235,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   distanceFog:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   distanceDensity:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.7
   useRadialDistance:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   skyboxInfluence:
     m_OverrideState: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
     m_Value: 1
   useLightIntensity:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0
   lightColor:
     m_OverrideState: 0
     m_Value: {r: 1, g: 0.89, b: 0.55, a: 1}
@@ -272,10 +272,10 @@ MonoBehaviour:
     m_Value: 1
   height:
     m_OverrideState: 1
-    m_Value: 6.94
+    m_Value: 30
   heightDensity:
     m_OverrideState: 1
-    m_Value: 10.4
+    m_Value: 10
   heightFogNoise:
     m_OverrideState: 1
     m_Value: 1
