@@ -18,7 +18,7 @@ public class PlayerSoundController : MonoBehaviour
         audioSource.volume = Random.Range(0.8f, 1);
         audioSource.pitch = Random.Range(0.8f, 1.1f);
 
-        _movementController.OnMovementStateChangeObservable.Subscribe(state => 
+        _movementController.State.Subscribe(state => 
         {
             Debug.Log(state.ToString());
             PlayMatchingClip(state);

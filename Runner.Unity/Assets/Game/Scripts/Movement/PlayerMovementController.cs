@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UniRx;
-using System;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
 public enum MovementState { Running, Dashing, Stomping, Boosting, Air }
@@ -19,12 +16,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private ReactiveProperty<MovementState> _state;
     public IReactiveProperty<MovementState> State => _state;
-    private MovementState lastState;
     [SerializeField] private LayerMask groundLayer;
     public MovementState state;
     public MovementState lastState;
-    private IObservable<MovementState> _onMovementStateChange;
-    public IObservable<MovementState> OnMovementStateChangeObservable => _onMovementStateChange;
 
     [HideInInspector] public bool _keepMomentum;
     [HideInInspector] public bool isBoosting = false;
@@ -98,7 +92,7 @@ public class PlayerMovementController : MonoBehaviour
     
     private void Awake()
     {
-        _onMovementStateChange = this.ObserveEveryValueChanged(_ => this.state);
+        _state = new(MovementState.Running);
 
         _rb = GetComponent<Rigidbody>();
         cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -169,7 +163,10 @@ public class PlayerMovementController : MonoBehaviour
                 _jumpBufferCounter = 0;
             }
 
-            else if (_jumpBufferCounter > 0 && _coyoteTimeCounter > 0 && _canJump && state == MovementState.Air)
+            else if (_jumpBufferCounter > 0
+                  && _coyoteTimeCounter > 0
+                  && _canJump
+                  && _state.Value == MovementState.Air)
             {
                 _canJump = false;
 
@@ -199,7 +196,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (_isDashing)
         {
-            state = MovementState.Dashing;
+            _state.Value = MovementState.Dashing;
 
             _hasDrag = false;
             _desiredMoveSpeed = dashForce * 10f;
@@ -208,7 +205,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (_isStomping)
         {
-            state = MovementState.Stomping;
+            _state.Value = MovementState.Stomping;
             _hasDrag = false;
             _xInput *= 0.1f;
             _yInput *= 0.1f;
@@ -216,7 +213,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (isGrounded && !_isDashing && !isBoosting)
         {
-            state = MovementState.Running;
+            _state.Value = MovementState.Running;
             _hasDrag = true;
             _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
@@ -224,7 +221,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (!isGrounded && !_isDashing)
         {
-            state = MovementState.Air;
+            _state.Value = MovementState.Air;
             _hasDrag = true;
             _coyoteTimeCounter -= Time.deltaTime;
             _desiredMoveSpeed = acceleration;
@@ -232,7 +229,7 @@ public class PlayerMovementController : MonoBehaviour
 
         else if (isBoosting)
         {
-            state = MovementState.Boosting;
+            _state.Value = MovementState.Boosting;
             _hasDrag = true;
             _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
@@ -258,7 +255,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
-        lastState = state;
+        lastState = _state.Value;
     }
 
     private void UpdateVelocity()
@@ -272,7 +269,7 @@ public class PlayerMovementController : MonoBehaviour
 
             _rb.AddForce(_dashSpeed, ForceMode.Impulse);
         }
-        else if (state == MovementState.Stomping)
+        else if (_state.Value == MovementState.Stomping)
         {
             _rb.velocity = new Vector3(0f + _xInput, 0f - stompForce * 10f, 0f + _yInput);
             if (isGrounded)
@@ -292,7 +289,7 @@ public class PlayerMovementController : MonoBehaviour
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
             _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
         }
-        else if(state == MovementState.Boosting)
+        else if(_state.Value == MovementState.Boosting)
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
@@ -415,7 +412,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Jump()
     {
-
         _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
         _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
