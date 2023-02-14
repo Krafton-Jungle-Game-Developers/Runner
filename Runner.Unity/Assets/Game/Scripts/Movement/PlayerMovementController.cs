@@ -20,13 +20,11 @@ public class PlayerMovementController : MonoBehaviour
     private MovementState lastState;
     [SerializeField] private LayerMask groundLayer;
     public MovementState state;
-    [SerializeField] private LayerMask groundLayer;
     [HideInInspector] public bool _keepMomentum;
     [HideInInspector] public bool isBoosting = false;
     private MovementState _lastState;
     private float _playerRadius;
     public bool isGrounded;
-    private bool _keepMomentum;
     private bool _hasDrag;
     private bool _canControl = true;
 
@@ -95,8 +93,6 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         _state = new(MovementState.Running);
-        _onExecuteInput = this.UpdateAsObservable().Where(_ => Input.GetKeyDown(executeKey))
-                                                             .ThrottleFirst(TimeSpan.FromSeconds(0.5f));
         
         _rb = GetComponent<Rigidbody>();
         cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -107,7 +103,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Start()
     {
-        itemCounter = GameObject.FindObjectOfType<ItemUI>();
+        itemCounter = FindObjectOfType<ItemUI>();
     }
 
     private void Update()
@@ -217,7 +213,7 @@ public class PlayerMovementController : MonoBehaviour
             _yInput *= 0.1f;
         }
 
-        else if (_isGrounded && !_isDashing && !isBoosting)
+        else if (isGrounded && !_isDashing && !isBoosting)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -456,6 +452,11 @@ public class PlayerMovementController : MonoBehaviour
         _ySpeedLimit = 0;
     }
 
+    private void Execute()
+    {
+        Debug.Log($"Excute Called from {gameObject.name}!");
+    }
+
     /// <summary>
     /// Return where the player is facing as a Vector3 value (excluding y-axis)
     /// </summary>
@@ -477,6 +478,13 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isStomping = true;
         _rb.useGravity = false;
+        ResetMomentum();
+    }
+
+    private void ResetStomp()
+    {
+        _isStomping = false;
+        _rb.useGravity = true;
         ResetMomentum();
     }
 

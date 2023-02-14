@@ -24,14 +24,14 @@ namespace Runner.Game
 
         private void Awake()
         {
-            _playerController = GetComponent<PlayerMovementController>();
-            _canExecute = new(true);
+            //_playerController = GetComponent<PlayerMovementController>();
+            //_canExecute = new(true);
             
-            var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
-                                                    .Take(1));
-            Observable.ZipLatest(_playerController.OnExecuteInputObservable,
-                    merged)
-                .Subscribe(_ => _);
+            //var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
+            //                                        .Take(1));
+            //Observable.ZipLatest(_playerController.OnExecuteInputObservable,
+            //        merged)
+            //    .Subscribe(_ => _);
         }
     }
 }
