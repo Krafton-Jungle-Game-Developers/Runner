@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: b2c84d90d4d2b5149bd8305ef8d0a02f
+labels:
+- imphenzia
+- usfx
+- mono
+- voice
+- scream
+- male
+- shout
+- fear
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

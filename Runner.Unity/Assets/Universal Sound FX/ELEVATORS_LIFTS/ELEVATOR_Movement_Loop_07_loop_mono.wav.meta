@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: e9a9c10799d6c5e4b94d2e21db3d20a9
+labels:
+- usfx
+- imphenzia
+- elevator
+- movement
+- lift
+- motor
+- engine
+- elevate
+- loop
+- mono
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

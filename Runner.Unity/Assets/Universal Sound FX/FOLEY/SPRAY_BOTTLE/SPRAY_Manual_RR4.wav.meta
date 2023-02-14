@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: d4aaef371d43c6e4c9217b7dc9d8ea7d
+labels:
+- usfx
+- imphenzia
+- stereo
+- spray
+- bottle
+- foley
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

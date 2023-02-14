@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 0c33c3429c63a2d449932f781c1f5320
+labels:
+- imphenzia
+- usfx
+- stereo
+- loop
+- construction
+- vehicle
+- digger
+- truck
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

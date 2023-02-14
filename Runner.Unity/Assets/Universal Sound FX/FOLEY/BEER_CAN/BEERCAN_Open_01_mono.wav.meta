@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: a0e86c4a5761acf4d91de2eb3b85c51f
+labels:
+- imphenzia
+- usfx
+- mono
+- beercan
+- can
+- metal
+- open
+- drink
+- thirst
+- thirsty
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

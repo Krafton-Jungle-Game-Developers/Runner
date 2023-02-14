@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: f29e2f9f959a05c4db0504ee43411b83
+labels:
+- imphenzia
+- usfx
+- mono
+- device
+- camera
+- dslr
+- shutter
+- photo
+- picture
+- snap
+- click
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

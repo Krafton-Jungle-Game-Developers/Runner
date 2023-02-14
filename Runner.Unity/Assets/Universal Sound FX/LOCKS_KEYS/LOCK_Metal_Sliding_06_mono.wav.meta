@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: fa14c5afb4349804cada5f0c89a03dbd
+labels:
+- imphenzia
+- usfx
+- mono
+- lock
+- metal
+- sliding
+- slide
+- unlock
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: f11b3a6cbe9ab824cba2561300953fb9
+labels:
+- usfx
+- imphenzia
+- sci-fi
+- scifi
+- door
+- close
+- mono
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

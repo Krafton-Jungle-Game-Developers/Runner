@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 90ac78317c54d4a4ba681017b21600d4
+labels:
+- usfx
+- imphenzia
+- mono
+- lift
+- elevator
+- motor
+- engine
+- generator
+- machine
+- platform
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: ee47d2d7d21c69044894baa7a8701255
+labels:
+- usfx
+- imphenzia
+- mono
+- balloon
+- air
+- blow
+- toy
+- party
+- rub
+- squeek
+- rub
+- handle
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

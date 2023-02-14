@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 4941cc7cf4669fc45bf85bccb37734cc
+labels:
+- usfx
+- imphenzia
+- foley
+- paper
+- mono
+- rip
+- tear
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

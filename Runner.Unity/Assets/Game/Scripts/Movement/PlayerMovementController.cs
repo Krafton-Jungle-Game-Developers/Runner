@@ -10,7 +10,7 @@ public enum MovementState { Running, Dashing, Air }
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float playerVelocity;
+    [SerializeField] public float playerVelocity;
     private Vector3 myVelocity;
     private Rigidbody _rb;
 
@@ -18,7 +18,7 @@ public class PlayerMovementController : MonoBehaviour
     private MovementState lastState;
 
     private float _playerRadius;
-    private bool _isGrounded;
+    public bool isGrounded;
     private bool _keepMomentum;
     [SerializeField] private bool _hasDrag;
 
@@ -116,11 +116,11 @@ public class PlayerMovementController : MonoBehaviour
         if (Physics.Raycast(origin, direction, out RaycastHit hit, _distance))
         {
             Debug.DrawRay(origin, direction * _distance, Color.red);
-            _isGrounded = true;
+            isGrounded = true;
         }
         else
         {
-            _isGrounded = false;
+            isGrounded = false;
         }
     }
 
@@ -156,7 +156,7 @@ public class PlayerMovementController : MonoBehaviour
             _speedChangeFactor = dashSpeedChangeFactor;
         }
 
-        else if (_isGrounded && !_isDashing)
+        else if (isGrounded && !_isDashing)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -164,7 +164,7 @@ public class PlayerMovementController : MonoBehaviour
             _desiredMoveSpeed = acceleration;
         }
 
-        else if (!_isGrounded && !_isDashing)
+        else if (!isGrounded && !_isDashing)
         {
             state = MovementState.Air;
             _hasDrag = true;
@@ -319,7 +319,7 @@ public class PlayerMovementController : MonoBehaviour
     private void AirJump()
     {
         _currentValue = inventory.GetValueOrDefault(AbilityType.ExtraJump);
-        if (_currentValue > 0 && _canJump && !_isGrounded)
+        if (_currentValue > 0 && _canJump && !isGrounded)
         {
             _canJump = false;
             Jump();

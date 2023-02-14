@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 3f9dff22df5a3b240bb94832d861952b
+labels:
+- imphenzia
+- usfx
+- mono
+- foley
+- stick
+- fence
+- wood
+- metal
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 22ed181b45729f740a5971a9aa63d0f2
+labels:
+- usfx
+- imphenzia
+- stereo
+- loop
+- lawnmower
+- lawn
+- mower
+- cut
+- cutting
+- grass
+- garden
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

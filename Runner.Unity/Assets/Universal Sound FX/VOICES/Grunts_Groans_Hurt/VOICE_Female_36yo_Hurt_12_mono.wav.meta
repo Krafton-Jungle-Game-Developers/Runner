@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: becd5f58e9b30ec4eb2cd91eee813d37
+labels:
+- imphenzia
+- usfx
+- mono
+- voice
+- woman
+- female
+- girl
+- hurt
+- pain
+- ouch
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

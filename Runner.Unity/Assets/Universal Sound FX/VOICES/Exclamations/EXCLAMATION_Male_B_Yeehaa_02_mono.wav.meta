@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 13abd0e9260e2bc4889b6420e3d64bd0
+labels:
+- imphenzia
+- usfx
+- mono
+- voice
+- male
+- exclamation
+- happy
+- yeehaa
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

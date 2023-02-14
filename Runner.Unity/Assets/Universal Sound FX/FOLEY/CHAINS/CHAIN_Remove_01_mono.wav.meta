@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 21d35e12357c2d04d96f2dcd2b29c5b4
+labels:
+- imphenzia
+- usfx
+- mono
+- chain
+- metal
+- links
+- rattle
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

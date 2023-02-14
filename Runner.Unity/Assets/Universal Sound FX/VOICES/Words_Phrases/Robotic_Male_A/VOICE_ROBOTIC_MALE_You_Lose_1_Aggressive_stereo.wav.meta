@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 2ee4e4742efeec449ade36a3c14c80d0
+labels:
+- usfx
+- imphenzia
+- voice
+- male
+- stereo
+- robot
+- robotic
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

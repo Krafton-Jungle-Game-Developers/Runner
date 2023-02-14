@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: 7d4011888f31cbf4a8e4423d64eb275d
+labels:
+- usfx
+- imphenzia
+- robotic
+- movement
+- stereo
+- robot
+- mech
+- mechanic
+- move
+- mechanical
+- stereo
+- tech
+- technology
+- transform
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

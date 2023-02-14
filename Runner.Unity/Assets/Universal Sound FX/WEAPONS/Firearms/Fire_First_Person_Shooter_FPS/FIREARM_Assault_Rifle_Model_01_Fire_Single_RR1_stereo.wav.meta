@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 52eee3472cd0d7744a172523797ea3ea
+labels:
+- usfx
+- imphenzia
+- weapon
+- firearm
+- rifle
+- assault
+- assault rifle
+- fire
+- stereo
+- FPS
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

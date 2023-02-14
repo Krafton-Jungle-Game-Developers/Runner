@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 18419ed242a2764409f26a3d65a1e69d
+labels:
+- usfx
+- imphenzia
+- weapon
+- foley
+- handling
+- operate
+- reload
+- mono
+- gun
+- handgun
+- pistol
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

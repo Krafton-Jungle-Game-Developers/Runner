@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 677e669d14d8270489246e81810987c8
+labels:
+- imphenzia
+- usfx
+- mono
+- door
+- freezer
+- open
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

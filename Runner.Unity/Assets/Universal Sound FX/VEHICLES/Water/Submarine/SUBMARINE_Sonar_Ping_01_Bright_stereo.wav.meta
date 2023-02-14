@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: ad9a770c1d45e9747bdc5fd440954fa6
+labels:
+- usfx
+- imphenzia
+- vehicle
+- submarine
+- sonar
+- ping
+- sub
+- underwater
+- military
+- stereo
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

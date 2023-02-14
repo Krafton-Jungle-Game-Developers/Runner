@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 07b9af7af07897342aa0ba2ab7bc9df4
+labels:
+- imphenzia
+- usfx
+- stereo
+- loop
+- ambience
+- public
+- hall
+- chatter
+- people
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

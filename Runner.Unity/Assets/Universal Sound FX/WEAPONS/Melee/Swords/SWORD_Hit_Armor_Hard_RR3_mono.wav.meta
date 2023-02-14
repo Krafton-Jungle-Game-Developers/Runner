@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 2913509b9ecd5204b81ba31a8f80b248
+labels:
+- usfx
+- imphenzia
+- mono
+- sword
+- impact
+- hit
+- medieval
+- metal
+- armor
+- clang
+- cling
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

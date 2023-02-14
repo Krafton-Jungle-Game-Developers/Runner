@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: a794942e8707f9a4fa4db06321d1bb57
+labels:
+- imphenzia
+- usfx
+- mono
+- toilet
+- flush
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

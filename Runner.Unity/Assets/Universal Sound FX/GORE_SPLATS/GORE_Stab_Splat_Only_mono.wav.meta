@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 5624ebbb9e0ee1444b6ced508af447a6
+labels:
+- usfx
+- imphenzia
+- gore
+- splat
+- mono
+- blood
+- hit
+- hurt
+- stab
+AudioImporter:
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 0
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  preloadAudioData: 1
+  loadInBackground: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
