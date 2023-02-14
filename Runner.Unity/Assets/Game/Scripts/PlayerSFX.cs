@@ -4,29 +4,64 @@ using UnityEngine;
 
 public class PlayerSFX : MonoBehaviour
 {
-    public AudioSource Jump;
-    public AudioSource Dash;
-    public AudioSource Stomp;
-    public AudioSource Step;
+    public AudioSource stepAudioSource;
+    public AudioSource jumpAudioSource;
+    public AudioSource groundAudioSource;
+    public AudioSource stompAudioSource;
+    public AudioSource dashAudioSource;
 
     PlayerMovementController PMC;
-    AudioSource audioSource;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] MovementState playerStateBuff;
+
+    void Awake()
     {
-        PMC = GetComponent<PlayerMovementController>();   
-        audioSource = GetComponent<AudioSource>();
+        PMC = GetComponent<PlayerMovementController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(PMC.isGrounded == true && PMC.playerVelocity > 2f && audioSource.isPlaying == false)
+        if (PMC.isGrounded == true && PMC.playerVelocity > 2f && stepAudioSource.isPlaying == false)
         {
-            audioSource.volume = Random.Range(0.8f, 1);
-            audioSource.pitch = Random.Range(0.8f, 1.1f);
-            audioSource.Play();
-            Debug.Log("Loading Walksound");
+            //Running Audio Play
+            stepAudioSource.volume = Random.Range(0.8f, 1);
+            stepAudioSource.pitch = Random.Range(0.8f, 1.1f);
+            stepAudioSource.Play();
+            Debug.Log("Loading Running sound");
+
         }
+        if (PMC.state != playerStateBuff)
+        {
+            if (PMC.state == MovementState.Dashing)
+            {
+                //Dashing Audio Play
+                dashAudioSource.volume = Random.Range(0.8f, 1);
+                dashAudioSource.pitch = Random.Range(0.8f, 1.1f);
+                dashAudioSource.Play();
+            }
+            else if (PMC.state == MovementState.Stomping)
+            {
+                Debug.Log("Loading Stomp sound");
+                //TODO: Stmop Audio Source Place
+            }
+            else if (PMC.state == MovementState.Running)
+            {
+                Debug.Log("Loading Ground sound");
+                //On Ground Audio Play
+                groundAudioSource.volume = Random.Range(0.8f, 1);
+                groundAudioSource.pitch = Random.Range(0.8f, 1.1f);
+                groundAudioSource.Play();
+            }
+            else if (PMC.state == MovementState.Air && playerStateBuff != MovementState.Dashing)
+            {
+                Debug.Log("Loading Ground sound");
+                //Jump Audio Play
+                jumpAudioSource.volume = Random.Range(0.8f, 1);
+                jumpAudioSource.pitch = Random.Range(0.8f, 1.1f);
+                jumpAudioSource.Play();
+            }
+
+        }
+        playerStateBuff = PMC.state;
     }
 }

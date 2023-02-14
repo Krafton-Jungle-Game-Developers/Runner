@@ -11,7 +11,7 @@ public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] public float playerVelocity;
-    private Vector3 myVelocity;
+    private Vector3 _myVelocity;
     private Rigidbody _rb;
 
     [SerializeField] private LayerMask groundLayer;
@@ -85,7 +85,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _cameraTransform = GetComponentInChildren<Camera>().transform;
+        cameraTransform = GetComponentInChildren<Camera>().transform;
         _rb.freezeRotation = true;
         _playerRadius = GetComponent<CapsuleCollider>().radius;
         _distance = (_playerRadius * 1.414f) + 0.5f;
@@ -197,7 +197,7 @@ public class PlayerMovementController : MonoBehaviour
             _yInput *= 0.1f;
         }
 
-        else if (_isGrounded && !_isDashing)
+        else if (isGrounded && !_isDashing)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -250,7 +250,7 @@ public class PlayerMovementController : MonoBehaviour
         else if (state == MovementState.Stomping)
         {
             _rb.velocity = new Vector3(0f + _xInput, 0f - stompForce * 10f, 0f + _yInput);
-            if (_isGrounded)
+            if (isGrounded)
             {
                 ResetStomp();
             }
@@ -273,7 +273,7 @@ public class PlayerMovementController : MonoBehaviour
             // x-axis, z-axis drag calculation
             if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
             {
-                Vector3 direction = GetDirection(_cameraTransform);
+                Vector3 direction = GetDirection(cameraTransform);
                 _myVelocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
                 _myVelocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
                 _rb.velocity = new Vector3(_myVelocity.x, _rb.velocity.y, _myVelocity.z);
@@ -359,7 +359,7 @@ public class PlayerMovementController : MonoBehaviour
         switch (currentAbility)
         {
             case AbilityType.AirJump:
-                if (_currentValue > 0 && _canJump && !_isGrounded)
+                if (_currentValue > 0 && _canJump && !isGrounded)
                 {
                     AirJump();
                     ConsumeInventory(currentAbility, _currentValue);
