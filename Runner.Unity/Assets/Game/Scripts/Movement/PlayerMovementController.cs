@@ -51,9 +51,6 @@ public class PlayerMovementController : MonoBehaviour
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
     [SerializeField] private KeyCode swapKey;
-    [SerializeField] private KeyCode executeKey = KeyCode.Mouse0;
-    private Subject<Vector3> _onExecuteInput;
-    public IObservable<Vector3> OnExecuteInputObservable => _onExecuteInput;
 
     public AbilityType currentAbility;
     public AbilityType secondaryAbility;
@@ -85,11 +82,11 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
 
+
     [Space][Header("Stomp")]
     [SerializeField] private float stompForce;
     private bool _isStomping = false;
 
-    
     private void Awake()
     {
         _state = new(MovementState.Running);
@@ -109,6 +106,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Update()
     {
         playerVelocity = new Vector3(_rb.velocity.x , 0f, _rb.velocity.z).magnitude;
+
         CheckGrounded();
         StateHandler();
         MyInput();
@@ -486,6 +484,14 @@ public class PlayerMovementController : MonoBehaviour
         ResetMomentum();
     }
 
+<<<<<<< Updated upstream
+=======
+    private void Execute()
+    {
+        Debug.Log($"Execute called from: {gameObject.name}");
+    }
+
+>>>>>>> Stashed changes
     /// <summary>
     /// Reduce current ability count by 1
     /// </summary>
