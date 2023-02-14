@@ -7,10 +7,12 @@ public class Consumable : MonoBehaviour
     private int _currentValue;
     private AbilityType _currentAbility;
     private PlayerMovementController playerController;
+    private ItemUI itemCounter;
 
     private void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>();
+        itemCounter = GameObject.FindObjectOfType<ItemUI>();
     }
 
     private void Update()
@@ -33,5 +35,7 @@ public class Consumable : MonoBehaviour
         }
         _currentValue += 1;
         playerController.inventory[type] = _currentValue;
+
+        itemCounter.ItemCounterUpdate();
     }
 }
