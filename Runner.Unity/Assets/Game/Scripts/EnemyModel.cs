@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -9,7 +10,6 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
-        [SerializeField] private SphereCollider collider;
         private PlayerEnemyPresenter _player;
         private HUDPresenter _HUD;
 
@@ -19,26 +19,19 @@ namespace Runner.Game
             _player = player;
             _HUD = HUD;
         }
-        
-        private IObservable<Unit> _onEnemyBecameVisibleObservable;
-        private IObservable<Unit> _onEnemyBecameInvisibleObservable;
-        public IObservable<Unit> OnEnemyBecameVisibleObservable => _onEnemyBecameVisibleObservable;
-        public IObservable<Unit> OnEnemyBecameInvisibleObservable => _onEnemyBecameInvisibleObservable;
+
+        private Subject<Vector3> _onBecameVisible;
+        public IObservable<Vector3> OnBecameVisibleObservable => _onBecameVisible;
+
         private ReactiveProperty<bool> _isDeadProperty;
         public IReactiveProperty<bool> IsDeadProperty => _isDeadProperty;
 
         private void Awake()
         {
-            _onEnemyBecameVisibleObservable = this.OnBecameVisibleAsObservable();
-            _onEnemyBecameInvisibleObservable = this.OnBecameInvisibleAsObservable();
-
+            _onBecameVisible = new();
             _isDeadProperty = new();
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, collider.radius);
-        }
+        public void OnBecameVisible() => _onBecameVisible.OnNext(transform.position);
     }
 }
