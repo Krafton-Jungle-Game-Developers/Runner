@@ -300,12 +300,13 @@ MonoBehaviour:
   playerVelocity: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   state: 0
   acceleration: 10
   deceleration: 10
   maxSpeed: 15
-  gravity: 4
+  maxDropSpeed: 30
+  gravity: 5
   abilityKey: 324
   swapKey: 113
   currentAbility: 0
@@ -320,6 +321,7 @@ MonoBehaviour:
   dashSpeedChangeFactor: 20
   dashDuration: 0.5
   dashYSpeedLimit: 3
+  stompForce: 10
 --- !u!114 &7609239868517586427
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Air }
+public enum MovementState { Running, Dashing, Stomping, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class PlayerMovementController : MonoBehaviour
     private Rigidbody _rb;
 
     [SerializeField] private LayerMask groundLayer;
-    [HideInInspector] public MovementState state;
+    public MovementState state;
     private MovementState _lastState;
     private float _playerRadius;
     private bool _isGrounded;
@@ -27,6 +27,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
     [SerializeField] private float maxSpeed = 15f;
+    [SerializeField] private float maxDropSpeed = 30f;
     [SerializeField] private float gravity = 2.5f;
     [Space]
 
@@ -75,6 +76,10 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _dashDirection;
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
+
+    [Space][Header("Stomp")]
+    [SerializeField] private float stompForce;
+    private bool _isStomping = false;
 
     
     private void Awake()
@@ -184,6 +189,14 @@ public class PlayerMovementController : MonoBehaviour
             _speedChangeFactor = dashSpeedChangeFactor;
         }
 
+        else if (_isStomping)
+        {
+            state = MovementState.Stomping;
+            _hasDrag = false;
+            _xInput *= 0.1f;
+            _yInput *= 0.1f;
+        }
+
         else if (_isGrounded && !_isDashing)
         {
             state = MovementState.Running;
@@ -234,7 +247,14 @@ public class PlayerMovementController : MonoBehaviour
 
             _rb.AddForce(_dashSpeed, ForceMode.Impulse);
         }
-
+        else if (state == MovementState.Stomping)
+        {
+            _rb.velocity = new Vector3(0f + _xInput, 0f - stompForce * 10f, 0f + _yInput);
+            if (_isGrounded)
+            {
+                ResetStomp();
+            }
+        }
         // on ground running
         else if(state == MovementState.Running)
         {
@@ -272,11 +292,17 @@ public class PlayerMovementController : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 _flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        Vector3 _fallSpeed = new Vector3(0f, _rb.velocity.y, 0f);
 
-        if(_flatVelocity.magnitude > maxSpeed)
+        if (_flatVelocity.magnitude > maxSpeed)
         {
             Vector3 _limitedVelocity = _flatVelocity.normalized * maxSpeed;
             _rb.velocity = new Vector3(_limitedVelocity.x, _rb.velocity.y, _limitedVelocity.z);
+        }
+        if (_fallSpeed.magnitude > maxDropSpeed)
+        {
+            Vector3 _limitedFallSpeed = _fallSpeed.normalized * maxDropSpeed;
+            _rb.velocity = new Vector3(_rb.velocity.x, _limitedFallSpeed.y, _rb.velocity.z);
         }
 
         if (_ySpeedLimit != 0 && _rb.velocity.y > _ySpeedLimit)
@@ -349,7 +375,7 @@ public class PlayerMovementController : MonoBehaviour
                 break;
 
             case AbilityType.Stomp:
-                if (_currentValue > 0)
+                if (_currentValue > 0 && !_isStomping)
                 {
                     Stomp();
                     ConsumeInventory(currentAbility, _currentValue);
@@ -417,7 +443,16 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Stomp()
     {
-        // Stomp
+        _isStomping = true;
+        _rb.useGravity = false;
+        ResetMomentum();
+    }
+
+    private void ResetStomp()
+    {
+        _isStomping = false;
+        _rb.useGravity = true;
+        ResetMomentum();
     }
 
     /// <summary>

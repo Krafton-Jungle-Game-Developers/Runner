@@ -5892,16 +5892,6 @@ PrefabInstance:
       objectReference: {fileID: 1165901279}
     - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
         type: 3}
-      propertyPath: swapKey
-      value: 113
-      objectReference: {fileID: 0}
-    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
-        type: 3}
-      propertyPath: currentAbility
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
-        type: 3}
       propertyPath: DecellerationForce
       value: 155
       objectReference: {fileID: 0}
