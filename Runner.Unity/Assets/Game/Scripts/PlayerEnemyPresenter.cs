@@ -30,8 +30,8 @@ namespace Runner.Game
             var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
                                                     .Take(1));
             Observable.ZipLatest(_playerController.OnExecuteInputObservable,
-                                 merged)
-                      .Subscribe(_ => _)
+                    merged)
+                .Subscribe(_ => _);
         }
     }
 }
