@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UniRx;
+using System;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
 public enum MovementState { Running, Dashing, Stomping, Air }
@@ -16,7 +16,10 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
     public MovementState state;
-    private MovementState _lastState;
+    public MovementState lastState;
+    private IObservable<MovementState> _onMovementStateChange;
+    public IObservable<MovementState> OnMovementStateChangeObservable => _onMovementStateChange;
+
     private float _playerRadius;
     public bool isGrounded;
     private bool _keepMomentum;
@@ -84,6 +87,8 @@ public class PlayerMovementController : MonoBehaviour
     
     private void Awake()
     {
+        _onMovementStateChange = this.ObserveEveryValueChanged(_ => this.state);
+
         _rb = GetComponent<Rigidbody>();
         cameraTransform = GetComponentInChildren<Camera>().transform;
         _rb.freezeRotation = true;
@@ -184,6 +189,7 @@ public class PlayerMovementController : MonoBehaviour
         if (_isDashing)
         {
             state = MovementState.Dashing;
+
             _hasDrag = false;
             _desiredMoveSpeed = dashForce * 10f;
             _speedChangeFactor = dashSpeedChangeFactor;
@@ -214,7 +220,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         bool desiredMoveSpeedChanged = _desiredMoveSpeed != _lastDesiredMoveSpeed;
-        if (_lastState == MovementState.Dashing)
+        if (lastState == MovementState.Dashing)
         {
             _keepMomentum = true;
         }
@@ -233,7 +239,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
-        _lastState = state;
+        lastState = state;
     }
 
     private void UpdateVelocity()
@@ -386,6 +392,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Jump()
     {
+
         _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
         _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
