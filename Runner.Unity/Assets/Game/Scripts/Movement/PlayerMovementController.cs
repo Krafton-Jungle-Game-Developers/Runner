@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Stomping, Air }
+public enum MovementState { Running, Dashing, Stomping, Boosting, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -14,22 +14,22 @@ public class PlayerMovementController : MonoBehaviour
     private Vector3 _myVelocity;
     private Rigidbody _rb;
 
-    [SerializeField] private LayerMask groundLayer;
     public MovementState state;
+    [SerializeField] private LayerMask groundLayer;
+    [HideInInspector] public bool _keepMomentum;
+    [HideInInspector] public bool isBoosting = false;
     private MovementState _lastState;
     private float _playerRadius;
     private bool _isGrounded;
-    private bool _keepMomentum;
     private bool _hasDrag;
     private bool _canControl = true;
 
     [Space][Header("Movement")]
-    [SerializeField] private float acceleration = 13f;
-    [SerializeField] private float deceleration = 13f;
-    [SerializeField] private float maxSpeed = 15f;
+    public float acceleration = 13f;
+    public float deceleration = 13f;
+    public float maxSpeed = 15f;
     [SerializeField] private float maxDropSpeed = 30f;
     [SerializeField] private float gravity = 2.5f;
-    [Space]
 
     private float _coyoteTime = 0.2f;
     private float _coyoteTimeCounter;
@@ -71,8 +71,8 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float dashSpeedChangeFactor = 50f;
     [SerializeField] private float dashDuration = 1f;
     [SerializeField] private float dashYSpeedLimit = 15f;
+    [HideInInspector] public float _speedChangeFactor;
     private float _dashTimer;
-    private float _speedChangeFactor;
     private Vector3 _dashDirection;
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
@@ -197,7 +197,7 @@ public class PlayerMovementController : MonoBehaviour
             _yInput *= 0.1f;
         }
 
-        else if (_isGrounded && !_isDashing)
+        else if (_isGrounded && !_isDashing && !isBoosting)
         {
             state = MovementState.Running;
             _hasDrag = true;
@@ -210,6 +210,14 @@ public class PlayerMovementController : MonoBehaviour
             state = MovementState.Air;
             _hasDrag = true;
             _coyoteTimeCounter -= Time.deltaTime;
+            _desiredMoveSpeed = acceleration;
+        }
+
+        else if (isBoosting)
+        {
+            state = MovementState.Boosting;
+            _hasDrag = true;
+            _coyoteTimeCounter = _coyoteTime;
             _desiredMoveSpeed = acceleration;
         }
 
@@ -266,6 +274,10 @@ public class PlayerMovementController : MonoBehaviour
         {
             _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
             _rb.AddForce(Physics.gravity * (gravity - 1) * _rb.mass);
+        }
+        else if(state == MovementState.Boosting)
+        {
+            _rb.AddForce(_moveDirection.normalized * _moveSpeed * 10f);
         }
 
         if (_hasDrag)
