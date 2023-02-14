@@ -21,26 +21,18 @@ namespace Runner.Game
         {
             _enemyModels = enemyModels;
         }
-<<<<<<< Updated upstream:Runner.Unity/Assets/Game/Scripts/PlayerEnemyPresenter.cs
-=======
-<<<<<<< Updated upstream:Runner.Unity/Assets/Game/Scripts/PlayerEnemyPresenter.cs
-=======
 
-        private void Awake()
-        {
-            _movementController = GetComponent<PlayerMovementController>();
-            _inputController = GetComponent<PlayerInputController>();
+        //private void Awake()
+        //{
+        //    _movementController = GetComponent<PlayerMovementController>();
+        //    _inputController = GetComponent<PlayerInputController>();
 
-            _canExecute = new(true);
+        //    _canExecute = new(true);
             
-            var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
-                                                    .Take(1));
-            Observable.ZipLatest(_inputController.OnExecuteInputObservable, merged)
-                      .Subscribe(_ => _);
-        }
-
-
->>>>>>> Stashed changes:Runner.Unity/Assets/Game/Scripts/PlayerAbilityController.cs
->>>>>>> Stashed changes:Runner.Unity/Assets/Game/Scripts/PlayerAbilityController.cs
+        //    var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
+        //                                            .Take(1));
+        //    Observable.ZipLatest(_inputController.OnExecuteInputObservable, merged)
+        //              .Subscribe(_ => _);
+        //}
     }
 }

@@ -484,14 +484,6 @@ public class PlayerMovementController : MonoBehaviour
         ResetMomentum();
     }
 
-<<<<<<< Updated upstream
-=======
-    private void Execute()
-    {
-        Debug.Log($"Execute called from: {gameObject.name}");
-    }
-
->>>>>>> Stashed changes
     /// <summary>
     /// Reduce current ability count by 1
     /// </summary>

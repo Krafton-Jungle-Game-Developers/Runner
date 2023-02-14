@@ -13461,12 +13461,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2106790626}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1919882706 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7609239868517586430, guid: c271a033504fff64bb9faeed01c8986b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7609239869054261388}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1919882709 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7609239868517586420, guid: c271a033504fff64bb9faeed01c8986b,
@@ -14833,26 +14827,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1919882706}
-    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: playerCamera
-      value: 
-      objectReference: {fileID: 688698166}
-    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: slayCountText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869431865473809, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: totalEnemyText
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 116869431865473810, guid: 291220c80bf819b4295c9a48d34ef99a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -14967,88 +14941,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HUD Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869431865473822, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869432474567869, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869433240336688, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869433240336688, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869433240336688, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869433240336693, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_text
-      value: 00:00:00
-      objectReference: {fileID: 0}
-    - target: {fileID: 116869433240336693, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: e5b74945cc63c014984b2519679d8a48,
-        type: 2}
-    - target: {fileID: 116869433240336693, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 21082280118058838, guid: e5b74945cc63c014984b2519679d8a48,
-        type: 2}
-    - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: InitialModule.startSizeY.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2109847125312762912, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: InitialModule.startSizeZ.scalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123960756067473389, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 658580d6e9a6a4646b7bd7ae50d4cc1d, type: 2}
-    - target: {fileID: 3384849506674691156, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6831434625464986559, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8876336286813365444, guid: 291220c80bf819b4295c9a48d34ef99a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291220c80bf819b4295c9a48d34ef99a, type: 3}

@@ -119,8 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e6acca38c580d4f9686a76605baf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorPanel: {fileID: 0}
-  elementContainer: {fileID: 0}
+  slayCountText: {fileID: 8321583282996656829}
+  totalEnemyText: {fileID: 9032705869110726446}
 --- !u!1 &116869432474567869
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 116869432474567858}
   - component: {fileID: 116869432474567859}
   m_Layer: 5
-  m_Name: FadePanel
+  m_Name: Fade Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 116869433240336693}
   - component: {fileID: 116869433240336692}
   m_Layer: 5
-  m_Name: TimerText
+  m_Name: Timer Text
   m_TagString: TimerText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,10 +231,10 @@ RectTransform:
   m_Father: {fileID: 116869431865473810}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &116869433240336694
 CanvasRenderer:
@@ -264,10 +264,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Timer
+  m_text: 00:00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 788812be2c8155d4cad6ccf25e8f944e, type: 2}
-  m_sharedMaterial: {fileID: 21728410361126204, guid: 788812be2c8155d4cad6ccf25e8f944e,
+  m_fontAsset: {fileID: 11400000, guid: e5b74945cc63c014984b2519679d8a48, type: 2}
+  m_sharedMaterial: {fileID: 21082280118058838, guid: e5b74945cc63c014984b2519679d8a48,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 3384849506674691156}
   - component: {fileID: 4523941587025211884}
   m_Layer: 5
-  m_Name: ItemUI
+  m_Name: Item UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 6432590463562882649}
   - component: {fileID: 3400513286337501822}
   m_Layer: 5
-  m_Name: EnemyCounter
+  m_Name: Enemy Counter
   m_TagString: EnemyCounter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6345,7 +6345,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.1
+      scalar: 0.05
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -6619,7 +6619,7 @@ ParticleSystem:
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 0
+    radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
