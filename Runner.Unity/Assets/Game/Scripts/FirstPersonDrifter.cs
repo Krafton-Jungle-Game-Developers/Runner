@@ -1,4 +1,4 @@
-/*// Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+// Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 // FirstPersonDrifter
 using System;
 using System.Collections.Generic;
@@ -1458,4 +1458,3 @@ public class FirstPersonDrifter : MonoBehaviour, ICharacterController
         RM.playerRotation = rotation;
     }
 }
-*/

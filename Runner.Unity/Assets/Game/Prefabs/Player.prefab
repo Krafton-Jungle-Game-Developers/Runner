@@ -306,6 +306,8 @@ MonoBehaviour:
     m_Bits: 8
   state: 0
   lastState: 0
+  _keepMomentum: 0
+  isBoosting: 0
   isGrounded: 0
   acceleration: 10
   deceleration: 10
@@ -314,8 +316,8 @@ MonoBehaviour:
   gravity: 5
   abilityKey: 324
   swapKey: 113
+  executeKey: 323
   currentAbility: 0
-  secondaryAbility: 0
   secondaryAbility: 0
   inventory:
     keys: 00000000010000000200000003000000
@@ -327,6 +329,7 @@ MonoBehaviour:
   dashSpeedChangeFactor: 20
   dashDuration: 0.5
   dashYSpeedLimit: 3
+  _speedChangeFactor: 0
   stompForce: 10
 --- !u!114 &7609239868517586427
 MonoBehaviour:
@@ -383,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  executeDistance: 15
 --- !u!114 &4857002367569075793
 MonoBehaviour:
   m_ObjectHideFlags: 0
