@@ -23,8 +23,8 @@ public class PlayerMovementController : MonoBehaviour
     [HideInInspector] public bool isBoosting = false;
     private float _playerRadius;
     public bool isGrounded;
+    public bool canControl = true;
     private bool _hasDrag;
-    private bool _canControl = true;
 
     [Space][Header("Movement")]
     public float acceleration = 10f;
@@ -135,7 +135,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void MyInput()
     {
-        if (_canControl)
+        if (canControl)
         {
             _xInput = Input.GetAxisRaw("Horizontal");
             _yInput = Input.GetAxisRaw("Vertical");
@@ -279,7 +279,7 @@ public class PlayerMovementController : MonoBehaviour
 
         if (_state.Value == MovementState.Dashing)
         {
-            _dashSpeed =  _dashDirection * EaseOutQuad(dashForce * 0f * 10f, dashForce * 10f, _dashTimer / dashDuration);
+            _dashSpeed = _dashDirection * EaseOutQuad(dashForce * 0f * 10f, dashForce * 10f, _dashTimer / dashDuration);
             _dashTimer -= 1f * Time.deltaTime;
 
             _rb.AddForce(_dashSpeed, ForceMode.Impulse);
@@ -447,7 +447,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = true;
         _rb.useGravity = false;
-        _canControl = false;
+        canControl = false;
         _dashTimer = dashDuration;
         _ySpeedLimit = dashYSpeedLimit;
         _dashDirection = GetDirection(transform);
@@ -459,7 +459,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isDashing = false;
         _rb.useGravity = true;
-        _canControl = true;
+        canControl = true;
         _dashSpeed = Vector3.zero;
         _ySpeedLimit = 0;
     }

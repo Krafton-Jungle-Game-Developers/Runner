@@ -17,6 +17,7 @@ namespace Runner.Game
         
         public BoolReactiveProperty CanExecute;
 
+        private PlayerCameraController _cameraController;
         private PlayerMovementController _movementController;
         private PlayerInputController _inputController;
         private List<EnemyModel> _enemyModels;
@@ -29,6 +30,7 @@ namespace Runner.Game
 
         private void Start()
         {
+            _cameraController = GetComponentInChildren<PlayerCameraController>();
             _movementController = GetComponent<PlayerMovementController>();
             _inputController = GetComponent<PlayerInputController>();
 
@@ -58,13 +60,16 @@ namespace Runner.Game
             Vector3 direction = enemy.transform.position - transform.position;
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
-
+            _cameraController.freezeMouse = true;
+            _movementController.canControl = false;
             float currentDistance = float.MaxValue;
             while (Vector3.Distance(transform.position, targetPosition) > float.Epsilon)
             {
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * approachTime);
                 await UniTask.Yield();
             }
+            _cameraController.freezeMouse = false;
+            _movementController.canControl = true;
             Destroy(enemy.gameObject);
         }
     }
