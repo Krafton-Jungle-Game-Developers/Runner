@@ -10,6 +10,7 @@ namespace Runner.Game
 {
     public class PlayerAbilityController : MonoBehaviour
     {
+        [SerializeField] private float approachTime = 1f;
         [SerializeField] private float executeThrottleTime = 0.5f;
         [SerializeField] private float executeDistance = 15f;
         [SerializeField] private float approachDistance = 2f;
@@ -44,19 +45,26 @@ namespace Runner.Game
                                    .OrderBy(enemy => Vector3.Distance(enemy.transform.position, transform.position))
                                    .FirstOrDefault();
             })
-            .Subscribe(enemy =>
+            .Subscribe(async (enemy) =>
             {
                 CanExecute.Value = false;
                 if (enemy is not null) { await Execute(enemy); }
                 CanExecute.Value = true;
-            });
+            }).AddTo(this);
         }
 
-        private async UniTaskVoid Execute(EnemyModel enemy)
+        private async UniTask Execute(EnemyModel enemy)
         {
             Vector3 direction = enemy.transform.position - transform.position;
-            transform.position = enemy.transform.position - direction.normalized * approachDistance;
+            Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
+
+            float currentDistance = float.MaxValue;
+            while (Vector3.Distance(transform.position, targetPosition) > float.Epsilon)
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * approachTime);
+                await UniTask.Yield();
+            }
             Destroy(enemy.gameObject);
         }
     }

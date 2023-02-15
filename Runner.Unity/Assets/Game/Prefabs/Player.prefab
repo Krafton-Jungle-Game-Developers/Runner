@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 508368156786912201}
   - component: {fileID: 508368156786912246}
   - component: {fileID: 508368156786912247}
+  - component: {fileID: 584376635266465965}
   - component: {fileID: 508368156786912244}
   - component: {fileID: 508368156786912245}
   - component: {fileID: 508368156786912242}
@@ -70,6 +71,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &584376635266465965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508368156786912241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f013ee4fe7f1646a1a658a35a24000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  executeKey: 323
 --- !u!114 &508368156786912244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,8 +111,8 @@ MonoBehaviour:
   gravity: 5
   abilityKey: 324
   swapKey: 113
-  currentAbility: 1
-  secondaryAbility: 2
+  currentAbility: 0
+  secondaryAbility: 0
   inventory:
     keys: 00000000010000000200000003000000
     values: 00000000e8030000e8030000e8030000
@@ -161,12 +175,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508368156786912241}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  approachTime: 5
+  executeThrottleTime: 0.5
   executeDistance: 15
+  approachDistance: 2
+  CanExecute:
+    value: 0
 --- !u!114 &508368156786912243
 MonoBehaviour:
   m_ObjectHideFlags: 0
