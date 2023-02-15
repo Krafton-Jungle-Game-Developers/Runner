@@ -63,17 +63,12 @@ namespace Runner.Game
             Vector3 direction = enemy.transform.position - transform.position;
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
-            await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
             _cameraController.freezeMouse = true;
             _movementController.canControl = false;
-            float currentDistance = float.MaxValue;
-            while (Vector3.Distance(transform.position, targetPosition) > float.Epsilon)
-            {
-                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * approachTime);
-                await UniTask.Yield();
-            }
+            await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
             _cameraController.freezeMouse = false;
             _movementController.canControl = true;
+            transform.LookAt(enemy.transform.position);
             Destroy(enemy.gameObject);
         }
     }
