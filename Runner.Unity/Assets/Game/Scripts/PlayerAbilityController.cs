@@ -1,16 +1,19 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using DG.Tweening;
 
 namespace Runner.Game
 {
     public class PlayerAbilityController : MonoBehaviour
     {
-        [SerializeField] private float approachTime = 1f;
+        [SerializeField] private Ease executeApproachEase = Ease.InExpo;
+        [SerializeField] private float approachTime = 0.3f;
         [SerializeField] private float executeThrottleTime = 0.5f;
         [SerializeField] private float executeDistance = 15f;
         [SerializeField] private float approachDistance = 2f;
@@ -50,16 +53,17 @@ namespace Runner.Game
             .Subscribe(async (enemy) =>
             {
                 CanExecute.Value = false;
-                if (enemy is not null) { await Execute(enemy); }
+                if (enemy is not null) { await Execute(enemy, this.GetCancellationTokenOnDestroy()); }
                 CanExecute.Value = true;
             }).AddTo(this);
         }
 
-        private async UniTask Execute(EnemyModel enemy)
+        private async UniTask Execute(EnemyModel enemy, CancellationToken token)
         {
             Vector3 direction = enemy.transform.position - transform.position;
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
+            await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
             _cameraController.freezeMouse = true;
             _movementController.canControl = false;
             float currentDistance = float.MaxValue;
