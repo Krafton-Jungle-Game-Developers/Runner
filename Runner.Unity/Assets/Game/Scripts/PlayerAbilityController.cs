@@ -23,6 +23,7 @@ namespace Runner.Game
 
         public BoolReactiveProperty CanExecute;
 
+        private PlayerCameraController _cameraController;
         private CapsuleCollider _collider;
         private PlayerMovementController _movementController;
         private PlayerInputController _inputController;
@@ -36,6 +37,7 @@ namespace Runner.Game
 
         private void Start()
         {
+            _cameraController = GetComponentInChildren<PlayerCameraController>();
             _collider = GetComponent<CapsuleCollider>();
             _movementController = GetComponent<PlayerMovementController>();
             _inputController = GetComponent<PlayerInputController>();
@@ -66,6 +68,8 @@ namespace Runner.Game
             Vector3 direction = enemy.transform.position - transform.position;
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
+            _cameraController.freezeMouse = true;
+            _movementController.canControl = false;
             await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
 
             Vector3 rayOrigin = new(transform.position.x, transform.position.y + fallThroughCheckRayOriginYOffset, transform.position.z);
@@ -74,6 +78,9 @@ namespace Runner.Game
                 Debug.Log("hit");
                 transform.position = new(transform.position.x, hit.point.y + 0.5f, transform.position.z);
             }
+            _cameraController.freezeMouse = false;
+            _movementController.canControl = true;
+            transform.LookAt(enemy.transform.position);
             Destroy(enemy.gameObject);
         }
     }
