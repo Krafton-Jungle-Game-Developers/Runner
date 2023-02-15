@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedPlatform : MonoBehaviour
 {
-    public PlayerMovementController playerController; 
+    [HideInInspector] public PlayerMovementController playerController; 
 
     void Start()
     {
