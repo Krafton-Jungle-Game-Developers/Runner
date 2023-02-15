@@ -11,6 +11,7 @@ namespace Runner.Game
         private SkinnedMeshRenderer _enemyRenderer;
         private Animator _animator;
         private EnemySoundController _soundController;
+        public Transform childTransform;
 
         public BoolReactiveProperty IsVisible;
         public BoolReactiveProperty IsDead;
