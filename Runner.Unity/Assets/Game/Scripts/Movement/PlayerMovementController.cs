@@ -30,11 +30,11 @@ public class PlayerMovementController : MonoBehaviour
     private bool _canControl = true;
 
     [Space][Header("Movement")]
-    public float acceleration = 13f;
-    public float deceleration;
+    public float acceleration = 10f;
+    public float deceleration = 10f;
     public float maxSpeed = 15f;
     [SerializeField] private float maxDropSpeed = 30f;
-    [SerializeField] private float gravity = 2.5f;
+    [SerializeField] private float gravity = 5f;
 
     private float _coyoteTime = 0.2f;
     private float _coyoteTimeCounter;
@@ -71,15 +71,15 @@ public class PlayerMovementController : MonoBehaviour
 
     [Space][Header("Jump")]
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
-    [SerializeField] private float jumpForce = 25;
+    [SerializeField] private float jumpForce = 30f;
     [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
 
     [Space][Header("Dash")]
-    [SerializeField] private float dashForce = 150f;
-    [SerializeField] private float dashSpeedChangeFactor = 50f;
-    [SerializeField] private float dashDuration = 1f;
-    [SerializeField] private float dashYSpeedLimit = 15f;
+    [SerializeField] private float dashForce = 15f;
+    [SerializeField] private float dashSpeedChangeFactor = 15f;
+    [SerializeField] private float dashDuration = 0.5f;
+    [SerializeField] private float dashYSpeedLimit = 3f;
     [HideInInspector] public float _speedChangeFactor;
     private float _dashTimer;
     private Vector3 _dashDirection;
