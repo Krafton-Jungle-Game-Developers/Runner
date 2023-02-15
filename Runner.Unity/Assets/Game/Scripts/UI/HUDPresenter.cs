@@ -28,11 +28,12 @@ namespace Runner.UI
             slayCountText.text = $"{SlayCount}";
             totalEnemyText.text = $"{_enemyModels.Count}";
 
-            Observable.Merge(_enemyModels.Select(_ => _.IsDead)).Subscribe(_ =>
+            _enemyModels.ForEach(enemy => enemy.IsDead.Where(_ => _).Subscribe(_ => 
             {
                 SlayCount.Value = Mathf.Min(SlayCount.Value + 1, _enemyModels.Count);
                 slayCountText.text = $"{SlayCount.Value}";
-            }).AddTo(this);
+            }).AddTo(enemy));
+            
         }
     }
 }

@@ -24,9 +24,9 @@ namespace Runner.Game
         public BoolReactiveProperty CanExecute;
 
         private PlayerCameraController _cameraController;
-        private CapsuleCollider _collider;
         private PlayerMovementController _movementController;
         private PlayerInputController _inputController;
+        private CapsuleCollider _collider;
         private List<EnemyModel> _enemyModels;
 
         [Inject]
