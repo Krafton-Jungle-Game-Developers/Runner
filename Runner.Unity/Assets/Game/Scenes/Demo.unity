@@ -1921,13 +1921,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 508368156786912242, guid: 5fc48ffcded94fa44aceae223cc31ae9,
         type: 3}
-      propertyPath: approachTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 508368156786912242, guid: 5fc48ffcded94fa44aceae223cc31ae9,
-        type: 3}
-      propertyPath: executeApproachEase
-      value: 18
+      propertyPath: fallThroughCheckRayOriginYOffset
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 508368156786912245, guid: 5fc48ffcded94fa44aceae223cc31ae9,
         type: 3}

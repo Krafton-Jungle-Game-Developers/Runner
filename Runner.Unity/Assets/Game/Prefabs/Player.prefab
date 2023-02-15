@@ -180,10 +180,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachTime: 5
+  executeApproachEase: 18
+  approachTime: 0.3
   executeThrottleTime: 0.5
   executeDistance: 15
   approachDistance: 2
+  fallThroughCheckRayDistance: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   CanExecute:
     value: 0
 --- !u!114 &508368156786912243

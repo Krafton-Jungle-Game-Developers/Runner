@@ -17,9 +17,13 @@ namespace Runner.Game
         [SerializeField] private float executeThrottleTime = 0.5f;
         [SerializeField] private float executeDistance = 15f;
         [SerializeField] private float approachDistance = 2f;
-        
+        [SerializeField] private float fallThroughCheckRayOriginYOffset = 1f;
+        [SerializeField] private float fallThroughCheckRayDistance = 0.5f;
+        [SerializeField] private LayerMask groundLayer;
+
         public BoolReactiveProperty CanExecute;
 
+        private CapsuleCollider _collider;
         private PlayerMovementController _movementController;
         private PlayerInputController _inputController;
         private List<EnemyModel> _enemyModels;
@@ -32,9 +36,10 @@ namespace Runner.Game
 
         private void Start()
         {
+            _collider = GetComponent<CapsuleCollider>();
             _movementController = GetComponent<PlayerMovementController>();
             _inputController = GetComponent<PlayerInputController>();
-
+            groundLayer = LayerMask.NameToLayer("Ground");
             CanExecute = new(true);
 
             _inputController.OnExecuteInputObservable
@@ -62,6 +67,13 @@ namespace Runner.Game
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
             transform.LookAt(enemy.transform.position);
             await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
+
+            Vector3 rayOrigin = new(transform.position.x, transform.position.y + fallThroughCheckRayOriginYOffset, transform.position.z);
+            if (Physics.Raycast(rayOrigin, Vector3.down, out var hit, fallThroughCheckRayDistance, groundLayer))
+            {
+                Debug.Log("hit");
+                transform.position = new(transform.position.x, hit.point.y + 0.5f, transform.position.z);
+            }
             Destroy(enemy.gameObject);
         }
     }

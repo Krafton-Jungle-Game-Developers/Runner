@@ -19,7 +19,7 @@ namespace Runner.UI
             _enemyModels = enemyModels;
         }
 
-        private void Awake()
+        private void Start()
         {
             slayCountText.text = "0";
             totalEnemyText.text = $"{_enemyModels.Count}";
