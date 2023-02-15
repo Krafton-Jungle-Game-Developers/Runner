@@ -9,8 +9,8 @@ namespace Runner.Game
         public override void InstallBindings()
         {
             Container.Bind<PlayerAbilityController>().FromComponentInHierarchy()
-                                                  .AsCached()
-                                                  .NonLazy();
+                                                     .AsCached()
+                                                     .NonLazy();
 
             Container.Bind<EnemyModel>().FromComponentsInHierarchy()
                                         .AsCached()

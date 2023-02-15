@@ -9,7 +9,7 @@ public enum MovementState { Running, Dashing, Stomping, Boosting, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTransform;
+    private Transform cameraTransform;
     [SerializeField] public float playerVelocity;
     private Vector3 _myVelocity;
     private Rigidbody _rb;
@@ -17,7 +17,6 @@ public class PlayerMovementController : MonoBehaviour
     private ReactiveProperty<MovementState> _state;
     public IReactiveProperty<MovementState> State => _state;
     [SerializeField] private LayerMask groundLayer;
-    public MovementState state;
     public MovementState lastState;
 
     [HideInInspector] public bool _keepMomentum;

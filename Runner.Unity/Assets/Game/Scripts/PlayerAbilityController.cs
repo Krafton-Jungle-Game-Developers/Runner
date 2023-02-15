@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UniRx;
@@ -22,17 +23,29 @@ namespace Runner.Game
             _enemyModels = enemyModels;
         }
 
-        //private void Awake()
-        //{
-        //    _movementController = GetComponent<PlayerMovementController>();
-        //    _inputController = GetComponent<PlayerInputController>();
+        private void Start()
+        {
+            _movementController = GetComponent<PlayerMovementController>();
+            _inputController = GetComponent<PlayerInputController>();
 
-        //    _canExecute = new(true);
+            _canExecute = new(true);
+
+            IObservable<Vector3> merged = Observable.Merge(_enemyModels.Select(x => x.OnEnemyBecameVisibleObservable
+                                                    .Where(enemyPosition => Vector3.Distance(enemyPosition, transform.position) <= executeDistance)));
+            Observable.ZipLatest(_inputController.OnExecuteInputObservable, merged)
+                      .Subscribe(_ =>
+                      {
+                          Execute(_.Last());
+                      })
+                      .AddTo(this);
+        }
+
+        private void Execute(Vector3 enemyPosition)
+        {
+            Vector3 direction = enemyPosition - transform.position;
+            transform.position = enemyPosition - direction.normalized * 2f;
             
-        //    var merged = Observable.Merge(_enemyModels.Select(x => x.OnBecameVisibleObservable)
-        //                                            .Take(1));
-        //    Observable.ZipLatest(_inputController.OnExecuteInputObservable, merged)
-        //              .Subscribe(_ => _);
-        //}
+            transform.LookAt(enemyPosition);
+        }
     }
 }
