@@ -49,7 +49,7 @@ namespace Runner.Game
             .Select(_ =>
             {
                 return _enemyModels.Where(enemy => enemy is not null
-                                                && enemy.IsDead is false
+                                                && enemy.IsDead.Value is false
                                                 && enemy.IsVisible.Value
                                                 && Vector3.Distance(enemy.transform.position, transform.position) <= executeDistance)
                                    .OrderBy(enemy => Vector3.Distance(enemy.transform.position, transform.position))
@@ -81,7 +81,8 @@ namespace Runner.Game
             _cameraController.freezeMouse = false;
             _movementController.canControl = true;
             transform.LookAt(enemy.transform.position);
-            Destroy(enemy.gameObject);
+
+            enemy.Die();
         }
     }
 }

@@ -1,9 +1,8 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
-using Runner.UI;
-using Zenject;
 
 namespace Runner.Game
 {
@@ -11,11 +10,10 @@ namespace Runner.Game
     {
         private SkinnedMeshRenderer _enemyRenderer;
         private Animator _animator;
-        private int _dieTrigger = Animator.StringToHash("Die");
+        private EnemySoundController _soundController;
 
         public BoolReactiveProperty IsVisible;
-        private bool _isDead = false;
-        public bool IsDead => _isDead;
+        public BoolReactiveProperty IsDead;
         private IObservable<EnemyModel> _onEnemyExecutableObservable;
         public IObservable<EnemyModel> OnEnemyExecutableObservable => _onEnemyExecutableObservable;
         
@@ -23,15 +21,23 @@ namespace Runner.Game
         {
             _enemyRenderer = GetComponent<SkinnedMeshRenderer>();
             _animator = GetComponent<Animator>();
+            _soundController = GetComponent<EnemySoundController>();
+            
             IsVisible = new(false);
+            IsDead = new(false);
         }
 
         private void OnBecameVisible() => IsVisible.Value = true;
         private void OnBecameInvisible() => IsVisible.Value = false;
 
-        private void Die()
+        public async UniTask Die()
         {
-            _animator.SetTrigger(_dieTrigger);
+            IsDead.Value = true;
+            _soundController.PlayDeathAudio();
+            _animator.SetTrigger("DieTrigger");
+            await UniTask.WhenAll(UniTask.WaitWhile(() => _soundController.EnemyAudioSource.isPlaying), 
+                                  UniTask.WaitWhile(() => _animator.IsInTransition(0)));
+            Destroy(gameObject);
         }
     }
 }
