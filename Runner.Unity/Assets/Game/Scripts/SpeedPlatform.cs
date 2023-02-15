@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedPlatform : MonoBehaviour
 {
-    public PlayerMovementController playerController; 
+    [HideInInspector] public PlayerMovementController playerController;
 
     void Start()
     {
@@ -13,19 +13,15 @@ public class SpeedPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        playerController.acceleration *= 1.5f;
-        playerController.maxSpeed *= 2f;
-        playerController.deceleration = 0.05f;
+        playerController.acceleration *= 8f;
+        playerController.deceleration /= 10f;
         playerController.isBoosting = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        playerController.acceleration /= 1.5f;
-        playerController.maxSpeed /= 2f;
-        playerController.deceleration = 10f;
-        playerController._keepMomentum = true;
-        playerController._speedChangeFactor = 1.5f;
+        playerController.acceleration /= 8f;
+        playerController.deceleration *= 10f;
         playerController.isBoosting = false;
     }
 }

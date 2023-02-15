@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 6783117385782633884}
   - component: {fileID: 5714415074082706995}
   - component: {fileID: 2694718847720274794}
+  - component: {fileID: 2527360929016665139}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -119,7 +120,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &5714415074082706995
 Light:
@@ -203,6 +204,21 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &2527360929016665139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558778856332029095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6041d0407caa5e4a81e37e6a65d95d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlwaysShowCollider: 1
+  IncludeCollidersInChildren: 1
+  GizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &4703506437029040132
 PrefabInstance:
   m_ObjectHideFlags: 0
