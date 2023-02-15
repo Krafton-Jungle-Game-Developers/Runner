@@ -8,6 +8,7 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
+        [SerializeField] private float gizmoRadius = 20f;
         private SkinnedMeshRenderer _enemyRenderer;
         private Animator _animator;
         private EnemySoundController _soundController;
@@ -31,7 +32,7 @@ namespace Runner.Game
         private void OnBecameVisible() => IsVisible.Value = true;
         private void OnBecameInvisible() => IsVisible.Value = false;
 
-        public async UniTask Die()
+        public async UniTaskVoid Die()
         {
             IsDead.Value = true;
             _soundController.PlayDeathAudio();
@@ -39,6 +40,12 @@ namespace Runner.Game
             await UniTask.WhenAll(UniTask.WaitWhile(() => _soundController.EnemyAudioSource.isPlaying), 
                                   UniTask.WaitWhile(() => _animator.IsInTransition(0)));
             Destroy(gameObject);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, gizmoRadius);
         }
     }
 }

@@ -184,8 +184,9 @@ MonoBehaviour:
   executeApproachEase: 18
   approachTime: 0.3
   executeThrottleTime: 0.5
-  executeDistance: 15
+  executeDistance: 20
   approachDistance: 2
+  fallThroughCheckRayOriginYOffset: 1
   fallThroughCheckRayDistance: 2
   groundLayer:
     serializedVersion: 2
@@ -492,6 +493,8 @@ MonoBehaviour:
   ySensitivity: 500
   orientation: {fileID: 508368156786912201}
   freezeMouse: 0
+  _xRotation: 0
+  _yRotation: 0
 --- !u!114 &508368157925409653
 MonoBehaviour:
   m_ObjectHideFlags: 0

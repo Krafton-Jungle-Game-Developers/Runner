@@ -78,7 +78,7 @@ namespace Runner.Game
                 Debug.Log("hit");
                 transform.position = new(transform.position.x, hit.point.y + 0.5f, transform.position.z);
             }
-            await enemy.Die();
+            enemy.Die().Forget();
         }
     }
 }
