@@ -30,7 +30,7 @@ namespace Runner.Game
         private void OnBecameVisible() => IsVisible.Value = true;
         private void OnBecameInvisible() => IsVisible.Value = false;
 
-        public async UniTask Die()
+        public async UniTaskVoid Die()
         {
             IsDead.Value = true;
             _soundController.PlayDeathAudio();
