@@ -30,11 +30,9 @@ namespace Runner.UI
 
             Observable.Merge(_enemyModels.Select(_ => _.IsDead)).Subscribe(_ =>
             {
-                SlayCount.Value = Mathf.Min(SlayCount.Value++, _enemyModels.Count);
-
+                SlayCount.Value = Mathf.Min(SlayCount.Value + 1, _enemyModels.Count);
+                slayCountText.text = $"{SlayCount.Value}";
             }).AddTo(this);
-            
-            SlayCount.Subscribe(_ => slayCountText.text = $"{_}").AddTo(this);
         }
     }
 }

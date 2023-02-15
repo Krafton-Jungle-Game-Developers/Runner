@@ -82,7 +82,7 @@ namespace Runner.Game
             _movementController.canControl = true;
             transform.LookAt(enemy.transform.position);
 
-            enemy.Die();
+            await enemy.Die();
         }
     }
 }
