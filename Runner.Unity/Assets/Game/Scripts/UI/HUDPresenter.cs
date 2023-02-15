@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Collections.Generic;
 using Runner.Game;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +13,7 @@ namespace Runner.UI
     {
         [SerializeField] private TMP_Text slayCountText;
         [SerializeField] private TMP_Text totalEnemyText;
+        public IntReactiveProperty SlayCount;
         private List<EnemyModel> _enemyModels;
 
         [Inject]
@@ -21,8 +24,17 @@ namespace Runner.UI
 
         private void Start()
         {
-            slayCountText.text = "0";
+            SlayCount = new(0);
+            slayCountText.text = $"{SlayCount}";
             totalEnemyText.text = $"{_enemyModels.Count}";
+
+            Observable.Merge(_enemyModels.Select(_ => _.IsDead)).Subscribe(_ =>
+            {
+                SlayCount.Value = Mathf.Min(SlayCount.Value++, _enemyModels.Count);
+
+            }).AddTo(this);
+            
+            SlayCount.Subscribe(_ => slayCountText.text = $"{_}").AddTo(this);
         }
     }
 }
