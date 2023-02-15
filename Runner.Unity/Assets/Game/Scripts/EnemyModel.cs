@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 using Runner.UI;
 using Zenject;
 
@@ -8,6 +9,7 @@ namespace Runner.Game
 {
     public class EnemyModel : MonoBehaviour
     {
+        private SkinnedMeshRenderer _enemyRenderer;
         private PlayerAbilityController _player;
         private HUDPresenter _HUD;
 
@@ -17,19 +19,20 @@ namespace Runner.Game
             _player = player;
             _HUD = HUD;
         }
-
-        private Subject<Vector3> _onBecameVisible;
-        public IObservable<Vector3> OnBecameVisibleObservable => _onBecameVisible;
-
-        private ReactiveProperty<bool> _isDeadProperty;
-        public IReactiveProperty<bool> IsDeadProperty => _isDeadProperty;
-
+        
+        private ReactiveProperty<bool> _isDead;
+        public IReactiveProperty<bool> IsDead => _isDead;
+        private IObservable<Vector3> _onEnemyBecameVisibleObservable;
+        public IObservable<Vector3> OnEnemyBecameVisibleObservable => _onEnemyBecameVisibleObservable;
+        
         private void Awake()
         {
-            _onBecameVisible = new();
-            _isDeadProperty = new();
+            _enemyRenderer = GetComponent<SkinnedMeshRenderer>();
+            _onEnemyBecameVisibleObservable = Observable.Interval(TimeSpan.FromSeconds(0.1f))
+                                                        .TakeWhile(_ => _enemyRenderer.isVisible)
+                                                        .Repeat()
+                                                        .Select(_ => transform.position);
+            _isDead = new(false);
         }
-
-        public void OnBecameVisible() => _onBecameVisible.OnNext(transform.position);
     }
 }

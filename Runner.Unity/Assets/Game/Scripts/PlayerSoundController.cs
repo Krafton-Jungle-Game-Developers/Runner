@@ -20,7 +20,6 @@ public class PlayerSoundController : MonoBehaviour
 
         _movementController.State.Subscribe(state => 
         {
-            Debug.Log(state.ToString());
             PlayMatchingClip(state);
         }).AddTo(this);
     }
