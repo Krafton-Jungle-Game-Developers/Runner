@@ -51,8 +51,8 @@ namespace Runner.Game
                 return _enemyModels.Where(enemy => enemy is not null
                                                 && enemy.IsDead.Value is false
                                                 && enemy.IsVisible.Value
-                                                && Vector3.Distance(enemy.transform.position, transform.position) <= executeDistance)
-                                   .OrderBy(enemy => Vector3.Distance(enemy.transform.position, transform.position))
+                                                && Vector3.Distance(enemy.childTransform.position, transform.position) <= executeDistance)
+                                   .OrderBy(enemy => Vector3.Distance(enemy.childTransform.position, transform.position))
                                    .FirstOrDefault();
             })
             .Subscribe(async (enemy) =>
@@ -65,10 +65,10 @@ namespace Runner.Game
 
         private async UniTask Execute(EnemyModel enemy, CancellationToken token)
         {
-            Vector3 direction = enemy.transform.position - transform.position;
-            Vector3 targetPosition = enemy.transform.position - direction.normalized;
+            Vector3 direction = enemy.childTransform.position - transform.position;
+            Vector3 targetPosition = enemy.childTransform.position - direction.normalized;
             _cameraController.freezeMouse = true;
-            _cameraController.transform.DOLookAt(enemy.transform.position, approachTime);
+            _cameraController.transform.DOLookAt(enemy.childTransform.position, approachTime);
             await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
             _cameraController.freezeMouse = false;
 
