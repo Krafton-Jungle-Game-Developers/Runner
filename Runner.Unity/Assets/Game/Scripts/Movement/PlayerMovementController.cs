@@ -189,7 +189,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void StateHandler()
     {
-        if (isGrounded && Mathf.Abs(_xInput) < 0.1f && Mathf.Abs(_yInput) < 0.1f)
+        if (isGrounded && Mathf.Abs(_xInput) < 0.1f && Mathf.Abs(_yInput) < 0.1f && !_isStomping)
         {
             _state.Value = MovementState.Idle;
             _hasDrag = true;
