@@ -67,10 +67,10 @@ namespace Runner.Game
         {
             Vector3 direction = enemy.transform.position - transform.position;
             Vector3 targetPosition = enemy.transform.position - direction.normalized;
-            transform.LookAt(enemy.transform.position);
             _cameraController.freezeMouse = true;
-            _movementController.canControl = false;
+            _cameraController.transform.DOLookAt(enemy.transform.position, approachTime);
             await transform.DOMove(targetPosition, approachTime).SetEase(executeApproachEase);
+            _cameraController.freezeMouse = false;
 
             Vector3 rayOrigin = new(transform.position.x, transform.position.y + fallThroughCheckRayOriginYOffset, transform.position.z);
             if (Physics.Raycast(rayOrigin, Vector3.down, out var hit, fallThroughCheckRayDistance, groundLayer))
@@ -78,10 +78,6 @@ namespace Runner.Game
                 Debug.Log("hit");
                 transform.position = new(transform.position.x, hit.point.y + 0.5f, transform.position.z);
             }
-            _cameraController.freezeMouse = false;
-            _movementController.canControl = true;
-            transform.LookAt(enemy.transform.position);
-
             await enemy.Die();
         }
     }

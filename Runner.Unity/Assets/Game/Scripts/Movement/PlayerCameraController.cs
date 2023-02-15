@@ -9,8 +9,8 @@ public class PlayerCameraController : MonoBehaviour
     public Transform orientation;
     public bool freezeMouse;
 
-    private float _xRotation;
-    private float _yRotation;
+    public float _xRotation;
+    public float _yRotation;
 
     private void Start()
     {
@@ -18,7 +18,6 @@ public class PlayerCameraController : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         //FIXED: orientation before 
@@ -35,6 +34,15 @@ public class PlayerCameraController : MonoBehaviour
 
             orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
             transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+        }
+        if (freezeMouse)
+        {
+            _xRotation = transform.rotation.eulerAngles.x;
+            _yRotation = transform.rotation.eulerAngles.y;
+            if (_xRotation > 90)
+            {
+                _xRotation -= 360;
+            }
         }
     }
 }
