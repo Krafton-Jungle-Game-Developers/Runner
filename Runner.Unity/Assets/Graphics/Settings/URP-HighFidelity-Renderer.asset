@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4658817577104122855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bd13fabf96a4cc1aaf221e40805c5c, type: 3}
+  m_Name: RadiantRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  renderPassEvent: 450
+  renderingPath: 0
+  ignorePostProcessingOption: 1
 --- !u!114 &-1160480016144428905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +43,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f58c0e0fb1b4c7549b2b50948300b0e5, type: 3}
-  m_Name: '[SCPE] FogRenderer'
+  m_Name: SCPE FogRenderer
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
@@ -53,7 +69,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1160480016144428905}
   - {fileID: -299178263106762836}
-  m_RendererFeatureMap: 9790c5e49225e5ef
+  - {fileID: -4658817577104122855}
+  m_RendererFeatureMap: 9790c5e49225e5ef19dc5cdb188e58bf
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
