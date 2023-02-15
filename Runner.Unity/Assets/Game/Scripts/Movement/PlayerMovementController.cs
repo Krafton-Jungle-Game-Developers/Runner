@@ -5,7 +5,7 @@ using UnityEngine;
 using UniRx;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
-public enum MovementState { Running, Dashing, Stomping, Boosting, Air }
+public enum MovementState { Idle, Running, Dashing, Stomping, Boosting, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -21,18 +21,17 @@ public class PlayerMovementController : MonoBehaviour
 
     [HideInInspector] public bool _keepMomentum;
     [HideInInspector] public bool isBoosting = false;
-    private MovementState _lastState;
     private float _playerRadius;
     public bool isGrounded;
     private bool _hasDrag;
     private bool _canControl = true;
 
     [Space][Header("Movement")]
-    public float acceleration = 13f;
-    public float deceleration = 13f;
+    public float acceleration = 10f;
+    public float deceleration = 10f;
     public float maxSpeed = 15f;
     [SerializeField] private float maxDropSpeed = 30f;
-    [SerializeField] private float gravity = 2.5f;
+    [SerializeField] private float gravity = 5f;
 
     private float _coyoteTime = 0.2f;
     private float _coyoteTimeCounter;
@@ -66,26 +65,26 @@ public class PlayerMovementController : MonoBehaviour
 
     [Space][Header("Jump")]
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
-    [SerializeField] private float jumpForce = 25;
+    [SerializeField] private float jumpForce = 30f;
     [SerializeField] private float jumpCooldown = 0.25f;
     private bool _canJump = true;
 
     [Space][Header("Dash")]
-    [SerializeField] private float dashForce = 150f;
-    [SerializeField] private float dashSpeedChangeFactor = 50f;
-    [SerializeField] private float dashDuration = 1f;
-    [SerializeField] private float dashYSpeedLimit = 15f;
+    [SerializeField] private float dashForce = 15f;
+    [SerializeField] private float dashSpeedChangeFactor = 15f;
+    [SerializeField] private float dashDuration = 0.5f;
+    [SerializeField] private float dashYSpeedLimit = 3f;
     [HideInInspector] public float _speedChangeFactor;
     private float _dashTimer;
     private Vector3 _dashDirection;
     private Vector3 _dashSpeed;
     private bool _isDashing = false;
 
-
     [Space][Header("Stomp")]
     [SerializeField] private float stompForce;
     private bool _isStomping = false;
 
+    
     private void Awake()
     {
         _state = new(MovementState.Running);
@@ -105,7 +104,6 @@ public class PlayerMovementController : MonoBehaviour
     private void Update()
     {
         playerVelocity = new Vector3(_rb.velocity.x , 0f, _rb.velocity.z).magnitude;
-
         CheckGrounded();
         StateHandler();
         MyInput();
@@ -191,7 +189,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private void StateHandler()
     {
-        if (_isDashing)
+        if (isGrounded && Mathf.Abs(_xInput) < 0.1f && Mathf.Abs(_yInput) < 0.1f)
+        {
+            _state.Value = MovementState.Idle;
+            _hasDrag = true;
+            _coyoteTimeCounter = _coyoteTime;
+            _desiredMoveSpeed = 0f;
+        }
+        else if (_isDashing)
         {
             _state.Value = MovementState.Dashing;
 
@@ -208,7 +213,15 @@ public class PlayerMovementController : MonoBehaviour
             _yInput *= 0.1f;
         }
 
-        else if (isGrounded && !_isDashing && !isBoosting)
+        else if (isBoosting)
+        {
+            _state.Value = MovementState.Boosting;
+            _hasDrag = true;
+            _coyoteTimeCounter = _coyoteTime;
+            _desiredMoveSpeed = acceleration;
+        }
+
+        else if (isGrounded && !_isDashing)
         {
             _state.Value = MovementState.Running;
             _hasDrag = true;
@@ -224,18 +237,23 @@ public class PlayerMovementController : MonoBehaviour
             _desiredMoveSpeed = acceleration;
         }
 
-        else if (isBoosting)
-        {
-            _state.Value = MovementState.Boosting;
-            _hasDrag = true;
-            _coyoteTimeCounter = _coyoteTime;
-            _desiredMoveSpeed = acceleration;
-        }
-
         bool desiredMoveSpeedChanged = _desiredMoveSpeed != _lastDesiredMoveSpeed;
         if (lastState == MovementState.Dashing)
         {
             _keepMomentum = true;
+        }
+        else if (lastState == MovementState.Boosting)
+        {
+            if (_state.Value == MovementState.Running)
+            {
+                _keepMomentum = true;
+                _speedChangeFactor = dashSpeedChangeFactor;
+            }
+            else if (_state.Value == MovementState.Air)
+            {
+                _keepMomentum = true;
+                _speedChangeFactor = dashSpeedChangeFactor / 2f;
+            }
         }
         if (desiredMoveSpeedChanged)
         {
@@ -250,7 +268,6 @@ public class PlayerMovementController : MonoBehaviour
                 _moveSpeed = _desiredMoveSpeed;
             }
         }
-
         _lastDesiredMoveSpeed = _desiredMoveSpeed;
         lastState = _state.Value;
     }
@@ -258,6 +275,7 @@ public class PlayerMovementController : MonoBehaviour
     private void UpdateVelocity()
     {
         _moveDirection = transform.forward * _yInput + transform.right * _xInput;
+        _myVelocity = _rb.velocity;
 
         if (_state.Value == MovementState.Dashing)
         {
@@ -296,7 +314,6 @@ public class PlayerMovementController : MonoBehaviour
             // x-axis, z-axis drag calculation
             if (Mathf.Abs(_yInput) < 0.1f && Mathf.Abs(_xInput) < 0.1f)
             {
-                Vector3 direction = GetDirection(cameraTransform);
                 _myVelocity.x *= 1f / (1f + deceleration * 10f * Time.deltaTime);
                 _myVelocity.z *= 1f / (1f + deceleration * 10f * Time.deltaTime);
                 _rb.velocity = new Vector3(_myVelocity.x, _rb.velocity.y, _myVelocity.z);
