@@ -326,11 +326,12 @@ MonoBehaviour:
   jumpForce: 30
   jumpCooldown: 0.25
   dashForce: 15
-  dashSpeedChangeFactor: 20
+  dashSpeedChangeFactor: 15
   dashDuration: 0.5
   dashYSpeedLimit: 3
   _speedChangeFactor: 0
   stompForce: 10
+  text: {fileID: 0}
 --- !u!114 &7609239868517586427
 MonoBehaviour:
   m_ObjectHideFlags: 0
