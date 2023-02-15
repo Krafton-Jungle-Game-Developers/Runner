@@ -104,6 +104,7 @@ MonoBehaviour:
   _keepMomentum: 0
   isBoosting: 0
   isGrounded: 0
+  canControl: 1
   acceleration: 10
   deceleration: 10
   maxSpeed: 15
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d681cd74daf40a94d837439c641e0e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  executeApproachEase: 17
   approachTime: 5
   executeThrottleTime: 0.5
   executeDistance: 15
@@ -204,7 +206,7 @@ MonoBehaviour:
   landAudioClip: {fileID: 8300000, guid: dadaa610dcc8540478eb22b5eb22600d, type: 3}
   stompAudioClip: {fileID: 8300000, guid: cf6e302243ba31d448fa67a12e4a2805, type: 3}
   jumpAudioClip: {fileID: 8300000, guid: f41f9339fdeab694d8f37397bfbf3a76, type: 3}
-  boostAudioClip: {fileID: 0}
+  boostAudioClip: {fileID: 8300000, guid: 4d8463854df47194b8197916ee9d3a2a, type: 3}
 --- !u!82 &508368156786912240
 AudioSource:
   m_ObjectHideFlags: 0
@@ -485,6 +487,7 @@ MonoBehaviour:
   xSensitivity: 500
   ySensitivity: 500
   orientation: {fileID: 508368156786912201}
+  freezeMouse: 0
 --- !u!114 &508368157925409653
 MonoBehaviour:
   m_ObjectHideFlags: 0

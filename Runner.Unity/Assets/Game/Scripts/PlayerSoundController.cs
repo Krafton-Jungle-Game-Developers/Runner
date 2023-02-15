@@ -66,18 +66,18 @@ public class PlayerSoundController : MonoBehaviour
                 audioSource.clip = boostAudioClip; ;
                 audioSource.Play();
                 break;
-            //case MovementState.Idle:
-            //    if (playerStateBuff == MovementState.Stomping)
-            //    {
-            //        audioSource.PlayOneShot(stompAudioClip);
-            //    }
-            //    else if (playerStateBuff == MovementState.Air)
-            //    {
-            //        audioSource.PlayOneShot(landAudioClip);
-            //    }
-            //    audioSource.loop = false;
-            //    Debug.Log($"상태 변경 발생: {state}");
-            //    break;
+            case MovementState.Idle:
+                if (playerStateBuff == MovementState.Stomping)
+                {
+                    audioSource.PlayOneShot(stompAudioClip);
+                }
+                else if (playerStateBuff == MovementState.Air)
+                {
+                    audioSource.PlayOneShot(landAudioClip);
+                }
+                audioSource.loop = false;
+                Debug.Log($"상태 변경 발생: {state}");
+                break;
             default:
                 break;
         }
