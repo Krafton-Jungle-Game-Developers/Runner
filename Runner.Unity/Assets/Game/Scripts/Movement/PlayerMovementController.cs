@@ -1,17 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 using UniRx;
-using TMPro;
 
 public enum AbilityType { Base, AirJump, Dash, Stomp }
 public enum MovementState { Idle, Running, Dashing, Stomping, Boosting, Air }
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTransform;
+    private Transform cameraTransform;
     [SerializeField] public float playerVelocity;
     private Vector3 _myVelocity;
     private Rigidbody _rb;
@@ -19,7 +17,6 @@ public class PlayerMovementController : MonoBehaviour
     private ReactiveProperty<MovementState> _state;
     public IReactiveProperty<MovementState> State => _state;
     [SerializeField] private LayerMask groundLayer;
-    public MovementState state;
     public MovementState lastState;
 
     [HideInInspector] public bool _keepMomentum;
@@ -52,9 +49,6 @@ public class PlayerMovementController : MonoBehaviour
     [Space][Header("Ability")]
     [SerializeField] private KeyCode abilityKey;
     [SerializeField] private KeyCode swapKey;
-    [SerializeField] private KeyCode executeKey = KeyCode.Mouse0;
-    private Subject<Vector3> _onExecuteInput;
-    public IObservable<Vector3> OnExecuteInputObservable => _onExecuteInput;
 
     public AbilityType currentAbility;
     public AbilityType secondaryAbility;
@@ -90,8 +84,6 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float stompForce;
     private bool _isStomping = false;
 
-    public Text text;
-    private float max;
     
     private void Awake()
     {
@@ -111,13 +103,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        playerVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z).magnitude;
-        if (playerVelocity > 15f)
-        {
-            max = playerVelocity;
-        }
-        text.text = max.ToString();
-
+        playerVelocity = new Vector3(_rb.velocity.x , 0f, _rb.velocity.z).magnitude;
         CheckGrounded();
         StateHandler();
         MyInput();
@@ -213,6 +199,7 @@ public class PlayerMovementController : MonoBehaviour
         else if (_isDashing)
         {
             _state.Value = MovementState.Dashing;
+
             _hasDrag = false;
             _desiredMoveSpeed = dashForce * 10f;
             _speedChangeFactor = dashSpeedChangeFactor;

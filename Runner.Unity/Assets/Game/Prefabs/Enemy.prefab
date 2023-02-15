@@ -69,7 +69,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7459004889234300937}
   - component: {fileID: 1526356154899131620}
-  - component: {fileID: 6783117385782633884}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -106,19 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e726d8c6e37e2c4b9f15e8cfe0ffd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &6783117385782633884
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6558778856332029095}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 15
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4703506437029040132
 PrefabInstance:
   m_ObjectHideFlags: 0

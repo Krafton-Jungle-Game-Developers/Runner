@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Runner.Game;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Runner.UI

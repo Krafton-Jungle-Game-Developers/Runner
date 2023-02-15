@@ -1,5 +1,6 @@
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class PlayerSoundController : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private AudioClip landAudioClip;
     [SerializeField] private AudioClip stompAudioClip;
     [SerializeField] private AudioClip jumpAudioClip;
+    [SerializeField] private AudioClip boostAudioClip;
+
+    MovementState playerStateBuff;
 
     private PlayerMovementController _movementController;
 
@@ -20,8 +24,8 @@ public class PlayerSoundController : MonoBehaviour
 
         _movementController.State.Subscribe(state => 
         {
-            Debug.Log(state.ToString());
             PlayMatchingClip(state);
+            playerStateBuff = state;
         }).AddTo(this);
     }
 
@@ -29,7 +33,16 @@ public class PlayerSoundController : MonoBehaviour
     {
         switch (state) 
         {
+            //jump는 signal 받아서 처리
             case MovementState.Running:
+                if(playerStateBuff == MovementState.Stomping)
+                {
+                    audioSource.PlayOneShot(stompAudioClip);
+                }
+                else if(playerStateBuff == MovementState.Air)
+                {
+                    audioSource.PlayOneShot(landAudioClip);
+                }
                 audioSource.loop = true;
                 audioSource.clip = stepAudioClip;
                 audioSource.Play();
@@ -38,14 +51,33 @@ public class PlayerSoundController : MonoBehaviour
                 audioSource.loop = false;
                 audioSource.PlayOneShot(dashAudioClip);
                 break;
-            case MovementState.Stomping:
+            //TODO :Delete(처리내용 X)
+            case MovementState.Stomping://(->Running, Idle시, Stompsound)
                 audioSource.loop = false;
                 Debug.Log($"상태 변경 발생: {state}");
                 break;
-            case MovementState.Air:
+            //TODO :Delete(처리내용 X)
+            case MovementState.Air: //(->Running/Idle시, Landsound), Running/Idle ->시, JumpsoundX (signal로 처리) 
                 audioSource.loop = false;
                 Debug.Log($"상태 변경 발생: {state}");
                 break;
+            case MovementState.Boosting: //(->Running/Idle시, Landsound), Running/Idle ->시, JumpsoundX (signal로 처리)
+                audioSource.loop = true;
+                audioSource.clip = boostAudioClip; ;
+                audioSource.Play();
+                break;
+            //case MovementState.Idle:
+            //    if (playerStateBuff == MovementState.Stomping)
+            //    {
+            //        audioSource.PlayOneShot(stompAudioClip);
+            //    }
+            //    else if (playerStateBuff == MovementState.Air)
+            //    {
+            //        audioSource.PlayOneShot(landAudioClip);
+            //    }
+            //    audioSource.loop = false;
+            //    Debug.Log($"상태 변경 발생: {state}");
+            //    break;
             default:
                 break;
         }
