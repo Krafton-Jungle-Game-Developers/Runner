@@ -207,11 +207,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 508368156786912240}
   stepAudioClip: {fileID: 8300000, guid: d88cbad2d217cd74ba1eb0899d6c55ad, type: 3}
-  dashAudioClip: {fileID: 8300000, guid: 9abbc43e9c6c5de40a2f6170d586219c, type: 3}
-  landAudioClip: {fileID: 8300000, guid: dadaa610dcc8540478eb22b5eb22600d, type: 3}
-  stompAudioClip: {fileID: 8300000, guid: cf6e302243ba31d448fa67a12e4a2805, type: 3}
+  dashAudioClip: {fileID: 8300000, guid: 8a2cbe526fe32424181d98452137173a, type: 3}
+  landAudioClip: {fileID: 8300000, guid: f64331878e5dcce40a88e09b9af50d49, type: 3}
+  stompAudioClip: {fileID: 8300000, guid: b681302c90285974a8d834b81c9af8b0, type: 3}
   jumpAudioClip: {fileID: 8300000, guid: f41f9339fdeab694d8f37397bfbf3a76, type: 3}
-  boostAudioClip: {fileID: 8300000, guid: 4d8463854df47194b8197916ee9d3a2a, type: 3}
+  boostAudioClip: {fileID: 8300000, guid: 74df5a31b5b766444a65d3df835dca6a, type: 3}
 --- !u!82 &508368156786912240
 AudioSource:
   m_ObjectHideFlags: 0
