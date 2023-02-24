@@ -1,2 +1,2 @@
 # Runner
-Namanmu Project for Krafton Jungle
+First proposal of short-term game project in Krafton Jungle. Suspended.
